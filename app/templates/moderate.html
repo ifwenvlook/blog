@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Fly - 评论管理{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>评论管理</h1>
+</div>
+{% set moderate = True %}
+{% include '_comments_moderate.html' %}
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.moderate') }}
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}Fly - 修改电子邮箱{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+	<a href="{{ url_for('auth.change_password') }}" class="btn btn-default btn-flat">修改密码</a>
+	<a href="{{ url_for('auth.change_email_request') }}"class="btn btn-default btn-flat">修改邮箱</a>
+	<a href="{{ url_for('main.user', username=current_user.username) }}"class="btn btn-default btn-flat">个人资料</a>
+</div>
+<div class="col-md-4">
+    {{ wtf.quick_form(form) }}
+</div>
+{% endblock %}
