@@ -14,17 +14,15 @@ from datetime import datetime
 def before_request():
     if current_user.is_authenticated:
         current_user.ping()
-        if not current_user.confirmed \
-                and request.endpoint[:5] != 'auth.' \
-                and request.endpoint != 'static':
-            return redirect(url_for('auth.unconfirmed'),current_time=datetime.utcnow())
+        if not current_user.confirmed: \
+            return render_template('auth/unconfirmed.html')
 
 
 @auth.route('/unconfirmed')
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
-    return render_template('auth/unconfirmed.html',current_time=datetime.utcnow())
+    return render_template('auth/unconfirmed.html')
 
 
 @auth.route('/login', methods=['GET', 'POST'])
