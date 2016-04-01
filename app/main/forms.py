@@ -4,7 +4,12 @@ from wtforms import StringField, TextAreaField, BooleanField, SelectField,\
 from wtforms.validators import Required, Length, Email, Regexp
 from wtforms import ValidationError
 from flask.ext.pagedown.fields import PageDownField
-from ..models import Role, User
+from ..models import Role, User, Message
+
+
+class SendmessageForm(Form):
+    body = StringField('私信内容', validators=[Length(0, 256)])
+    submit = SubmitField('发送')
 
 
 class NameForm(Form):

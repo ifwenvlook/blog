@@ -3,10 +3,9 @@ from flask import render_template, redirect, url_for, abort, flash, request,\
 from flask.ext.login import login_required, current_user
 from flask.ext.sqlalchemy import get_debug_queries
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm, PostForm,\
-    CommentForm
+from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SendmessageForm
 from .. import db
-from ..models import Permission, Role, User, Post, Comment
+from ..models import Permission, Role, User, Post, Comment,Message
 from ..decorators import admin_required, permission_required
 from datetime import datetime
 
@@ -328,6 +327,24 @@ def mycomments():
     comments = pagination.items
     return render_template('mycomments.html', comments=comments,
                            pagination=pagination, page=page,current_time=datetime.utcnow() )
+
+
+@main.route('/sendmessage/<username>', methods=['GET', 'POST'])
+@login_required
+@permission_required(Permission.COMMENT)
+def sendmessage(username):
+    user = User.query.filter_by(username=username).first()
+    form = SendmessageForm()
+    if form.validate_on_submit():
+        message = Message(body=form.body.data, \
+                    sender=current_user,
+                    sendto=user)
+        db.session.add(message)
+        db.session.commit()
+        flash('私信发送成功')
+        return redirect(url_for('.user', username=username))
+        
+    return render_template('sendmessage.html', form=form,current_time=datetime.utcnow())
 
 
 

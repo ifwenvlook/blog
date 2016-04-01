@@ -62,15 +62,15 @@ class Follow(db.Model):
                             primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
-# #评论关系表
-# class Talk(db.Model):
-#     __tablename__ = 'talks'
-#     talker_id = db.Column(db.Integer, db.ForeignKey('users.id'),
-#                             primary_key=True)
-#     talked_id = db.Column(db.Integer, db.ForeignKey('users.id'),
-#                             primary_key=True)
-#     timestamp = db.Column(db.DateTime, default=datetime.now)
-
+class Message(db.Model):
+    __tablename__ = 'messages'
+    id = db.Column(db.Integer, primary_key=True)
+    body = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime,  default=datetime.now)    
+    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'),primary_key=True)
+    sendto_id = db.Column(db.Integer, db.ForeignKey('users.id'),primary_key=True)
+    def __repr__(self):
+        return '<Message %r  @%r sent to %r>' % (self.body,self.sender.username,self.sendto.username)
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -98,6 +98,17 @@ class User(UserMixin, db.Model):
                                 lazy='dynamic',
                                 cascade='all, delete-orphan')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
+
+    senders = db.relationship('Message',
+                               foreign_keys=[Message.sendto_id],
+                               backref=db.backref('sendto', lazy='joined'),
+                               lazy='dynamic',
+                               cascade='all, delete-orphan')
+    sendtos = db.relationship('Message',
+                                foreign_keys=[Message.sender_id],
+                                backref=db.backref('sender', lazy='joined'),
+                                lazy='dynamic',
+                                cascade='all, delete-orphan')
 
 
 
