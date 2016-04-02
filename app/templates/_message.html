@@ -1,17 +1,17 @@
 {% if current_user.is_authenticated %} 
-<ul class="messages">
+<ul class="comment">
         {% for message in messages %}  
             {% if message.sendto == current_user %}
-            <li class="message">
-                <div class="message-thumbnail">
+            <li class="comment">
+                <div class="comment-thumbnail">
                     <a href="{{ url_for('.user', username=message.sendto.username) }}">
                         <img class="img-rounded profile-thumbnail" src="{{ message.author.gravatar(size=40) }}">
                     </a>
                 </div>
-                <div class="message-content">
-                    <div class="message-date">{{ moment(message.timestamp).fromNow() }}</div>
-                    <div class="message-sendto">来自<a href="{{ url_for('.user', username=message.author.username) }}">{{ message.author.username }}</a>的消息</div>
-                        <div class="message-body">
+                <div class="comment-content">
+                    <div class="comment-date">{{ moment(message.timestamp).fromNow() }}</div>
+                    <div class="comment-sendto">来自<a href="{{ url_for('.user', username=message.author.username) }}">{{ message.author.username }}</a>的消息:</div>
+                        <div class="comment-body">
                         {{ message.body }}                         
                         </div>                     
                     {% if message %}

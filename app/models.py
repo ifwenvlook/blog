@@ -106,16 +106,23 @@ class User(UserMixin, db.Model):
 
     messages = db.relationship('Message', backref='author', lazy='dynamic',primaryjoin='Message.author_id==User.id')
 
-    sendtos = db.relationship('Message', backref='sendto', lazy='dynamic', primaryjoin='Message.sendto_id==User.id')
+    messageds = db.relationship('Message', backref='sendto', lazy='dynamic', primaryjoin='Message.sendto_id==User.id')
 
+#私信
     
     def unreadmessages(self):
-        maxi=self.sendtos.count()
+        maxi=self.messageds.count()
         total=0
         for i in range(0,maxi):            
-            if not self.sendtos[i].confirmed:
+            if not self.messageds[i].confirmed:
                 total=total+1
         return total
+    def lastmessage(self):
+        last=self.messageds[-1]
+        return last
+    def lastmessageform(self):
+        lastform=self.messageds[-1].author
+        return lastform
 
 
 
@@ -131,6 +138,13 @@ class User(UserMixin, db.Model):
                 if not self.posts[i].comments[num].confirmed:                    
                     total=total+1                   
         return total
+
+    def lastcomment(self):
+        return self.posts[-1].comments[-1]
+    def lastcommentform(self):
+        return self.posts[-1].comments[-1].author
+
+
 
     @staticmethod
     def generate_fake(count=100):

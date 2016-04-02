@@ -94,53 +94,93 @@ type="image/x-icon">
                           <li class="header">你有 {{ current_user.unreadmessages()}} 条未读私信</li>
                           <li>
                             <!-- inner menu: contains the messages -->
+                            {% if current_user.unreadmessages() > 0 %}
                             <ul class="menu">
                               <li><!-- start message -->
-                                <a href="#">
-                                  <div class="pull-left">
+                                <a href="{{ url_for('main.showmessage') }}">
+                                  <div class="pull-left">                                     
                                     <!-- User Image -->  
                                     {% if current_user.is_authenticated %}                          
                                     <!-- <img src="{{url_for('static',filename='img/my.jpg')}}" class="img-circle" alt="User Image"> -->
-                                    <img class="user-image" alt="User Image" src="{{ current_user.gravatar(size=256) }}">
+                                    <img class="user-image" alt="User Image" src="{{ current_user.lastmessageform().gravatar(size=256) }}">
                                     {% endif %}
                                   </div>
-                                  <!-- Message title and timestamp -->
-                                  <h4>
-                                    Support Team
-                                    <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                  <!-- Message title and timestamp -->                               
+                                  <h4>                                    
+                                    <small><i class="fa fa-clock-o"></i> 最近的消息</small>
+                                  <br>
                                   </h4>
                                   <!-- The message -->
-                                  <p>Why not buy a new awesome theme?</p>
+                                  <p>{{ current_user.lastmessageform().username }}对你说:{{ current_user.lastmessage().body }}</p>
                                 </a>
                               </li><!-- end message -->
                             </ul><!-- /.menu -->
-                          </li>
+                            </li>
+                            {% else %}
+                            <ul class="menu">
+                              <li><!-- start message -->
+                                <a href="{{ url_for('main.showmessage') }}">
+                                <h4>   
+                                    最近没有消息                                
+                                    <small><i class="fa fa-clock-o"></i> 最近的消息</small>
+                                </h4>
+                                </a>
+                              </li>
+                            </ul>   
+                            {% endif %}
+
                           <li class="footer"><a href="{{ url_for('main.showmessage') }}">查看全部私信</a></li>
                         </ul>
                       </li><!-- /.messages-menu -->
 
-                      <!-- Notifications Menu -->
-                      <li class="dropdown notifications-menu">
+                      <li class="dropdown messages-menu">
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                           <i class="fa fa-bell-o"></i>
-                          <span class="label label-warning">{{current_user.commenteds()}}</span>
-                        </a>
+                          <span class="label label-warning">{{ current_user.commenteds()}} </span>
+                        </a>                
                         <ul class="dropdown-menu">
-                          <li class="header"> {{ current_user.commenteds() }} 条通知</li>
+                          <li class="header">你有 {{ current_user.commenteds() }} 条未读评论</li>
                           <li>
-                            <!-- Inner Menu: contains the notifications -->
+                            <!-- inner menu: contains the messages -->
+                            {% if current_user.commenteds() > 0 and current_user.posts[-1].comments.count() > 0 %}
                             <ul class="menu">
-                              <li><!-- start notification -->
+                              <li><!-- start message -->
                                 <a href="{{ url_for('main.shownotice') }}">
-                                  <i class="fa fa-users text-aqua"></i> 你有{{ current_user.commenteds()}} 条未读评论
+                                  <div class="pull-left">
+                                    <!-- User Image -->  
+                                    {% if current_user.is_authenticated %}                          
+                                    <!-- <img src="{{url_for('static',filename='img/my.jpg')}}" class="img-circle" alt="User Image"> -->
+                                    <img class="user-image" alt="User Image" src="{{ current_user.lastcommentform().gravatar(size=256) }}">
+                                    {% endif %}
+                                  </div>
+                                  <!-- Message title and timestamp -->
+                                  <h4>                                    
+                                    <small><i class="fa fa-clock-o"></i> 最近的评论</small>
+                                  </h4>
+                                  <br>
+                                  <!-- The message -->
+                                  <p>{{ current_user.lastcommentform().username }}发表了评论:{{ current_user.lastcomment().body }}</p>
                                 </a>
-                              </li><!-- end notification -->
-                            </ul>
+                              </li><!-- end message -->
+                            </ul><!-- /.menu -->
+                            {% else %}
+                            <ul class="menu">
+                              <li><!-- start message -->
+                                <a href="{{ url_for('main.shownotice') }}">
+                                <h4>   
+                                最近没有新的评论                         
+                                    <small><i class="fa fa-clock-o"></i> 最近的消息</small>
+                                </h4>
+                                </a>
+                              </li>
+                            </ul> 
+                            {% endif %}
                           </li>
                           <li class="footer"><a href="{{ url_for('main.shownotice') }}">查看全部评论</a></li>
                         </ul>
-                      </li>
+                      </li><!-- /.notice -->
+
                       <!-- Tasks Menu -->
                       
                       <li class="dropdown tasks-menu">
