@@ -132,13 +132,13 @@ type="image/x-icon">
                             <!-- Inner Menu: contains the notifications -->
                             <ul class="menu">
                               <li><!-- start notification -->
-                                <a href="{{ url_for('main.showmessage') }}">
+                                <a href="{{ url_for('main.shownotice') }}">
                                   <i class="fa fa-users text-aqua"></i> 你有{{ current_user.commented()}} 条未读评论
                                 </a>
                               </li><!-- end notification -->
                             </ul>
                           </li>
-                          <li class="footer"><a href="{{ url_for('main.showmessage') }}">查看全部评论</a></li>
+                          <li class="footer"><a href="{{ url_for('main.shownotice') }}">查看全部评论</a></li>
                         </ul>
                       </li>
                       <!-- Tasks Menu -->

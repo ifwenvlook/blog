@@ -280,38 +280,38 @@ def moderate():
                            pagination=pagination, page=page,current_time=datetime.utcnow() )
 
 
-@main.route('/showmessage')
+@main.route('/shownotice')
 @login_required
 @permission_required(Permission.COMMENT)
-def showmessage():
+def shownotice():
     page = request.args.get('page', 1, type=int)
     pagination = Comment.query.order_by(Comment.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
         error_out=False)
     comments = pagination.items
-    return render_template('showmessage.html', comments=comments,
+    return render_template('shownotice.html', comments=comments,
                            pagination=pagination, page=page,current_time=datetime.utcnow() )
 
 
-@main.route('/showmessage/unconfirmed/<int:id>')
+@main.route('/shownotice/unconfirmed/<int:id>')
 @login_required
 @permission_required(Permission.COMMENT)
-def showmessage_unconfirmed(id):
+def shownotice_unconfirmed(id):
     comment = Comment.query.get_or_404(id)
     comment.confirmed = True
     db.session.add(comment)
-    return redirect(url_for('.showmessage',
+    return redirect(url_for('.shownotice',
                             page=request.args.get('page', 1, type=int)))
 
 
-@main.route('/showmessage/confirmed/<int:id>')
+@main.route('/shownotice/confirmed/<int:id>')
 @login_required
 @permission_required(Permission.COMMENT)
-def showmessage_confirmed(id):
+def shownotice_confirmed(id):
     comment = Comment.query.get_or_404(id)
     comment.confirmed = False
     db.session.add(comment)
-    return redirect(url_for('.showmessage',
+    return redirect(url_for('.shownotice',
                             page=request.args.get('page', 1, type=int)))
 
 
