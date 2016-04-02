@@ -37,6 +37,7 @@ def server_shutdown():
 def index():
     form = PostForm()
     user = User() 
+    message = Message()
     
     if current_user.can(Permission.WRITE_ARTICLES) and \
             form.validate_on_submit():
@@ -60,7 +61,7 @@ def index():
     # current_user=current_user
 
 
-    return render_template('index.html', form=form, posts=posts,user=current_user,
+    return render_template('index.html', form=form, posts=posts,user=current_user,message=message,
                            show_followed=show_followed, pagination=pagination,current_time=datetime.utcnow())
 
 
@@ -345,6 +346,40 @@ def sendmessage(username):
         return redirect(url_for('.user', username=username))
         
     return render_template('sendmessage.html', form=form,current_time=datetime.utcnow())
+
+@main.route('/showmessage')
+@login_required
+@permission_required(Permission.COMMENT)
+def showmessage():
+    page = request.args.get('page', 1, type=int)
+    pagination = Message.query.order_by(Message.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
+        error_out=False)
+    messages = pagination.items
+    return render_template('showmessage.html', messages=messages,
+                           pagination=pagination, page=page,current_time=datetime.utcnow() )
+
+
+@main.route('/showmessage/unconfirmed/<int:id>')
+@login_required
+@permission_required(Permission.COMMENT)
+def showmessage_unconfirmed(id):
+    message = Message.query.get_or_404(id)
+    message.confirmed = True
+    db.session.add(message)
+    return redirect(url_for('.showmessage',
+                            page=request.args.get('page', 1, type=int)))
+
+
+@main.route('/showmessage/confirmed/<int:id>')
+@login_required
+@permission_required(Permission.COMMENT)
+def showmessage_confirmed(id):
+    message = Message.query.get_or_404(id)
+    message.confirmed = False
+    db.session.add(message)
+    return redirect(url_for('.showmessage',
+                            page=request.args.get('page', 1, type=int)))
 
 
 
