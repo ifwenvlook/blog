@@ -338,7 +338,7 @@ def sendmessage(username):
     form = SendmessageForm()
     if form.validate_on_submit():
         message = Message(body=form.body.data, \
-                    sender=current_user,
+                    author=current_user,
                     sendto=user)
         db.session.add(message)
         db.session.commit()

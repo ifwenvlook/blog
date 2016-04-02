@@ -5,12 +5,12 @@
             <li class="message">
                 <div class="message-thumbnail">
                     <a href="{{ url_for('.user', username=message.sendto.username) }}">
-                        <img class="img-rounded profile-thumbnail" src="{{ message.sendto.gravatar(size=40) }}">
+                        <img class="img-rounded profile-thumbnail" src="{{ message.author.gravatar(size=40) }}">
                     </a>
                 </div>
                 <div class="message-content">
                     <div class="message-date">{{ moment(message.timestamp).fromNow() }}</div>
-                    <div class="message-sendto"><a href="{{ url_for('.user', username=message.sendto.username) }}">{{ message.sendto.username }}</a></div>
+                    <div class="message-sendto">来自<a href="{{ url_for('.user', username=message.author.username) }}">{{ message.author.username }}</a>的消息</div>
                         <div class="message-body">
                         {{ message.body }}                         
                         </div>                     
@@ -20,7 +20,9 @@
                         <a class="btn btn-danger btn-xs" href="{{ url_for('.showmessage_unconfirmed', id=message.id, page=page) }}">标记为已读</a> 
                         {% else %}
                         <a class="btn btn-default btn-xs" href="{{ url_for('.showmessage_confirmed', id=message.id, page=page) }}">标记为未读</a> 
-                        {% endif %}  
+                        {% endif %}
+                        <a href="{{ url_for('.sendmessage', username=message.author.username) }}" class="btn btn-danger btn-xs">回复</a>
+
                     {% endif %}                 
                 </div>
             </li>  

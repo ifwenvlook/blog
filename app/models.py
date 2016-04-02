@@ -61,27 +61,21 @@ class Follow(db.Model):
     followed_id = db.Column(db.Integer, db.ForeignKey('users.id'),
                             primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.now)
-    
+
 class Message(db.Model):
     __tablename__ = 'messages'
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime,  default=datetime.now)    
-    sender_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     sendto_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     confirmed = db.Column(db.Boolean,default=False)
 
-    def unread(self):
-        maxi=self.count()
-        total=0
-        for i in range(0,maxi):
-            if not self.confirmed:
-                total=total+1
-        return total
+
 
 
     def __repr__(self):
-        return '<Message %r  @%r sent to %r>' % (self.body,self.sender.username,self.sendto.username)
+        return '<Message %r  @%r sent to %r>' % (self.body,self.author.username,self.sendto.username)
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -110,25 +104,25 @@ class User(UserMixin, db.Model):
                                 cascade='all, delete-orphan')
     comments = db.relationship('Comment', backref='author', lazy='dynamic')
 
-    senders = db.relationship('Message',
-                               foreign_keys=[Message.sendto_id],
-                               backref=db.backref('sendto', lazy='joined'),
-                               lazy='dynamic',
-                               cascade='all, delete-orphan')
-    sendtos = db.relationship('Message',
-                                foreign_keys=[Message.sender_id],
-                                backref=db.backref('sender', lazy='joined'),
-                                lazy='dynamic',
-                                cascade='all, delete-orphan')
+    messages = db.relationship('Message', backref='author', lazy='dynamic',primaryjoin='Message.author_id==User.id')
 
+    sendtos = db.relationship('Message', backref='sendto', lazy='dynamic', primaryjoin='Message.sendto_id==User.id')
 
+    
+    def unreadmessages(self):
+        maxi=self.sendtos.count()
+        total=0
+        for i in range(0,maxi):            
+            if not self.sendtos[i].confirmed:
+                total=total+1
+        return total
 
 
 
 
 #计算被评论数
 
-    def commented(self): 
+    def commenteds(self): 
         maxi=self.posts.count()
         total=0
         for i in range(0,maxi):            

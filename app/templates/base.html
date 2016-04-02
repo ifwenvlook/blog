@@ -88,10 +88,10 @@ type="image/x-icon">
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                           <i class="fa fa-envelope-o"></i>
-                          <span class="label label-success">{{ current_user.senders.count()}} </span>
+                          <span class="label label-success">{{ current_user.unreadmessages()}} </span>
                         </a>                
                         <ul class="dropdown-menu">
-                          <li class="header">你有 {{ current_user.senders.count()}} 条未读私信</li>
+                          <li class="header">你有 {{ current_user.unreadmessages()}} 条未读私信</li>
                           <li>
                             <!-- inner menu: contains the messages -->
                             <ul class="menu">
@@ -115,7 +115,7 @@ type="image/x-icon">
                               </li><!-- end message -->
                             </ul><!-- /.menu -->
                           </li>
-                          <li class="footer"><a href="{{ url_for('main.showmessage') }}">See All Messages</a></li>
+                          <li class="footer"><a href="{{ url_for('main.showmessage') }}">查看全部私信</a></li>
                         </ul>
                       </li><!-- /.messages-menu -->
 
@@ -124,16 +124,16 @@ type="image/x-icon">
                         <!-- Menu toggle button -->
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                           <i class="fa fa-bell-o"></i>
-                          <span class="label label-warning">{{current_user.commented()}}</span>
+                          <span class="label label-warning">{{current_user.commenteds()}}</span>
                         </a>
                         <ul class="dropdown-menu">
-                          <li class="header"> {{ current_user.commented() }} 条通知</li>
+                          <li class="header"> {{ current_user.commenteds() }} 条通知</li>
                           <li>
                             <!-- Inner Menu: contains the notifications -->
                             <ul class="menu">
                               <li><!-- start notification -->
                                 <a href="{{ url_for('main.shownotice') }}">
-                                  <i class="fa fa-users text-aqua"></i> 你有{{ current_user.commented()}} 条未读评论
+                                  <i class="fa fa-users text-aqua"></i> 你有{{ current_user.commenteds()}} 条未读评论
                                 </a>
                               </li><!-- end notification -->
                             </ul>
