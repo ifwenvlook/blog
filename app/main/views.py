@@ -58,9 +58,6 @@ def index():
         error_out=False)
     posts = pagination.items[:] #分页显示
 
-    # current_user=current_user
-
-
     return render_template('index.html', form=form, posts=posts,user=current_user,message=message,
                            show_followed=show_followed, pagination=pagination,current_time=datetime.utcnow())
 
@@ -130,7 +127,7 @@ def post(id):
                           post=post,
                           author=current_user._get_current_object())
         db.session.add(comment)
-        flash('Your comment has been published.')
+        flash('你的评论已提交.')
         return redirect(url_for('.post', id=post.id, page=-1))
     page = request.args.get('page', 1, type=int)
     if page == -1:
@@ -142,6 +139,16 @@ def post(id):
     comments = pagination.items
     return render_template('post.html', posts=[post], form=form,
                            comments=comments, pagination=pagination,current_time=datetime.utcnow() )
+
+@main.route('/post/delete/<int:id>')
+def post_delete(id):
+    post=Post.query.get_or_404(id)
+    db.session.delete(post)
+    for comment in post.comments:
+        db.session.delete(comment)
+    flash('博客以及相关的评论已删除')
+    return redirect(url_for('.user', username=post.author.username))
+
 
 
 @main.route('/edit/<int:id>', methods=['GET', 'POST'])
@@ -329,6 +336,15 @@ def mycomments():
     return render_template('mycomments.html', comments=comments,
                            pagination=pagination, page=page,current_time=datetime.utcnow() )
 
+@main.route('/mycomments/delete/<int:id>')
+@login_required
+@permission_required(Permission.COMMENT)
+def mycomments_delete(id):
+    comment = Comment.query.get_or_404(id)
+    db.session.delete(comment)
+    return redirect(url_for('.mycomments',
+                            page=request.args.get('page', 1, type=int)))
+
 
 @main.route('/sendmessage/<username>', methods=['GET', 'POST'])
 @login_required
@@ -378,6 +394,17 @@ def showmessage_confirmed(id):
     message = Message.query.get_or_404(id)
     message.confirmed = False
     db.session.add(message)
+    return redirect(url_for('.showmessage',
+                            page=request.args.get('page', 1, type=int)))
+
+
+@main.route('/showmessage/delete/<int:id>')
+@login_required
+@permission_required(Permission.COMMENT)
+def message_delete(id):
+    message = Message.query.get_or_404(id)    
+    db.session.delete(message)
+    flash('私信删除成功')
     return redirect(url_for('.showmessage',
                             page=request.args.get('page', 1, type=int)))
 

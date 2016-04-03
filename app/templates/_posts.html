@@ -23,6 +23,9 @@
                 {% if current_user == post.author %}
                 <a href="{{ url_for('.edit', id=post.id) }}">
                     <span class="label label-primary">编辑</span>
+                <a href="{{ url_for('.post_delete', id=post.id,) }}" class="label label-danger">
+                    <span class="label label-danger">删除</span>
+                    </a>
                 </a>
                 {% elif current_user.is_administrator() %}
                 <a href="{{ url_for('.edit', id=post.id) }}">

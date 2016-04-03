@@ -21,7 +21,9 @@
                         {% else %}
                         <a class="btn btn-default btn-xs" href="{{ url_for('.showmessage_confirmed', id=message.id, page=page) }}">标记为未读</a> 
                         {% endif %}
-                        <a href="{{ url_for('.sendmessage', username=message.author.username) }}" class="btn btn-danger btn-xs">回复</a>
+                        <a href="{{ url_for('.message_delete', id=message.id, page=page) }}" class="btn btn-danger btn-xs">删除</a>
+                        <a href="{{ url_for('.sendmessage', username=message.author.username) }}" class="btn btn-default btn-xs">回复</a>
+
 
                     {% endif %}                 
                 </div>

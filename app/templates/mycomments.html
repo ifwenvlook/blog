@@ -36,15 +36,9 @@
                                     {{ comment.body }}
                                 {% endif %}
                             {% endif %}
-                        </div>                     
-                    
-                    <br>                   
-<!--                         {% if not comment.confirmed %}
-                        <a class="btn btn-danger btn-xs" href="{{ url_for('.showmessage_unconfirmed', id=comment.id, page=page) }}">标记为已读</a> 
-                        {% else %}
-                        <a class="btn btn-default btn-xs" href="{{ url_for('.showmessage_confirmed', id=comment.id, page=page) }}">标记为未读</a> 
-                        {% endif %}  --> 
-                                    
+                            <a href="{{ url_for('.mycomments_delete', id=comment.id, page=page) }}" class="btn btn-danger btn-xs">删除</a>
+                        </div> 
+                    <br>                              
                 </div>
             </li>  
             {% endif %}    
