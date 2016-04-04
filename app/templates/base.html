@@ -20,15 +20,15 @@ type="image/x-icon">
 {% block styles %}
 
     <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='bootstrap.min.css')}}"><!-- static/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="stylesheet" href="{{url_for('static',filename='bootstrap.min.css')}}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> <!-- 提供通知小图标 -->
     <!-- Ionicons -->
     <link rel="stylesheet" href="{{url_for('static',filename='ionicons.min.css')}}"> 
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{url_for('static',filename='AdminLTE.min.css')}}"> <!-- "static/dist/css/AdminLTE.min.css"> -->
+    <link rel="stylesheet" href="{{url_for('static',filename='AdminLTE.min.css')}}">
     
-    <link rel="stylesheet" href="{{url_for('static',filename='skin-blue.min.css')}}"><!-- "static/dist/css/skins/skin-blue.min.css"> -->
+    <link rel="stylesheet" href="{{url_for('static',filename='skin-blue.min.css')}}">
 
 {% endblock %}
 {% endblock %} <!-- headend -->
@@ -50,11 +50,6 @@ type="image/x-icon">
 
             {% block navbar %}
             <nav class="navbar navbar-static-top" role="navigation">
-
-                  <!-- Sidebar toggle button-->
-                  <!-- <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-                    <span class="sr-only">Toggle navigation</span>
-                  </a> -->
                   <!-- Navbar Right Menu -->
                   <div class="navbar-header">            
                     <ul class="nav navbar-nav">
@@ -271,26 +266,14 @@ type="image/x-icon">
 
 <div class="container"> <!-- 定义博客列表格式 -->
 {% block content %}
-
-{% for message in get_flashed_messages() %}
   
-    <div class="alert alert-warning">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ message }}
-    </div>
-  
-{% endfor %}
 
-
-    
-<!-- <div class="content-wrapper" style="min-height: 824px;">
-</div> -->
 {% block page_content %} <!-- post页面等等 -->
 
-{% endblock %}
-</div>
+{% endblock %} <!-- end page_content -->
+</div><!-- 定义博客列表格式结束 -->
 
-<footer class="container">
+<footer class="container"> <!-- 页脚 -->
         <!-- To the right -->
         <div class="pull-right hidden-xs">
           作者:<a href="mailto:ifwenvlook@gmail.com">ifwenvlook@gmail.com</a>
@@ -300,26 +283,18 @@ type="image/x-icon">
         <strong>有志者事竟成</strong> All rights reserved.
 </footer>
 
-
-
-      
-
-
-
 {% endblock %} <!-- end content -->
 
 
 {% block scripts %}
-    <script src="{{url_for('static',filename='jquery.js')}}"></script> 
-    <script src="{{url_for('static',filename='bootstrap.min.js')}}"></script>  
-    <script src="{{url_for('static',filename='app.min.js')}}"></script>
-<!--     <script src="{{url_for('static',filename='moment-with-locales.js')}}"> </script>  -->
 
-<!--     <script src="{{url_for('static',filename='jquery.js')}}"></script>
-    <script src="{{url_for('static',filename='bootstrap.js')}}"></script> -->
-
-
-    
+{{ moment.include_jquery() }}
+{{ moment.include_moment() }}
+{{ moment.lang("zh-CN") }} 
+<script src="{{url_for('static',filename='jquery.js')}}"></script> 
+<script src="{{url_for('static',filename='bootstrap.min.js')}}"></script>  
+<script src="{{url_for('static',filename='app.min.js')}}"></script>    
 {% endblock %} <!-- endscripts -->
+
 
 {% endblock %}

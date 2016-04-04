@@ -12,10 +12,13 @@
 <div class="page-header">
     <h4>{% if current_user.is_authenticated %}欢迎回来, {{ current_user.username }}{% else %}欢迎来到我的世界，屠龙宝龙、点击就送，快来<a href=/auth/register>注册</a>吧，关注<a href=/user/wen>博主</a>送签名照~~{% endif %}!</h4>
     <h4> 
+    <p>现在是{{ moment(current_time).format('LLL') }}.</p>
+<!--     <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
     <script >
     document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());     
     // 时间
-    </script> </h4>
+    </script>  -->
+    </h4>
 </div>
 <div>
     {% if current_user.can(Permission.WRITE_ARTICLES) %}

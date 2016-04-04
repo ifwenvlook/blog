@@ -9,7 +9,7 @@
                     </a>
                 </div>
                 <div class="comment-content">
-                    <div class="comment-date">{{ moment(message.timestamp).fromNow() }}</div>
+                    <div class="comment-date">{{ message.timestamp}}</div>
                     <div class="comment-sendto">来自<a href="{{ url_for('.user', username=message.author.username) }}">{{ message.author.username }}</a>的消息:</div>
                         <div class="comment-body">
                         {{ message.body }}                         

@@ -7,7 +7,7 @@
             </a>
         </div>
         <div class="post-content">
-            <div class="post-date">{{ moment(post.timestamp).fromNow() }}</div>
+            <div class="post-date">{{ post.timestamp }}</div>
             <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
             <div class="post-head">
             {{ post.head }} 
@@ -32,9 +32,9 @@
                     <span class="label label-danger">编辑 [Admin]</span>
                 </a>
                 {% endif %}
-                <a href="{{ url_for('.post', id=post.id) }}">
+                <!-- <a href="{{ url_for('.post', id=post.id) }}">
                     <span class="label label-default">查看</span>
-                </a>
+                </a> -->
                 <a href="{{ url_for('.post', id=post.id) }}#comments">
                     <span class="label label-primary">{{ post.comments.count() }} 评论</span>
                 </a>
