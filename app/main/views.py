@@ -413,7 +413,7 @@ def message_delete(id):
 
 @main.route('/firstpage', methods=['GET', 'POST'])
 def firstpage():
-    return render_template('new_index.html',current_time=datetime.utcnow())
+    return render_template('aboutme.html',current_time=datetime.utcnow())
 
 
 

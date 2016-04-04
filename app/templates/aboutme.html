@@ -74,15 +74,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
             <span class="sr-only">Toggle navigation</span>
           </a>
           <!-- Navbar Right Menu -->
-          <div class="navbar-header">            
-            <ul class="nav navbar-nav">
-            <li><a href="{{ url_for('main.firstpage') }}">首页</a></li>
-            </ul>          
+          <div class="navbar-header">         
             <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('main.index') }}">博客主页</a></li>
-                {% if current_user.is_authenticated %}
-                <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a></li>
-                {% endif %}
             </ul>
           </div>
           <div class="navbar-custom-menu">
@@ -278,20 +272,22 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Content Header (Page header) -->
         <section class="content-header">
           <h1>
-            Page Header
-            <small>Optional description</small>
+            关于我
+            <small>-自学python的小白</small>
           </h1>
-          <ol class="breadcrumb">
+<!--           <ol class="breadcrumb">
             <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
             <li class="active">Here</li>
-          </ol>
+          </ol>  -->         
         </section>
-
         <!-- Main content -->
         <section class="content">
-
-          <!-- Your Page Content Here -->
-
+        <a href="https://github.com/ifwenvlook">Github</a>&nbsp;&nbsp;
+        <a href="http://weibo.com/wenvlook">微博</a>
+        <small>---------------爱python,<a href="https://www.zhihu.com/people/wen-liu-zhou">爱知乎</a>   </small>
+        <p>
+        从前有座山，山上有座庙。<br>云白松青泉水澄，方丈持经童儿笑。<br>摩诃般若妙。<br><br>山中无日月，佛门无白皂。<br>岂闻天下俱兴兵，为得人前身后名，血流漂杵不留行。<br>佛前香零丁。<br><br>天下苍生苦，眼下清泪咸，忽有一日到山前。<br>北坡军威盛，东村号炮鸣。<br>不尽杀戮与血腥。<br>童儿直发抖，方丈只念经。<br>我佛慈悲若有情，但求战事顷刻停，阿弥陀佛念万遍，已见长庚星。<br>喊声才宁息。<br><br>月明星稀三更天，山门之外人马疲，血衣将军滚下马，马头轻顶撞柴扉。<br>方丈忙惊起，披衣开门扉，虽恐血光脏我佛，不忍将军命西归。<br>两日将军醒，五日将军归，七日庙宇人马围。<br>一问曰不知，二问曰不明，六名僧众皆圆寂。<br>佛倒庙塌去。<br><br>日落月升，沧海桑田。<br>天子巡游至山前。<br>文官赞山美，武将夸水甜。<br>丞相铺纸画山景，圣上亲题辞。<br>辞曰：<br>从前有座山，山上有座庙……
+        </p>
         </section><!-- /.content -->
       </div><!-- /.content-wrapper -->
 
