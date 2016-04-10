@@ -21,7 +21,9 @@
         {% endif %}
         {% if user.about_me %}<p>{{ user.about_me }}</p>{% endif %}
         <p>注册于：{{ moment(user.member_since).format('LLL') }}. 上次登录：{{ moment(user.last_seen).fromNow() }}.</p>
-        <p>{{ user.posts.count() }} 篇博客. {{ user.comments.count() }} 条<a href="{{ url_for('.mycomments')}}">评论.</a></p>
+        <p>
+        {{ user.posts.count() }} 篇博客. {{ user.comments.count() }} 条<a href="{{ url_for('.usercomments',username=user.username)}}">评论.</a>
+        </p>
 
         <p>
             {% if current_user.can(Permission.FOLLOW) and user != current_user %}

@@ -326,26 +326,27 @@ def shownotice_confirmed(id):
 
 
 
-@main.route('/mycomments')
+@main.route('/usercomments/<username>')
 @login_required
 @permission_required(Permission.COMMENT)
-def mycomments():
+def usercomments(username):
+    user=User.query.filter_by(username=username).first()
     page = request.args.get('page', 1, type=int)
     pagination = Comment.query.order_by(Comment.timestamp.desc()).paginate(
         page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
         error_out=False)
     comments = pagination.items
-    return render_template('mycomments.html', comments=comments,
+    return render_template('usercomments.html', comments=comments,user=user,
                            pagination=pagination, page=page,current_time=datetime.utcnow() )
 
-@main.route('/mycomments/delete/<int:id>')
+@main.route('/usercomments/delete/<int:id>')
 @login_required
 @permission_required(Permission.COMMENT)
-def mycomments_delete(id):
+def usercomments_delete(id):
     comment = Comment.query.get_or_404(id)
     db.session.delete(comment)
     flash("评论已删除")
-    return redirect(url_for('.mycomments',
+    return redirect(url_for('.usercomments',
                             page=request.args.get('page', 1, type=int)))
 
 
