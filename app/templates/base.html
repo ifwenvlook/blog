@@ -266,12 +266,20 @@ type="image/x-icon">
 
 <div class="container"> <!-- 定义博客列表格式 -->
 {% block content %}
+{% for message in get_flashed_messages() %}    
+  <div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ message }}
+  </div>
+ 
+{% endfor %}
   
 
 {% block page_content %} <!-- post页面等等 -->
 
 {% endblock %} <!-- end page_content -->
 </div><!-- 定义博客列表格式结束 -->
+
 
 <footer class="container"> <!-- 页脚 -->
         <!-- To the right -->
