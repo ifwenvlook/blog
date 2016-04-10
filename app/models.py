@@ -134,16 +134,12 @@ class User(UserMixin, db.Model):
 
 #计算被评论数
 
-    # def commenteds(self): 
-            
-    #     maxi=self.posts.count()
-    #     total=0
-    #     for i in range(0,maxi):            
-    #         maxnum=self.posts[i].comments.count()
-    #         for num in range(0,maxnum):
-    #             if not self.posts[i].comments[num].confirmed:                    
-    #                 total=total+1                   
-    #     return total
+    def unreadcommenteds(self): 
+        total=0
+        for comment in self.commented: 
+            if not comment.confirmed:                    
+                total=total+1                   
+        return total
 
     def lastcomment(self):
         return self.commented[-1]
