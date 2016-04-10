@@ -103,7 +103,11 @@ class User(UserMixin, db.Model):
                                 backref=db.backref('followed', lazy='joined'),
                                 lazy='dynamic',
                                 cascade='all, delete-orphan')
-    comments = db.relationship('Comment', backref='author', lazy='dynamic')
+    commented = db.relationship('Comment',backref='sendto', lazy='dynamic', primaryjoin='Comment.sendto_id==User.id')
+
+    # commenters = db.relationship('Comment',backref='author', lazy='dynamic',primaryjoin='Comment.author_id==User.id')
+
+    comments = db.relationship('Comment', backref='author', lazy='dynamic',primaryjoin='Comment.author_id==User.id')
 
     messages = db.relationship('Message', backref='author', lazy='dynamic',primaryjoin='Message.author_id==User.id')
 
@@ -130,20 +134,21 @@ class User(UserMixin, db.Model):
 
 #计算被评论数
 
-    def commenteds(self): 
-        maxi=self.posts.count()
-        total=0
-        for i in range(0,maxi):            
-            maxnum=self.posts[i].comments.count()
-            for num in range(0,maxnum):
-                if not self.posts[i].comments[num].confirmed:                    
-                    total=total+1                   
-        return total
+    # def commenteds(self): 
+            
+    #     maxi=self.posts.count()
+    #     total=0
+    #     for i in range(0,maxi):            
+    #         maxnum=self.posts[i].comments.count()
+    #         for num in range(0,maxnum):
+    #             if not self.posts[i].comments[num].confirmed:                    
+    #                 total=total+1                   
+    #     return total
 
     def lastcomment(self):
-        return self.posts[-1].comments[-1]
+        return self.commented[-1]
     def lastcommentform(self):
-        return self.posts[-1].comments[-1].author
+        return self.commented[-1].author
 
 
 
@@ -411,6 +416,7 @@ class Comment(db.Model):
     body_html = db.Column(db.Text)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     disabled = db.Column(db.Boolean)
+    sendto_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     confirmed = db.Column(db.Boolean,default=False)
