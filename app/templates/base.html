@@ -52,24 +52,20 @@ type="image/x-icon">
             <nav class="navbar navbar-static-top" role="navigation">
                   <div class="navbar-header">            
                     <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('main.firstpage') }}">关于</a></li>
-                    </ul>          
-                    <ul class="nav navbar-nav">
-                        <li><a href="{{ url_for('main.index') }}">博客主页</a></li>
+                    <li><a href="{{ url_for('main.firstpage') }}">关于</a>                        
+                        <a href="{{ url_for('main.index') }}">博客主页</a>
                         {% if current_user.is_authenticated %}
-                        <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a></li>
+                        <a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a>
                         {% endif %}
-                    </ul>
-                        <ul class="nav navbar-nav">
                         {% if current_user.can(Permission.MODERATE_COMMENTS) %}
-                        <li><a href="{{ url_for('main.moderate') }}">管理评论</a></li>
+                        <a href="{{ url_for('main.moderate') }}">管理评论</a>
                         {% endif %}
 
                         {% if not current_user.is_authenticated %} 
-                        <li><a href="{{ url_for('auth.register') }}">注册</a> </li>
-                        <li><a href="{{ url_for('auth.login') }}">登录</a> </li>
+                        <a href="{{ url_for('auth.register') }}">注册</a> 
+                        <a href="{{ url_for('auth.login') }}">登录</a> 
                         {% endif %}
-
+                        </li>
                     </ul>
 
                   </div>
