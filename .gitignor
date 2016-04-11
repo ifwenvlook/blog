@@ -1,0 +1,3 @@
+*.pyc
+*.exe
+*__pycache__*
