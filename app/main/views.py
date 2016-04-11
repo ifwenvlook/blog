@@ -35,18 +35,10 @@ def server_shutdown():
 
 
 @main.route('/', methods=['GET', 'POST'])
-def index():
-    form = PostForm()
+def index():    
     user = User() 
-    message = Message()
-    
-    if current_user.can(Permission.WRITE_ARTICLES) and \
-            form.validate_on_submit():
-        post = Post(body=form.body.data,head=form.head.data,
-                    author=current_user._get_current_object())                   #内容、标题、作者
-        db.session.add(post)
-        flash("博客已发布")
-        return redirect(url_for('.index'))
+    message = Message()   
+
     page = request.args.get('page', 1, type=int)
     show_followed = False    
     if current_user.is_authenticated:
@@ -60,8 +52,22 @@ def index():
         error_out=False)
     posts = pagination.items[:] #分页显示
 
-    return render_template('index.html', form=form, posts=posts,user=current_user,message=message,
+    return render_template('index.html',  posts=posts,user=current_user,message=message,
                            show_followed=show_followed, pagination=pagination,current_time=datetime.utcnow())
+
+@main.route('/writepost', methods=['GET', 'POST'])
+@login_required
+def writepost():
+    # user=User.query.filter_by(username=username).frist()
+    form = PostForm()
+    if current_user.can(Permission.WRITE_ARTICLES) and \
+            form.validate_on_submit():
+        post = Post(body=form.body.data,head=form.head.data,
+                    author=current_user._get_current_object())                   #内容、标题、作者
+        db.session.add(post)
+        flash("博客已发布")
+        return redirect(url_for('.index'))
+    return render_template('writepost.html',current_time=datetime.utcnow(),form=form)
 
 
 @main.route('/user/<username>')
@@ -411,8 +417,6 @@ def message_delete(id):
     flash('私信删除成功')
     return redirect(url_for('.showmessage',
                             page=request.args.get('page', 1, type=int)))
-
-
 
 
 @main.route('/firstpage', methods=['GET', 'POST'])
