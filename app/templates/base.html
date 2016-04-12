@@ -247,13 +247,25 @@ type="image/x-icon">
                             </div>
                           </li>
                         </ul>
-                      </li>   
+                      </li>  
+
                       <li>
-                      <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                      </li>          
+                  <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                  </li> 
+         
                     </ul>
+
                   </div>
-                  {% endif %}
+                  {% else %}
+                  <div class="navbar-custom-menu">
+                    <ul class="nav navbar-nav">
+                    <li>
+                    <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+                    </li>
+                  </div> 
+
+                  {% endif %} 
+                  
         </nav>                       
 </header>
 {% endblock %} 
@@ -328,15 +340,7 @@ type="image/x-icon">
   {% endblock %} <!-- end page_content -->
   </section>
 
-<footer class="container"> <!-- 页脚 -->
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-          作者:<a href="mailto:ifwenvlook@gmail.com">ifwenvlook@gmail.com</a>
-        </div>
-        <!-- Default to the left -->
-        <!-- <strong>Copyright &copy; 2015 <a href="#">Company</a>.</strong> All rights reserved. -->
-        <strong>有志者事竟成</strong> All rights reserved.
-</footer>
+
 
 <aside class="control-sidebar control-sidebar-dark">
         <!-- Create the tabs -->
@@ -402,6 +406,16 @@ type="image/x-icon">
 
 
 </div>
+
+
+    <footer class="main-footer">
+        <!-- To the right -->
+        <div class="pull-right hidden-xs">
+          Email:<a href="mailto:ifwenvlook@163.com">ifwenvlook@163.com</a>
+        </div>
+        <!-- Default to the left -->
+        <strong>Code@<a href="#"><a href="https://github.com/ifwenvlook/blog">Github</a></a>.</strong> Power by Flask.
+    </footer>
 </div>
 {% endblock %} <!-- end content -->
 

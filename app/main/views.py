@@ -6,7 +6,7 @@ from flask.ext.sqlalchemy import get_debug_queries
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SendmessageForm
 from .. import db
-from ..models import Permission, Role, User, Post, Comment,Message
+from ..models import Permission, Role, User, Post, Comment,Message,Category
 from ..decorators import admin_required, permission_required
 from datetime import datetime
 
@@ -57,15 +57,11 @@ def index():
 
 @main.route('/writepost', methods=['GET', 'POST'])
 @login_required
-def writepost():
-    # user=User.query.filter_by(username=username).frist()
+def writepost():    
     form = PostForm()
-    # form1=form.head
-    # form2=form.category
-    # form3=form.body
     if current_user.can(Permission.WRITE_ARTICLES) and \
             form.validate_on_submit():
-        post = Post(body=form.body.data,head=form.head.data,category=form.category.data,
+        post = Post(body=form.body.data,head=form.head.data,category=form.category,
                     author=current_user._get_current_object())                   #内容、标题、作者、类别
         db.session.add(post)
         flash("博客已发布")

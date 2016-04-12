@@ -20,7 +20,6 @@ class Permission:
     MODERATE_COMMENTS = 0x08
     ADMINISTER = 0x80
 
-
 class Role(db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer, primary_key=True)
@@ -346,6 +345,27 @@ def load_user(user_id):
     return User.query.get(int(user_id))
 
 
+
+class Category(db.Model):
+    __tablename__ = 'categorys'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(64), unique=True)
+    posts = db.relationship('Post', backref='category', lazy='dynamic')
+
+    @staticmethod
+    def insert_categorys():
+        categorylist = ["python","web后端","git/centos/ubuntu","c/c++","数据库","前端","杂记"]
+        for category in  categorylist:
+            postcategory=Category.query.filter_by(name=category).first()
+            if postcategory is None:
+                postcategory=Category(name=category)
+                db.session.add(postcategory)
+        db.session.commit()
+    def __repr__(self):
+        return '<Category %r>' % self.name
+
+
+
 class Post(db.Model):
     __tablename__ = 'posts'
     id = db.Column(db.Integer, primary_key=True)
@@ -355,7 +375,11 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
-    category = db.Column(db.String(15))
+    category_id = db.Column(db.Integer, db.ForeignKey('categorys.id'))
+
+
+
+
 
     @staticmethod
     def generate_fake(count=100):
@@ -364,11 +388,13 @@ class Post(db.Model):
 
         seed()
         user_count = User.query.count()
+        category_count=Category.query.count()
         for i in range(count):
             u = User.query.offset(randint(0, user_count - 1)).first()
+            ca = Category.query.offset(randint(0, category_count - 1)).first()
             p = Post(body=forgery_py.lorem_ipsum.sentences(randint(1, 3)),
                      timestamp=forgery_py.date.date(True),
-                     author=u)
+                     author=u,category=ca)
             db.session.add(p)
             db.session.commit()
 
