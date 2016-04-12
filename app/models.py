@@ -355,6 +355,7 @@ class Post(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.now)
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
+    category = db.Column(db.String(15))
 
     @staticmethod
     def generate_fake(count=100):

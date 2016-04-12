@@ -57,7 +57,8 @@ class EditProfileAdminForm(Form):
 
 
 class PostForm(Form):    
-    head = StringField('标题', validators=[Required(), Length(1, 30) ])
+    head = StringField('标题', validators=[Required(), Length(1, 30)])
+    category = StringField("分类",validators=[Required(), Length(1, 15)])
     body = PageDownField("博客内容", validators=[Required()])    
     submit = SubmitField('发布')
 

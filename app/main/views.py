@@ -60,14 +60,18 @@ def index():
 def writepost():
     # user=User.query.filter_by(username=username).frist()
     form = PostForm()
+    # form1=form.head
+    # form2=form.category
+    # form3=form.body
     if current_user.can(Permission.WRITE_ARTICLES) and \
             form.validate_on_submit():
-        post = Post(body=form.body.data,head=form.head.data,
-                    author=current_user._get_current_object())                   #内容、标题、作者
+        post = Post(body=form.body.data,head=form.head.data,category=form.category.data,
+                    author=current_user._get_current_object())                   #内容、标题、作者、类别
         db.session.add(post)
         flash("博客已发布")
         return redirect(url_for('.index'))
     return render_template('writepost.html',current_time=datetime.utcnow(),form=form)
+        # form1=form1,form2=form2,form3=form3)
 
 
 @main.route('/user/<username>')
@@ -131,9 +135,8 @@ def post(id):
     post = Post.query.get_or_404(id)
     form = CommentForm()
     if form.validate_on_submit():
-        comment = Comment(body=form.body.data,
-                          post=post,sendto=post.author,
-                          author=current_user._get_current_object())
+        comment = Comment(body=form.body.data,post=post,sendto=post.author,
+            author=current_user._get_current_object())
         db.session.add(comment)
         flash('你的评论已提交.')
         return redirect(url_for('.post', id=post.id, page=-1))
