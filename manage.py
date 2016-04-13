@@ -30,6 +30,8 @@ manager.add_command("shell", Shell(make_context=make_shell_context))
 manager.add_command('db', MigrateCommand)
 
 
+
+
 @manager.command
 def test(coverage=False):
     """Run the unit tests."""
@@ -59,6 +61,31 @@ def profile(length=25, profile_dir=None):
     app.wsgi_app = ProfilerMiddleware(app.wsgi_app, restrictions=[length],
                                       profile_dir=profile_dir)
     app.run()
+
+
+
+@manager.command
+def datainit():
+    from app.models import Role,User,Post,Category
+    print ("Category init")
+    Category.insert_categorys()    
+    print ("Role init")
+    Role.insert_roles()    
+    print ("User and Post generate")
+    User.generate_fake(100)
+    Post.generate_fake(100)    
+    wen=User.query.filter_by(username='wen').first()
+    if not wen:
+        print ("make wen in admin")
+        wen=User(username='wen',email='2535199139@qq.com',password='meian',confirmed=True)
+        wen.role=Role.query.filter_by(permissions=0xff).first()
+        db.session.add(wen)
+        db.session.commit()        
+    else :
+        print ("User(wen) already in data")
+
+    
+    print ("all_data readly now")
 
 
 @manager.command
