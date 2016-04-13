@@ -52,8 +52,7 @@ def index():
         error_out=False)
     posts = pagination.items[:] #分页显示
 
-    return render_template('index.html',  posts=posts,user=current_user,message=message,
-                           show_followed=show_followed, pagination=pagination,current_time=datetime.utcnow())
+    return render_template('index.html',  posts=posts,user=current_user,message=message,show_followed=show_followed, pagination=pagination,current_time=datetime.utcnow())
 
 @main.route('/writepost', methods=['GET', 'POST'])
 @login_required
