@@ -60,8 +60,9 @@ def writepost():
     form = PostForm()
     if current_user.can(Permission.WRITE_ARTICLES) and \
             form.validate_on_submit():
-        post = Post(body=form.body.data,head=form.head.data,category=form.category,
-                    author=current_user._get_current_object())                   #内容、标题、作者、类别
+        post = Post(body=form.body.data,head=form.head.data,category=Category.query.get(form.category.data),
+                    author=current_user._get_current_object())                  
+                     #内容、标题、作者、类别
         db.session.add(post)
         flash("博客已发布")
         return redirect(url_for('.index'))

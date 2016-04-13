@@ -37,7 +37,7 @@ class PostForm(Form):
         super(PostForm,self).__init__(*args, **kwargs)
         self.category.choices = [(category.id, category.name)
                              for category in Category.query.order_by(Category.name).all()]
-        self.category = category
+
 
 class EditProfileAdminForm(Form):
     email = StringField('电子邮箱(Email)', validators=[Required(), Length(1, 64),
