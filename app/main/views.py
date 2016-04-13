@@ -81,6 +81,17 @@ def user(username):
     return render_template('user.html', user=user, posts=posts,
                            pagination=pagination,current_time=datetime.utcnow() )
 
+#分类路由
+@main.route('/category/<name>')
+def category(name):
+    category = Category.query.filter_by(name=name).first_or_404()
+    page = request.args.get('page', 1, type=int)
+    pagination = category.posts.order_by(Post.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],
+        error_out=False)
+    posts = pagination.items
+    return render_template('category.html',category=category,posts=posts,pagination=pagination,current_time=current_time)
+
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
 @login_required
@@ -124,6 +135,7 @@ def edit_profile_admin(id):
     form.location.data = user.location
     form.about_me.data = user.about_me
     return render_template('edit_profile.html', form=form, user=user)
+
 
 
 @main.route('/post/<int:id>', methods=['GET', 'POST'])

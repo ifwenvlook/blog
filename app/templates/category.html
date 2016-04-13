@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Fly - {{ category.name }}{% endblock %}
+
+{% block page_content %}
+<h3>{{ category.name }}类的博客</h3>
+{% include '_posts.html' %}
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.category', name=categoty.name) }}
+</div>
+{% endif %}
+{% endblock %}

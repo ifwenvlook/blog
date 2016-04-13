@@ -7,7 +7,8 @@
             </a>
         </div>
         <div class="post-content">
-            <div class="post-date">发布于:{{ moment(post.timestamp).fromNow() }}</div>
+            <div class="post-date">发布于:{{ moment(post.timestamp).fromNow() }} <br>
+            From <a href="#">-{{post.category.name}}-</a></div>
             <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
             <div class="post-head">
             分享了文章：<a href="{{ url_for('.post', id=post.id) }}">{{ post.head }} </a>

@@ -1,3 +1,4 @@
+#encoding:utf-8
 #!/usr/bin/env python
 import os
 COV = None
@@ -63,13 +64,14 @@ def profile(length=25, profile_dir=None):
     app.run()
 
 
-
+#测试数据库初始化
 @manager.command
 def datainit():
     from app.models import Role,User,Post,Category
     print ("Category init")
     Category.insert_categorys()    
     print ("Role init")
+    User.add_self_follows()
     Role.insert_roles()    
     print ("User and Post generate")
     User.generate_fake(100)
@@ -82,9 +84,7 @@ def datainit():
         db.session.add(wen)
         db.session.commit()        
     else :
-        print ("User(wen) already in data")
-
-    
+        print ("User(wen) already in data")    
     print ("all_data readly now")
 
 
