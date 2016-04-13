@@ -407,17 +407,15 @@ type="image/x-icon">
 
 </div>
 
-
-    <footer class="main-footer">
-        <!-- To the right -->
-        <div class="pull-right hidden-xs">
-          Email:<a href="mailto:ifwenvlook@163.com">ifwenvlook@163.com</a>
-        </div>
-        <!-- Default to the left -->
-        <strong>From@<a href="#"><a href="https://github.com/ifwenvlook/blog">Github</a></a>.</strong> Power by Flask.
-    </footer>
+<footer class="main-footer">
+<div class="pull-right hidden-xs">
+Email:<a href="mailto:ifwenvlook@163.com">ifwenvlook@163.com</a>
 </div>
-{% endblock %} <!-- end content -->
+<strong>From@<a href="#"><a href="https://github.com/ifwenvlook/blog">Github</a></a>.</strong> Power by Flask.
+</footer>
+
+</div>
+{% endblock %}
 
 
 {% block scripts %}
@@ -428,7 +426,7 @@ type="image/x-icon">
 <script src="{{url_for('static',filename='jquery.js')}}"></script> 
 <script src="{{url_for('static',filename='bootstrap.min.js')}}"></script>  
 <script src="{{url_for('static',filename='app.min.js')}}"></script>    
-{% endblock %} <!-- endscripts -->
+{% endblock %} 
 
 
 {% endblock %}
