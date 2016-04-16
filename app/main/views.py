@@ -37,7 +37,8 @@ def server_shutdown():
 @main.route('/', methods=['GET', 'POST'])
 def index():    
     user = User() 
-    message = Message()   
+    message = Message() 
+    category = Category()  
 
     page = request.args.get('page', 1, type=int)
     show_followed = False    
@@ -52,7 +53,8 @@ def index():
         error_out=False)
     posts = pagination.items[:] #分页显示
 
-    return render_template('index.html',  posts=posts,user=current_user,message=message,show_followed=show_followed, pagination=pagination,current_time=datetime.utcnow())
+    return render_template('index.html',  posts=posts,user=current_user,message=message,category=category,
+                            show_followed=show_followed, pagination=pagination,current_time=datetime.utcnow())
 
 @main.route('/writepost', methods=['GET', 'POST'])
 @login_required
@@ -81,16 +83,16 @@ def user(username):
     return render_template('user.html', user=user, posts=posts,
                            pagination=pagination,current_time=datetime.utcnow() )
 
-# #分类路由
-# @main.route('/category/<name>')
-# def category(name):
-#     category = Category.query.filter_by(name=name).first_or_404()
-#     page = request.args.get('page', 1, type=int)
-#     pagination = category.posts.order_by(Post.timestamp.desc()).paginate(
-#         page, per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],
-#         error_out=False)
-#     posts = pagination.items
-#     return render_template('category.html',category=category,posts=posts,pagination=pagination,current_time=current_time)
+#分类路由
+@main.route('/category/<int:id>')
+def category(id):
+    category = Category.query.get_or_404(id)
+    page = request.args.get('page', 1, type=int)
+    pagination = category.posts.order_by(Post.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],
+        error_out=False)
+    posts = pagination.items
+    return render_template('category.html',category=category,posts=posts,pagination=pagination,current_time=datetime.utcnow())
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])

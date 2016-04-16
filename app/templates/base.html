@@ -299,13 +299,13 @@ type="image/x-icon">
             <li class="treeview">                      
                 <a href="#"><i class="fa fa-link"></i> <span>全部分类</span> <i class="fa fa-angle-left pull-right"></i></a>
                 <ul class="treeview-menu" style="display: block;">
-                  <li><a href="#">python</a></li>                  
-                  <li><a href="#">web后端</a></li>
-                  <li><a href="#">git/centos/ubuntu</a></li>
-                  <li><a href="#">c/c++</a></li>
-                  <li><a href="#">数据库</a></li>
-                  <li><a href="#">前端</a></li>
-                  <li><a href="#">杂记</a></li>
+                  <li><a href= "{{ url_for('main.category', id=1) }}">python</a></li>                  
+                  <li><a href="{{ url_for('main.category', id=2) }}">web后端</a></li>
+                  <li><a href= "{{ url_for('main.category', id=3) }}">git/centos/ubuntu</a></li>
+                  <li><a href= "{{ url_for('main.category', id=4) }}">c/c++</a></li>
+                  <li><a href= "{{ url_for('main.category',id=5) }}">数据库</a></li>
+                  <li><a href= "{{ url_for('main.category', id=6) }}">前端</a></li>
+                  <li><a href= "{{ url_for('main.category',id=7) }}">杂记</a></li>
                 </ul>
             </li>
 
