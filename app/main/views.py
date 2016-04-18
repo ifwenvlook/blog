@@ -145,25 +145,26 @@ def post(id):
     form = CommentForm() 
 
     resp = make_response(redirect(url_for('.post',id=post.id)))
-    resp.set_cookie('visits', '0', max_age=60)
+    resp.set_cookie('visits', '0', max_age=60*60)
     reset_last_visit_time = False    
     visits=0 
     if 'last_visit' in request.cookies:
         last_visit_time = datetime.fromtimestamp(int(request.cookies.get('last_visit')))
-        if ( datetime.now() - last_visit_time ).hours> 5:
+        if 1<( datetime.now() - last_visit_time ).seconds< 60*60-1:
             visits = visits + 1
             post.visits=post.visits+visits
             db.session.add(post)
             db.session.commit()
             print ("visits+1")
+        else:
             reset_last_visit_time = True
             visits = int(request.cookies.get('visits', visits))#访问统计
     else:
         reset_last_visit_time = True
 
     if reset_last_visit_time:        
-        resp.set_cookie('last_visit', str(int(round(float(datetime.now().timestamp())))),max_age=60)
-        resp.set_cookie('visits', '0',max_age=60)
+        resp.set_cookie('last_visit', str(int(round(float(datetime.now().timestamp())))),max_age=60*60)
+        resp.set_cookie('visits', '0',max_age=60*60)
         return resp
 
     visits = int(request.cookies.get('visits', visits))#访问统计
