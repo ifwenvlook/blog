@@ -1,6 +1,7 @@
 Blog
 ----
 Preview: `http://120.76.133.73/`
+
 A simple blog system based on Flask
 
 
