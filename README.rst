@@ -16,7 +16,6 @@ Prerequests:
 3. Reference: `http://www.ituring.com.cn/book/1449`
 
 Setup flask development:
-
 	$ git clone `https://github.com/ifwenvlook/blog.git`
 
     $ cd /blog
@@ -37,7 +36,7 @@ Create testdata and upgrade to mysql:
     $ python manage db upgrade
 
     $ python manage runserver
-    
+
 
 
 Visit: `http://127.0.0.1:5000/`
