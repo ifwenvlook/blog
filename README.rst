@@ -13,14 +13,14 @@ Prerequests:
 
 1. python2.7/python3.4
 2. mysql5.5+
-3. Reference: `http://www.ituring.com.cn/book/1449`
+3. Reference: Flask Web开发：基于Python的Web应用开发实战: `http://www.ituring.com.cn/book/1449`
 
 Setup flask development:
 	$ git clone `https://github.com/ifwenvlook/blog.git`
 
-    $ cd /blog
+	$ cd /blog
 
-    $ pip install -r requirements/dev.txt  
+	$ pip install -r requirements/dev.txt  
 
 
 
