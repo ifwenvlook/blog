@@ -1,5 +1,6 @@
 Blog
 preview: `http://120.76.133.73/`
+
 =====
 
 A simple blog system based on Flask
@@ -15,18 +16,28 @@ Prerequests:
 3. Reference: `http://www.ituring.com.cn/book/1449`
 
 Setup flask development:
+
 	$ git clone `https://github.com/ifwenvlook/blog.git`
+
     $ cd /blog
+
     $ pip install -r requirements/dev.txt  
 
 
+
 Quick Start
-Create testdata and upgrade to mysql:    
+Create testdata and upgrade to mysql: 
+
     $ python manage db init
+
     $ python manage db migrate
+
     $ python manage datainit
+
     $ python manage db upgrade
+
     $ python manage runserver
+    
 
 
 Visit: `http://127.0.0.1:5000/`
