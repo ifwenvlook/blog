@@ -8,7 +8,7 @@
         </div>
         <div class="post-content">
             <div class="post-date">{{ post.timestamp }}</div>
-            <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
+            <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a>&nbsp;&nbsp;&nbsp;点击量：{{ post.visits }}</div>
             <div class="post-head">
             {{ post.head }} 
             </div>

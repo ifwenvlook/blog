@@ -26,15 +26,15 @@ Setup flask development:
 Quick Start
 -----------
 Create testdata and upgrade to mysql: 
-	$ python manage db init
+	$ python manage.py db init
 
-	$ python manage db migrate
+	$ python manage.py db migrate
 
-	$ python manage datainit
+	$ python manage.py datainit
 
-	$ python manage db upgrade
+	$ python manage.py db upgrade
 
-	$ python manage runserver
+	$ python manage.py runserver
 
 
 

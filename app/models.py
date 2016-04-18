@@ -62,6 +62,7 @@ class Follow(db.Model):
                             primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
+#私信
 class Message(db.Model):
     __tablename__ = 'messages'
     id = db.Column(db.Integer, primary_key=True)
@@ -70,12 +71,8 @@ class Message(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     sendto_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     confirmed = db.Column(db.Boolean,default=False)
-
-
-
-
     def __repr__(self):
-        return '<Message %r  @%r sent to %r>' % (self.body,self.author.username,self.sendto.username)
+        return '<Message %r  from %r sent to %r>' % (self.body,self.author.username,self.sendto.username)
 
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
@@ -376,6 +373,7 @@ class Post(db.Model):
     author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
     category_id = db.Column(db.Integer, db.ForeignKey('categorys.id'))
+    visits = db.Column(db.Integer,nullable=False,default=int(10))
 
 
 

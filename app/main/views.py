@@ -1,6 +1,6 @@
 #encoding:utf-8
 from flask import render_template, redirect, url_for, abort, flash, request,\
-    current_app, make_response
+    current_app, make_response, session
 from flask.ext.login import login_required, current_user
 from flask.ext.sqlalchemy import get_debug_queries
 from . import main
@@ -38,8 +38,7 @@ def server_shutdown():
 def index():    
     user = User() 
     message = Message() 
-    category = Category()  
-
+    category = Category()   
     page = request.args.get('page', 1, type=int)
     show_followed = False    
     if current_user.is_authenticated:
@@ -143,7 +142,37 @@ def edit_profile_admin(id):
 @main.route('/post/<int:id>', methods=['GET', 'POST'])
 def post(id):
     post = Post.query.get_or_404(id)
-    form = CommentForm()
+    form = CommentForm() 
+
+    resp = make_response(redirect(url_for('.post',id=post.id)))
+    resp.set_cookie('visits', '0', max_age=60)
+    reset_last_visit_time = False    
+    visits=0 
+    if 'last_visit' in request.cookies:
+        last_visit_time = datetime.fromtimestamp(int(request.cookies.get('last_visit')))
+        if ( datetime.now() - last_visit_time ).hours> 5:
+            visits = visits + 1
+            post.visits=post.visits+visits
+            db.session.add(post)
+            db.session.commit()
+            print ("visits+1")
+            reset_last_visit_time = True
+            visits = int(request.cookies.get('visits', visits))#访问统计
+    else:
+        reset_last_visit_time = True
+
+    if reset_last_visit_time:        
+        resp.set_cookie('last_visit', str(int(round(float(datetime.now().timestamp())))),max_age=60)
+        resp.set_cookie('visits', '0',max_age=60)
+        return resp
+
+    visits = int(request.cookies.get('visits', visits))#访问统计
+    post.visits=post.visits+visits
+    db.session.add(post)
+    db.session.commit()
+
+
+
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,post=post,sendto=post.author,
             author=current_user._get_current_object())
