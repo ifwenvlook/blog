@@ -8,6 +8,7 @@ Development
 -----------
 
 Prerequests:
+
 1. python2.7/python3.4
 2. mysql5.5+
 3. Reference: Flask Web开发-基于Python的Web应用开发实战 `http://www.ituring.com.cn/book/1449`
