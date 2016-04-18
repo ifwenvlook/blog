@@ -1,7 +1,8 @@
 Blog
+----
 preview: `http://120.76.133.73/`
 
-=====
+
 
 A simple blog system based on Flask
 
@@ -25,17 +26,18 @@ Setup flask development:
 
 
 Quick Start
+-----------
 Create testdata and upgrade to mysql: 
 
-    $ python manage db init
+	$ python manage db init
 
-    $ python manage db migrate
+	$ python manage db migrate
 
-    $ python manage datainit
+	$ python manage datainit
 
-    $ python manage db upgrade
+	$ python manage db upgrade
 
-    $ python manage runserver
+	$ python manage runserver
 
 
 
