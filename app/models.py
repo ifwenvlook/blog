@@ -375,7 +375,15 @@ class Post(db.Model):
     category_id = db.Column(db.Integer, db.ForeignKey('categorys.id'))
     visits = db.Column(db.Integer,nullable=False,default=int(10))
 
+    @staticmethod
+    def hotpost():        
+        posts = Post.query.all()
 
+        def byvisits(p):
+            return p.visits
+
+        posts_byvisits=sorted(posts,key=byvisits,reverse=True)
+        return posts_byvisits[0:10]
 
 
 

@@ -28,7 +28,7 @@ class EditProfileForm(Form):
 
 class PostForm(Form): 
     category = SelectField('文章类别', coerce=int)  
-    head = StringField('标题', validators=[Required(), Length(1, 30)])    
+    head = StringField('标题', validators=[Required(), Length(1, 25)])    
     body = PageDownField("正文", validators=[Required()])    
     submit = SubmitField('发布')
     

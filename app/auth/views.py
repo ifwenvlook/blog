@@ -3,7 +3,7 @@ from flask.ext.login import login_user, logout_user, login_required, \
     current_user
 from . import auth
 from .. import db
-from ..models import User
+from ..models import User,Post
 from ..email import send_email
 from .forms import LoginForm, RegistrationForm, ChangePasswordForm,\
     PasswordResetRequestForm, PasswordResetForm, ChangeEmailForm
@@ -17,14 +17,14 @@ def before_request():
         if not current_user.confirmed \
 		and request.endpoint[:5] != 'auth.' \
                 and request.endpoint != 'static':
-            return render_template('auth/unconfirmed.html')
+            return render_template('auth/unconfirmed.html',hot_post=Post().hotpost())
 
 
 @auth.route('/unconfirmed')
 def unconfirmed():
     if current_user.is_anonymous or current_user.confirmed:
         return redirect(url_for('main.index'))
-    return render_template('auth/unconfirmed.html')
+    return render_template('auth/unconfirmed.html',hot_post=Post().hotpost())
 
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -36,7 +36,7 @@ def login():
             login_user(user, form.remember_me.data)
             return redirect(request.args.get('next') or url_for('main.index'))
         flash('Invalid username or password.')
-    return render_template('auth/login.html', form=form,current_time=datetime.utcnow())
+    return render_template('auth/login.html', form=form,current_time=datetime.utcnow(),hot_post=Post().hotpost())
 
 
 @auth.route('/logout')
@@ -61,7 +61,7 @@ def register():
                    'auth/email/confirm', user=user, token=token)
         flash('A confirmation email has been sent to you by email.')
         return redirect(url_for('auth.login'))
-    return render_template('auth/register.html', form=form,current_time=datetime.utcnow())
+    return render_template('auth/register.html', form=form,current_time=datetime.utcnow(),hot_post=Post().hotpost())
 
 
 @auth.route('/confirm/<token>')
@@ -98,7 +98,7 @@ def change_userset():
             return redirect(url_for('main.index'))
         else:
             flash('Invalid password.')
-    return render_template("auth/change_userset.html", form=form,current_time=datetime.utcnow())
+    return render_template("auth/change_userset.html", form=form,current_time=datetime.utcnow(),hot_post=Post().hotpost())
 
 
 @auth.route('/change_password', methods=['GET', 'POST'])
@@ -113,7 +113,7 @@ def change_password():
             return redirect(url_for('main.index'))
         else:
             flash('Invalid password.')
-    return render_template("auth/change_password.html", form=form,current_time=datetime.utcnow())
+    return render_template("auth/change_password.html", form=form,current_time=datetime.utcnow(),hot_post=Post().hotpost())
 
 
 @auth.route('/reset', methods=['GET', 'POST'])
@@ -132,7 +132,7 @@ def password_reset_request():
         flash('An email with instructions to reset your password has been '
               'sent to you.')
         return redirect(url_for('auth.login'))
-    return render_template('auth/reset_password.html', form=form,current_time=datetime.utcnow())
+    return render_template('auth/reset_password.html', form=form,current_time=datetime.utcnow(),hot_post=Post().hotpost())
 
 
 @auth.route('/reset/<token>', methods=['GET', 'POST'])
@@ -149,7 +149,7 @@ def password_reset(token):
             return redirect(url_for('auth.login'))
         else:
             return redirect(url_for('main.index'))
-    return render_template('auth/reset_password.html', form=form,current_time=datetime.utcnow())
+    return render_template('auth/reset_password.html', form=form,current_time=datetime.utcnow(),hot_post=Post().hotpost())
 
 
 @auth.route('/change-email', methods=['GET', 'POST'])
@@ -168,7 +168,7 @@ def change_email_request():
             return redirect(url_for('main.index'))
         else:
             flash('Invalid email or password.')
-    return render_template("auth/change_email.html", form=form,current_time=datetime.utcnow())
+    return render_template("auth/change_email.html", form=form,current_time=datetime.utcnow(),hot_post=Post().hotpost())
 
 
 @auth.route('/change-email/<token>')

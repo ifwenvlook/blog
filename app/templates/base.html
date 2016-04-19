@@ -310,10 +310,17 @@ type="image/x-icon">
             </li>
 
             <li class="treeview">
-              <a href="#"><i class="fa fa-link"></i> <span>待定</span> <i class="fa fa-angle-left pull-right"></i></a>
+              <a href="#"><i class="fa fa-link"></i> <span>热门文章</span> <i class="fa fa-angle-left pull-right"></i></a>
               <ul class="treeview-menu" style="display: block;">
-                <li><a href="#">文章１</a></li>
-                <li><a href="#">文章２</a></li>
+                <li><a href="{{ url_for('main.post', id=hot_post[0].id) }}">No1. {{hot_post[0].head}}</a></li>
+                <li><a href="{{ url_for('main.post', id=hot_post[1].id) }}">No2. {{hot_post[1].head}}</a></li>
+                <li><a href="{{ url_for('main.post', id=hot_post[2].id) }}">No3. {{hot_post[2].head}}</a></li>
+                <li><a href="{{ url_for('main.post', id=hot_post[3].id) }}">No4. {{hot_post[3].head}}</a></li>
+                <li><a href="{{ url_for('main.post', id=hot_post[4].id) }}">No5. {{hot_post[4].head}}</a></li>
+                <li><a href="{{ url_for('main.post', id=hot_post[5].id) }}">No6. {{hot_post[5].head}}</a></li>
+                <li><a href="{{ url_for('main.post', id=hot_post[6].id) }}">No7. {{hot_post[6].head}}</a></li>
+                <li><a href="{{ url_for('main.post', id=hot_post[7].id) }}">No8. {{hot_post[7].head}}</a></li>
+<!--                 最长26字    -->            
               </ul>
             </li>  
 
