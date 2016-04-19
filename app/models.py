@@ -376,7 +376,7 @@ class Post(db.Model):
     visits = db.Column(db.Integer,nullable=False,default=int(10))
 
     @staticmethod
-    def hotpost():        
+    def hotpost():    #热门文章排序，取前10    
         posts = Post.query.all()
 
         def byvisits(p):
