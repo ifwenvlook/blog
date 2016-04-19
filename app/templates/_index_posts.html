@@ -11,16 +11,24 @@
             From <a href="#">-{{post.category.name}}-</a></div>
             <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
             <div class="post-head">
-            分享了文章：<a href="{{ url_for('.post', id=post.id) }}">{{ post.head }} </a>&nbsp;点击量：{{ post.visits }}
+            分享了文章：<a href="{{ url_for('.post', id=post.id) }}">{{ post.head }} </a>&nbsp;&nbsp;&nbsp;阅读:{{ post.visits }}
             </div>
             <div class="post-body">
                 <a style="text-decoration:none; color:black" href="{{ url_for('.post', id=post.id) }}">
                 {% if post.body_html %}
                     {{ post.head_html | safe }}<br/>
+                    {% if post.body[200] %}
                     {{ post.body_html[0:200] | safe }}....
+                    {% else %}
+                    {{ post.body_html | safe }}
+                    {% endif %}
                 {% else %}
                     {{ post.head }}<br/>
-                    {{ post.body[0:200] }}......                 
+                    {% if post.body[200] %}
+                    {{ post.body }}
+                    {% else %}
+                    {{ post.body[0:200] }}...... 
+                    {% endif %}                
                 {% endif %}
                 </a>
             </div>

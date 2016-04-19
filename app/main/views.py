@@ -143,30 +143,9 @@ def edit_profile_admin(id):
 def post(id):
     post = Post.query.get_or_404(id)
     form = CommentForm() 
-
-    resp = make_response(redirect(url_for('.post',id=post.id)))
-    reset_last_visit_time = False    
-    if 'last_visit' in request.cookies:
-        last_visit_time = datetime.fromtimestamp(int(request.cookies.get('last_visit')))
-        if 0<( datetime.now() - last_visit_time ).seconds< 5:
-            post.visits=post.visits+1
-            db.session.add(post)
-            db.session.commit()
-            print ("visits+1 aggain")
-    else:
-        reset_last_visit_time = True
-
-    if reset_last_visit_time:        
-        resp.set_cookie('last_visit', str(int(round(float(datetime.now().timestamp())))),max_age=60*60)
-        resp.set_cookie('visits', '0',max_age=60*60)
-        post.visits=post.visits+1
-        db.session.add(post)
-        db.session.commit()
-        print ("visits+1")
-        return resp
-
-
-
+    post.visits+=1
+    print ("visits+1")
+    
     if form.validate_on_submit():
         comment = Comment(body=form.body.data,post=post,sendto=post.author,
             author=current_user._get_current_object())
@@ -181,6 +160,27 @@ def post(id):
         page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
         error_out=False)
     comments = pagination.items
+    #cookie统计
+    # resp = make_response(redirect(url_for('.post',id=post.id))) 
+    # reset_last_visit_time = False    
+    # if 'last_visit' in request.cookies:
+    #     last_visit_time = datetime.fromtimestamp(int(request.cookies.get('last_visit')))
+    #     if 0<( datetime.now() - last_visit_time ).seconds< 5:
+    #         post.visits=post.visits+1
+    #         db.session.add(post)
+    #         db.session.commit()
+    #         print ("visits+1 aggain")
+    # else:
+    #     reset_last_visit_time = True
+
+    # if reset_last_visit_time:        
+    #     resp.set_cookie('last_visit', str(int(round(float(datetime.now().timestamp())))),max_age=60*60)
+    #     resp.set_cookie('visits', '0',max_age=60*60)
+    #     post.visits=post.visits+1
+    #     db.session.add(post)
+    #     db.session.commit()
+    #     print ("visits+1")
+    #     return resp
     return render_template('post.html', posts=[post], form=form,
                            comments=comments, pagination=pagination,current_time=datetime.utcnow() )
 
