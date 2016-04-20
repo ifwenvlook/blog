@@ -287,13 +287,17 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
                   </div>
                 </div> -->
-                <form action="#" method="get" class="sidebar-form">
+<!--                 <form action="#" method="get" class="sidebar-form">
                   <div class="input-group">
                     <input type="text" name="q" class="form-control" placeholder="Search...">
                     <span class="input-group-btn">
                       <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
                     </span>
                   </div>
+                </form> -->
+
+                <form style="display: inline;" action="{{url_for('main.search')}}" method="post" name="search">
+                {{g.search_form.hidden_tag()}}{{g.search_form.search(size=20)}}<input type="submit" value="按标题搜索" placeholder="Search...">
                 </form>
 
 

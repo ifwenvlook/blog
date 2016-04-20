@@ -72,3 +72,7 @@ class EditProfileAdminForm(Form):
 class CommentForm(Form):
     body = StringField('输入你的评论', validators=[Required()])
     submit = SubmitField('提交')
+
+
+class SearchForm(Form):
+    search = StringField('search', validators = [Required()])

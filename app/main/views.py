@@ -1,15 +1,21 @@
 #encoding:utf-8
 from flask import render_template, redirect, url_for, abort, flash, request,\
-    current_app, make_response, session
+    current_app, make_response, session,g
 from flask.ext.login import login_required, current_user
 from flask.ext.sqlalchemy import get_debug_queries
 from . import main
-from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SendmessageForm
+from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SendmessageForm,SearchForm
 from .. import db
 from ..models import Permission, Role, User, Post, Comment,Message,Category
 from ..decorators import admin_required, permission_required
 from datetime import datetime
 
+
+
+
+@main.before_app_request
+def before_request():
+    g.search_form = SearchForm()
 
 
 @main.after_app_request
@@ -32,6 +38,18 @@ def server_shutdown():
         abort(500)
     shutdown()
     return 'Shutting down...'
+
+@main.route('/search', methods = ['POST'])
+def search():
+    if not g.search_form.validate_on_submit():
+        return redirect(url_for('.index'))
+    return redirect(url_for('.search_results', query = g.search_form.search.data))
+
+@main.route('/search_results/<query>')
+def search_results(query):
+    posts = Post.query.filter(Post.head.like('%'+query+'%')).all()
+    # query=Post.query.filter(Post.head.like("%文%")).all()
+    return render_template('search_results.html',query = query, posts = posts,hot_post=Post().hotpost(),current_time=datetime.utcnow())
 
 
 @main.route('/', methods=['GET', 'POST'])

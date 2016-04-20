@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+ 
+ {% block title %}Fly - 搜索{% endblock %}
+
+{% block page_content %}
+<h1>"{{query}}"　的搜索结果:</h1>
+
+{% include '_index_posts.html' %}
+
+{% endblock %}
