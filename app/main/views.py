@@ -141,6 +141,7 @@ def edit_profile_admin(id):
 
 @main.route('/post/<int:id>', methods=['GET', 'POST'])
 def post(id):
+    hot_post=Post().hotpost()
     post = Post.query.get_or_404(id)
     form = CommentForm() 
     post.visits+=1
@@ -182,7 +183,7 @@ def post(id):
     #     print ("visits+1")
     #     return resp
     return render_template('post.html', posts=[post], form=form,
-                           comments=comments, pagination=pagination,current_time=datetime.utcnow(),hot_post=Post().hotpost() )
+                           comments=comments, pagination=pagination,current_time=datetime.utcnow(),hot_post=hot_post)
 
 @main.route('/post/delete/<int:id>')
 def post_delete(id):
