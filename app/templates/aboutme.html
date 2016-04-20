@@ -7,22 +7,23 @@ scratch. This page gets rid of all links and provides the needed markup only.
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>AdminLTE 2 | Starter</title>
+    <title>Fly - aboutme</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.5 -->
-    <link rel="stylesheet" href="{{url_for('static',filename='bootstrap.min.css')}}"><!-- static/bootstrap/css/bootstrap.min.css"> -->
+    <link rel="icon" href="{{ url_for('static', filename = 'img/favicon.ico') }}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}"><!-- static/bootstrap/css/bootstrap.min.css"> -->
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <!-- Ionicons -->
     <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{url_for('static',filename='AdminLTE.min.css')}}"> <!-- "static/dist/css/AdminLTE.min.css"> -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/AdminLTE.min.css')}}"> <!-- "static/dist/css/AdminLTE.min.css"> -->
     <!-- AdminLTE Skins. We have chosen the skin-blue for this starter
           page. However, you can choose any other skin. Make sure you
           apply the skin class to the body tag so the changes take effect.
     -->
-    <link rel="stylesheet" href="{{url_for('static',filename='skin-blue.min.css')}}"><!-- "static/dist/css/skins/skin-blue.min.css"> -->
+    <link rel="stylesheet" href="{{url_for('static',filename='css/skin-blue.min.css')}}"><!-- "static/dist/css/skins/skin-blue.min.css"> -->
 
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -61,9 +62,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
         <!-- Logo -->
         <a href="#" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>A</b>LT</span>
+          <span class="logo-mini"><b>F</b>ly</span>
           <!-- logo for regular state and mobile devices -->
-          <span class="logo-lg"><b>Admin</b>LTE</span>
+          <span class="logo-lg"><b>梦开始的地方</b></span>
         </a>
 
         <!-- Header Navbar -->
@@ -425,15 +426,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
     <!-- REQUIRED JS SCRIPTS -->
 
     <!-- jQuery 2.1.4 -->
-    <script src="{{url_for('static',filename='jQuery-2.1.4.min.js')}}"></script> <!-- "static/plugins/jQuery/jQuery-2.1.4.min.js"></script> -->
+    <script src="{{url_for('static',filename='js/jQuery-2.1.4.min.js')}}"></script> 
     <!-- Bootstrap 3.3.5 -->
-    <script src="{{url_for('static',filename='bootstrap.min.js')}}"></script> <!-- "static/bootstrap/js/bootstrap.min.js"></script> -->
+    <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script> 
     <!-- AdminLTE App -->
-    <script src="{{url_for('static',filename='app.min.js')}}"></script><!--  "static/dist/js/app.min.js"></script> -->
-
-    <!-- Optionally, you can add Slimscroll and FastClick plugins.
-         Both of these plugins are recommended to enhance the
-         user experience. Slimscroll is required when using the
-         fixed layout. -->
+    <script src="{{url_for('static',filename='js/app.min.js')}}"></script>
   </body>
 </html>

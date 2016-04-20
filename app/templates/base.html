@@ -3,32 +3,28 @@
 
 
 {% block head %} <!-- headstart -->
-<!-- <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
-<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">  -->
+
 {% block metas %}
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge"> 
 <title>{% block title %}{% endblock %}</title>
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 {% endblock%}
-<link rel="shortcut icon" href="{{ url_for('static', filename = 'favicon.ico') }}"
-type="image/x-icon">
-<link rel="icon" href="{{ url_for('static', filename = 'favicon.ico') }}"
+<link rel="icon" href="{{ url_for('static', filename = 'img/favicon.ico') }}"
 type="image/x-icon">
     
 {% block styles %}
 
-    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
-    <link rel="stylesheet" href="{{url_for('static',filename='bootstrap.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"> <!-- 提供通知小图标 -->
     <!-- Ionicons -->
-    <link rel="stylesheet" href="{{url_for('static',filename='ionicons.min.css')}}"> 
+    <link rel="stylesheet" href="{{url_for('static',filename='css/ionicons.min.css')}}"> 
     <!-- Theme style -->
-    <link rel="stylesheet" href="{{url_for('static',filename='AdminLTE.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/AdminLTE.min.css')}}">
     
-    <link rel="stylesheet" href="{{url_for('static',filename='skin-blue.min.css')}}">
+    <link rel="stylesheet" href="{{url_for('static',filename='css/skin-blue.min.css')}}">
 
 {% endblock %}
 {% endblock %} <!-- headend -->
@@ -41,10 +37,12 @@ type="image/x-icon">
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
   <header class="main-header">
-      <a href="#" class="logo">
-        <span class="logo-mini"><b>A</b>LT</span>
-         <span class="logo-lg"><b>Admin</b>LTE</span>
-      </a>
+        <a href="#" class="logo">
+          <!-- mini logo for sidebar mini 50x50 pixels -->
+          <span class="logo-mini"><b>F</b>ly</span>
+          <!-- logo for regular state and mobile devices -->
+          <span class="logo-lg"><b>梦开始的地方</b></span>
+        </a>
         <nav class="navbar navbar-static-top" role="navigation">
             <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
             <span class="sr-only">Toggle navigation</span>
@@ -293,7 +291,7 @@ type="image/x-icon">
 
 
           <ul class="sidebar-menu">
-            <li class="header">HEADER</li> 
+            <li class="header">推荐</li> 
 
              
             <li class="treeview">                      
@@ -433,9 +431,9 @@ type="image/x-icon">
 {{ moment.include_jquery() }}
 {{ moment.include_moment() }}
 {{ moment.lang("zh-CN") }} 
-<script src="{{url_for('static',filename='jquery.js')}}"></script> 
-<script src="{{url_for('static',filename='bootstrap.min.js')}}"></script>  
-<script src="{{url_for('static',filename='app.min.js')}}"></script>    
+<script src="{{url_for('static',filename='js/jquery.js')}}"></script> 
+<script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>  
+<script src="{{url_for('static',filename='js/app.min.js')}}"></script>    
 {% endblock %} 
 
 
