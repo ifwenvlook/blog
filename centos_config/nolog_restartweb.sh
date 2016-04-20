@@ -3,4 +3,4 @@
 service mysqld restart
 service nginx  restart
 killall -9 uwsgi
-uwsgi /home/blog/config.ini -d /home/log/uwsgi.log
+uwsgi /home/blog/config.ini 
