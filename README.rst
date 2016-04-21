@@ -1,6 +1,6 @@
 Blog
 ----
-Preview: `http://120.76.133.73/`
+Preview: `http://www.vlblog.tech/`
 
 A simple blog system based on Flask
 
