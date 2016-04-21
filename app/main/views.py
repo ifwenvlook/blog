@@ -14,8 +14,10 @@ from datetime import datetime
 
 
 @main.before_app_request
-def before_request():
+def before_request(): #定义全局变量
     g.search_form = SearchForm()
+    g.hot_post=Post().hotpost()
+    g.current_time=datetime.utcnow()
 
 
 @main.after_app_request
@@ -49,7 +51,7 @@ def search():
 def search_results(query):
     posts = Post.query.filter(Post.head.like('%'+query+'%')).all()
     # query=Post.query.filter(Post.head.like("%文%")).all()
-    return render_template('search_results.html',query = query, posts = posts,hot_post=Post().hotpost(),current_time=datetime.utcnow())
+    return render_template('search_results.html',query = query, posts = posts,  )
 
 
 @main.route('/', methods=['GET', 'POST'])
@@ -71,7 +73,7 @@ def index():
     posts = pagination.items[:] #分页显示
 
     return render_template('index.html',  posts=posts,user=current_user,message=message,category=category,
-                            show_followed=show_followed, pagination=pagination,current_time=datetime.utcnow(),hot_post=Post().hotpost())
+                            show_followed=show_followed, pagination=pagination,hot_post=Post().hotpost())
 
 @main.route('/writepost', methods=['GET', 'POST'])
 @login_required
@@ -85,7 +87,7 @@ def writepost():
         db.session.add(post)
         flash("博客已发布")
         return redirect(url_for('.index'))
-    return render_template('writepost.html',current_time=datetime.utcnow(),form=form,hot_post=Post().hotpost())
+    return render_template('writepost.html', form=form, )
         # form1=form1,form2=form2,form3=form3)
 
 
@@ -98,7 +100,7 @@ def user(username):
         error_out=False)
     posts = pagination.items
     return render_template('user.html', user=user, posts=posts,
-                           pagination=pagination,current_time=datetime.utcnow(),hot_post=Post().hotpost() )
+                           pagination=pagination,   )
 
 #分类路由
 @main.route('/category/<int:id>')
@@ -109,7 +111,7 @@ def category(id):
         page, per_page=current_app.config['FLASKY_POSTS_PER_PAGE'],
         error_out=False)
     posts = pagination.items
-    return render_template('category.html',category=category,posts=posts,pagination=pagination,current_time=datetime.utcnow(),hot_post=Post().hotpost())
+    return render_template('category.html',category=category,posts=posts,pagination=pagination,  )
 
 
 @main.route('/edit-profile', methods=['GET', 'POST'])
@@ -126,7 +128,7 @@ def edit_profile():
     form.name.data = current_user.name
     form.location.data = current_user.location
     form.about_me.data = current_user.about_me
-    return render_template('edit_profile.html', form=form,hot_post=Post().hotpost())
+    return render_template('edit_profile.html', form=form, )
 
 
 @main.route('/edit-profile/<int:id>', methods=['GET', 'POST'])
@@ -153,7 +155,7 @@ def edit_profile_admin(id):
     form.name.data = user.name
     form.location.data = user.location
     form.about_me.data = user.about_me
-    return render_template('edit_profile.html', form=form, user=user,hot_post=Post().hotpost())
+    return render_template('edit_profile.html', form=form, user=user, )
 
 
 
@@ -201,7 +203,7 @@ def post(id):
     #     print ("visits+1")
     #     return resp
     return render_template('post.html', posts=[post], form=form,
-                           comments=comments, pagination=pagination,current_time=datetime.utcnow(),hot_post=hot_post)
+                           comments=comments, pagination=pagination, hot_post=hot_post)
 
 @main.route('/post/delete/<int:id>')
 def post_delete(id):
@@ -231,7 +233,7 @@ def edit(id):
         return redirect(url_for('.post', id=post.id))
     form.body.data = post.body
     form.head.data = post.head
-    return render_template('edit_post.html', form=form,current_time=datetime.utcnow(),hot_post=Post().hotpost() )
+    return render_template('edit_post.html', form=form,   )
 
 
 @main.route('/follow/<username>')
@@ -280,7 +282,7 @@ def followers(username):
                for item in pagination.items]
     return render_template('followers.html', user=user, title="Followers of",
                            endpoint='.followers', pagination=pagination,
-                           follows=follows,current_time=datetime.utcnow(),hot_post=Post().hotpost() )
+                           follows=follows,   )
 
 
 @main.route('/followed-by/<username>')
@@ -297,7 +299,7 @@ def followed_by(username):
                for item in pagination.items]
     return render_template('followers.html', user=user, title="Followed by",
                            endpoint='.followed_by', pagination=pagination,
-                           follows=follows,current_time=datetime.utcnow(),hot_post=Post().hotpost() )
+                           follows=follows,   )
 
 
 @main.route('/all')
@@ -323,7 +325,7 @@ def moderate_enable(id):
     comment.disabled = False
     db.session.add(comment)
     return redirect(url_for('.moderate',
-                            page=request.args.get('page', 1, type=int)),hot_post=Post().hotpost())
+                            page=request.args.get('page', 1, type=int)), )
 
 
 @main.route('/moderate/disable/<int:id>')
@@ -334,7 +336,7 @@ def moderate_disable(id):
     comment.disabled = True
     db.session.add(comment)
     return redirect(url_for('.moderate',
-                            page=request.args.get('page', 1, type=int)),hot_post=Post().hotpost())
+                            page=request.args.get('page', 1, type=int)), )
 
 
 
@@ -348,7 +350,7 @@ def moderate():
         error_out=False)
     comments = pagination.items
     return render_template('moderate.html', comments=comments,
-                           pagination=pagination, page=page,current_time=datetime.utcnow(),hot_post=Post().hotpost() )
+                           pagination=pagination, page=page,   )
 
 
 @main.route('/shownotice')
@@ -361,7 +363,7 @@ def shownotice():
         error_out=False)
     comments = pagination.items
     return render_template('shownotice.html', comments=comments,
-                           pagination=pagination, page=page,current_time=datetime.utcnow(),hot_post=Post().hotpost() )
+                           pagination=pagination, page=page,   )
 
 
 @main.route('/shownotice/unconfirmed/<int:id>')
@@ -372,7 +374,7 @@ def shownotice_unconfirmed(id):
     comment.confirmed = True
     db.session.add(comment)
     return redirect(url_for('.shownotice',
-                            page=request.args.get('page', 1, type=int)),hot_post=Post().hotpost())
+                            page=request.args.get('page', 1, type=int)), )
 
 
 @main.route('/shownotice/confirmed/<int:id>')
@@ -383,7 +385,7 @@ def shownotice_confirmed(id):
     comment.confirmed = False
     db.session.add(comment)
     return redirect(url_for('.shownotice',
-                            page=request.args.get('page', 1, type=int)),hot_post=Post().hotpost())
+                            page=request.args.get('page', 1, type=int)), )
 
 
 
@@ -398,7 +400,7 @@ def usercomments(username):
         error_out=False)
     comments = pagination.items
     return render_template('usercomments.html', comments=comments,user=user,
-                           pagination=pagination, page=page,current_time=datetime.utcnow(),hot_post=Post().hotpost() )
+                           pagination=pagination, page=page,   )
 
 @main.route('/usercomments/delete/<int:id>')
 @login_required
@@ -426,7 +428,7 @@ def sendmessage(username):
         flash('私信发送成功')
         return redirect(url_for('.user', username=username))
         
-    return render_template('sendmessage.html', form=form,current_time=datetime.utcnow(),hot_post=Post().hotpost())
+    return render_template('sendmessage.html', form=form,  )
 
 @main.route('/showmessage')
 @login_required
@@ -438,7 +440,7 @@ def showmessage():
         error_out=False)
     messages = pagination.items
     return render_template('showmessage.html', messages=messages,
-                           pagination=pagination, page=page,current_time=datetime.utcnow() ,hot_post=Post().hotpost())
+                           pagination=pagination, page=page )
 
 
 @main.route('/showmessage/unconfirmed/<int:id>')
@@ -476,7 +478,7 @@ def message_delete(id):
 
 @main.route('/firstpage', methods=['GET', 'POST'])
 def firstpage():
-    return render_template('aboutme.html',current_time=datetime.utcnow(),hot_post=Post().hotpost())
+    return render_template('aboutme.html',  )
 
 
 

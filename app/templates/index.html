@@ -16,8 +16,8 @@
     {% endif %}
     </h4>
     <h4>
-    <p>现在是{{ moment(current_time).format('LLL') }}.</p>
-<!--     <p>That was {{ moment(current_time).fromNow(refresh=True) }}</p>
+    <p>现在是{{ moment(g.current_time).format('LLL') }}.</p>
+<!--     <p>That was {{ moment(g.current_time).fromNow(refresh=True) }}</p>
     <script >
     document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());     
     // 时间
