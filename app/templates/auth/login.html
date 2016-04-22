@@ -12,5 +12,6 @@
     <br>
     <p>忘记密码? <a href="{{ url_for('auth.password_reset_request') }}">找回密码</a>.</p>
     <p>新用户? <a href="{{ url_for('auth.register') }}">注册</a>.</p>
+    <wb:login-button type="3,4" onlogin="login" onlogout="logout">登录按钮</wb:login-button>
 </div>
 {% endblock %}
