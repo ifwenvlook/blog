@@ -1,1 +1,3 @@
 v1.0　评论系统、通知系统、adminlte界面
+
+回退到openid前
