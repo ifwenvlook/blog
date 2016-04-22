@@ -13,7 +13,7 @@ WB2.anyWhere(function (W) {
         id: "wb_connect_btn",
         type: '3,2',
         callback: {
-            login: function (o) { {{ url_for('auth.afterlogin') }}
+            login: function (o) { {{ url_for('auth.after_login') }}
                 alert("login: " + o.screen_name)
             },
             logout: function () { {{ url_for('auth.logout') }}
