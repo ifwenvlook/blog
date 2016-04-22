@@ -5,13 +5,12 @@
 
 {% block page_content %}
 <div class="page-header">
-    <h1>登录</h1>
+    <h1>登录<a href= "{{ url_for('auth.sina_login') }}">用微博账号登录</a></h1>
 </div>
 <div class="col-md-4">
     {{ wtf.quick_form(form) }}
     <br>
     <p>忘记密码? <a href="{{ url_for('auth.password_reset_request') }}">找回密码</a>.</p>
     <p>新用户? <a href="{{ url_for('auth.register') }}">注册</a>.</p>
-    <wb:login-button type="3,4" onlogin="login" onlogout="logout">登录按钮</wb:login-button>
 </div>
 {% endblock %}
