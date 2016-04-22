@@ -47,45 +47,6 @@ def login():
     return render_template('auth/login.html', form=form)
 
 
-
-
-
-
-# openid登录
-basedir = os.path.abspath(os.path.dirname(__file__))
-openid = OpenID(os.path.join(basedir, 'tmp'))
-
-@auth.route('/sina_login', methods=['GET', 'POST'])
-@openid.loginhandler
-def sina_login():
-    # if current_user is not None and current_user.is_authenticated():
-    #     return redirect(url_for('main.index'))
-    form = LoginForm()
-    if form.validate_on_submit():        
-        return openid.try_login(form.openid.data, ask_for=['username', 'email'])
-    return render_template('auth/sina_login.html')
-
-@openid.after_login
-def after_login(resp):
-    if resp.email is None or resp.email == "":
-        flash('Invalid login. Please try again.')
-        return redirect(url_for('auth.sina_login'))
-    user = User.query.filter_by(email=resp.email).first()
-    if user is None:
-        username = resp.username
-        if username is None or username == "":
-            username = resp.email.split('@')[0]
-        user = User(username=username, email=resp.email)
-        db.session.add(user)
-        db.session.commit()
-    login_user(user)
-    return redirect(request.args.get('next') or url_for('main.index'))
-
-
-
-
-
-
 @auth.route('/logout')
 @login_required
 def logout():
