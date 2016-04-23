@@ -351,7 +351,7 @@ class Category(db.Model):
 
     @staticmethod
     def insert_categorys():
-        categorylist = ["python","web后端","git/centos/ubuntu","c/c++","数据库","前端","杂记"]
+        categorylist = ["python","web后端","linux","c/c++","数据库","前端","杂记"]
         for category in  categorylist:
             postcategory=Category.query.filter_by(name=category).first()
             if postcategory is None:

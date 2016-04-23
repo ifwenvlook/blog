@@ -30,7 +30,7 @@
         {% if current_user.is_authenticated %}
         <li{% if show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_followed') }}">我的关注</a></li>
         {% endif %}
-        <li ><a href="{{ url_for('.writepost') }}">发布新文章</a></li>
+        <li style="float: right" ><button class="btn btn-block btn-info btn-lg"><a style="color:white" href="{{ url_for('.writepost') }}">发布新文章</a></button></li>
     </ul>
     {% include '_index_posts.html' %}
 </div>

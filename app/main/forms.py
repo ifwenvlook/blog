@@ -25,7 +25,6 @@ class EditProfileForm(Form):
     about_me = TextAreaField('关于我')
     submit = SubmitField('提交')
 
-
 class PostForm(Form): 
     category = SelectField('文章类别', coerce=int)  
     head = StringField('标题', validators=[Required(), Length(1, 25)])    

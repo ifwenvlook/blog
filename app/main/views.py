@@ -227,13 +227,15 @@ def edit(id):
     if form.validate_on_submit():
         post.body = form.body.data
         post.head = form.head.data
+        post.category=form.category.data
         #博客内容和标题
         db.session.add(post)
         flash('The post has been updated.')
         return redirect(url_for('.post', id=post.id))
     form.body.data = post.body
     form.head.data = post.head
-    return render_template('edit_post.html', form=form,   )
+    form.category.data = post.category_id
+    return render_template('edit_post.html', form=form)
 
 
 @main.route('/follow/<username>')
