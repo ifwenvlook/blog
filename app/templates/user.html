@@ -23,6 +23,7 @@
         <p>注册于：{{ moment(user.member_since).format('LLL') }}. 上次登录：{{ moment(user.last_seen).fromNow() }}.</p>
         <p>
         {{ user.posts.count() }} 篇博客. {{ user.comments.count() }} 条<a href="{{ url_for('.usercomments',username=user.username)}}">评论.</a>
+        {{ user.starposts.__len__() }} 篇<a href="{{ url_for('.starposts', username=user.username) }}">收藏</a>
         </p>
 
         <p>
@@ -39,7 +40,7 @@
             | <span class="label label-default">Follows you</span>
             {% endif %}
             {% if current_user.is_authenticated %}
-            <a href="{{ url_for('.sendmessage', username=user.username) }}" class="btn btn-primary">私信</a>
+            <a href="{{ url_for('.sendmessage', username=user.username) }}" class="btn btn-primary">发送私信</a>
                 {% if  user == current_user %}                
                 <small>（给自已发私信？程序猿是猴子请来的吗？)</small>
                 {% endif %}
@@ -47,7 +48,7 @@
             <a href="{{ url_for('auth.login') }}" class="btn btn-primary">私信</a>
             {% endif %}
         </p>
-        <p>
+        <p>            
             {% if user == current_user %}
             <a class="btn btn-default" href="{{ url_for('.edit_profile') }}">编辑资料</a>            
             <a href="{{ url_for('auth.change_userset') }}" class="btn btn-default">账户设置</a>                            

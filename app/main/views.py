@@ -6,7 +6,7 @@ from flask.ext.sqlalchemy import get_debug_queries
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SendmessageForm,SearchForm
 from .. import db
-from ..models import Permission, Role, User, Post, Comment,Message,Category
+from ..models import Permission, Role, User, Post, Comment,Message,Category,Star
 from ..decorators import admin_required, permission_required
 from datetime import datetime
 
@@ -236,6 +236,48 @@ def edit(id):
     form.head.data = post.head
     form.category.data = post.category_id
     return render_template('edit_post.html', form=form)
+
+
+#收藏
+@main.route('/star/<int:id>')
+@login_required
+@permission_required(Permission.FOLLOW)
+def star(id):
+    post=Post.query.get_or_404(id)
+    if current_user.staring(post):
+        flash('你已经收藏了这篇文章')
+        return redirect(url_for('.post',id=post.id))
+    current_user.star(post)
+    flash('收藏完成')
+    return redirect(url_for('.post',id=post.id))
+
+@main.route('/unstar/<int:id>')
+@login_required
+@permission_required(Permission.FOLLOW)
+def unstar(id):
+    post=Post.query.get_or_404(id)
+    if not current_user.staring(post):
+        flash('你没有收藏这篇文章')
+        return redirect(url_for('.post',id=post.id))
+    current_user.unstar(post)
+    flash('你不再收藏这篇旷世奇文了，太可惜了，你与大牛失之交臂')
+    return redirect(url_for('.post',id=post.id))
+
+@main.route('/starposts/<username>')
+def starposts(username):
+    user = User.query.filter_by(username=username).first()
+    if user is None:
+        flash('Invalid user.')
+        return redirect(url_for('.index'))
+    page = request.args.get('page', 1, type=int)
+    # pagination = user.starposts.paginate(
+    #     page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
+    #     error_out=False)
+    posts = user.starposts
+    return render_template('starposts.html', user=user, title="收藏的文章",
+                           posts=posts)
+
+
 
 
 @main.route('/follow/<username>')

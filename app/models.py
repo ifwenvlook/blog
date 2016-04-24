@@ -74,6 +74,15 @@ class Message(db.Model):
     def __repr__(self):
         return '<Message %r  from %r sent to %r>' % (self.body,self.author.username,self.sendto.username)
 
+#收藏
+class Star(db.Model):
+    __tablename__= 'stars'
+    id = db.Column(db.Integer, primary_key=True)
+    user_id=db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_id=db.Column(db.Integer, db.ForeignKey('posts.id'))
+    timestamp = db.Column(db.DateTime, default=datetime.now)
+
+
 class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
@@ -89,6 +98,7 @@ class User(UserMixin, db.Model):
     last_seen = db.Column(db.DateTime(), default=datetime.now)
     avatar_hash = db.Column(db.String(32))
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    starposts = db.relationship('Post',secondary='stars',backref=db.backref('stared',lazy='joined'),lazy='joined')
     followed = db.relationship('Follow',
                                foreign_keys=[Follow.follower_id],
                                backref=db.backref('follower', lazy='joined'),
@@ -108,6 +118,28 @@ class User(UserMixin, db.Model):
     messages = db.relationship('Message', backref='author', lazy='dynamic',primaryjoin='Message.author_id==User.id')
 
     messageds = db.relationship('Message', backref='sendto', lazy='dynamic', primaryjoin='Message.sendto_id==User.id')
+
+
+#收藏/取消收藏
+    def star(self,post):
+        if not self.staring(post):
+            s = Star(user_id=self.id,post_id=post.id)
+            db.session.add(s)
+            db.session.commit()
+    def unstar(self,post):
+        if self.staring(post):
+            uns = Star.query.filter_by(user_id=self.id,post_id=post.id).first()
+            db.session.delete(uns)
+            db.session.commit()
+
+    def staring(self,post):
+        if Star.query.filter_by(user_id=self.id,post_id=post.id).first():
+            return True
+        else:
+            return False
+    def startimestamp(self,post):
+        star=Star.query.filter_by(user_id=self.id,post_id=post.id).first()
+        return star.timestamp
 
 #私信
     

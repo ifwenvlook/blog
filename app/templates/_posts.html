@@ -7,10 +7,22 @@
             </a>
         </div>
         <div class="post-content">
-            <div class="post-date">{{ post.timestamp }}</div>
+
+            <div class="post-date">
+            {% if not current_user.staring(post) %}
+            <a href="{{ url_for('.star',id=post.id) }}#comments">
+            <span class="label label-primary">添加到收藏</span>
+            {% else %}
+            <a href="{{ url_for('.unstar',id=post.id) }}#comments">
+            <span class="label label-default">取消收藏</span>
+            </a>
+            {% endif %}
+
+
+            {{ post.timestamp }}</div>
             <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
             <div class="post-head">
-            {{ post.head }} &nbsp;&nbsp;&nbsp;阅读:{{ post.visits }}
+            {{ post.head }} &nbsp;&nbsp;&nbsp;阅读:{{ post.visits }} 收藏:{{ post.stared.__len__() }}
             </div>
             <div class="post-body">
                 {% if post.body_html %}                   
@@ -34,7 +46,7 @@
                 {% endif %}
                 <!-- <a href="{{ url_for('.post', id=post.id) }}">
                     <span class="label label-default">查看</span>
-                </a> -->
+                </a> -->                                
                 <a href="{{ url_for('.post', id=post.id) }}#comments">
                     <span class="label label-primary">{{ post.comments.count() }} 评论</span>
                 </a>

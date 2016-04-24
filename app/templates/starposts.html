@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Fly - {{ user.username }} {{ title }} {% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1> {{ user.username }} {{ title }}</h1>
+</div>
+<table class="table table-hover followers">
+    <thead><tr><th>文章</th><th>收藏时间</th></tr></thead>
+    {% for post in posts %}
+        <tr>
+        <td>
+            <a href="{{ url_for('.post', id = post.id) }}">
+                {{ post.head }}
+                </br>
+                From:{{ post.author.username }}
+            </a>
+        </td>
+        <td>{{ user.startimestamp(post) }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

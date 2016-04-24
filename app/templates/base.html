@@ -54,7 +54,7 @@ type="image/x-icon">
                     <ul class="nav navbar-nav">
                         <li><a href="{{ url_for('main.index') }}">博客主页</a></li>
                         {% if current_user.is_authenticated %}
-                        <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人资料</a></li>
+                        <li><a href="{{ url_for('main.user', username=current_user.username) }}">个人中心</a></li>
                         {% endif %}
                     </ul>
                         <ul class="nav navbar-nav">

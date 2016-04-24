@@ -11,7 +11,7 @@
             From <a href="#"> {{post.category.name}} </a></div>
             <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
             <div class="post-head">
-            分享了文章：<a href="{{ url_for('.post', id=post.id) }}">{{ post.head }} </a>&nbsp;&nbsp;&nbsp;阅读:{{ post.visits }}
+            分享了文章：<a href="{{ url_for('.post', id=post.id) }}">{{ post.head }} </a>&nbsp;&nbsp;&nbsp;阅读:{{ post.visits }}&nbsp;收藏:{{ post.stared.__len__() }}
             </div>
             <div class="post-body">
                 <a style="text-decoration:none; color:black" href="{{ url_for('.post', id=post.id) }}">
