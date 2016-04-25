@@ -227,7 +227,7 @@ def edit(id):
     if form.validate_on_submit():
         post.body = form.body.data
         post.head = form.head.data
-        post.category=form.category.data
+        post.category=Category.query.get(form.category.data)
         #博客内容和标题
         db.session.add(post)
         flash('The post has been updated.')
@@ -262,6 +262,21 @@ def unstar(id):
     current_user.unstar(post)
     flash('你不再收藏这篇旷世奇文了，太可惜了，你与大牛失之交臂')
     return redirect(url_for('.post',id=post.id))
+
+
+@main.route('/deletestar/<int:id>')
+@login_required
+@permission_required(Permission.FOLLOW)
+def deletestar(id):
+    post=Post.query.get_or_404(id)
+    if not current_user.staring(post):
+        flash('你没有收藏这篇文章')
+        return redirect(url_for('.starposts',username=current_user.username))
+    current_user.unstar(post)
+    flash('你不再收藏这篇旷世奇文了，太可惜了，你与大牛失之交臂')
+    return redirect(url_for('.starposts',username=current_user.username))
+
+
 
 @main.route('/starposts/<username>')
 def starposts(username):

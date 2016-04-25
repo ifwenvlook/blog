@@ -15,10 +15,22 @@
             <a href="{{ url_for('.post', id = post.id) }}">
                 {{ post.head }}
                 </br>
-                From:{{ post.author.username }}
             </a>
+                {% if post.body[200] %}
+                {{ post.body }}......
+                {% else %}
+                {{ post.body[0:200] }}
+                {% endif %} 
+                </br>               
+                From:{{ post.author.username }}
+                
+            
         </td>
-        <td>{{ user.startimestamp(post) }}</td>
+        <td>{{ user.startimestamp(post) }}
+        <a href="{{ url_for('.deletestar', id=post.id,) }}" class="label label-danger">
+        <span class="label label-danger">删除</span>
+        </a>
+        </td>
     </tr>
     {% endfor %}
 </table>
