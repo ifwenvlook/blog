@@ -12,17 +12,24 @@
     {% for post in posts %}
         <tr>
         <td>
-            <a href="{{ url_for('.post', id = post.id) }}">
-                {{ post.head }}
-                </br>
-            </a>
-                {% if post.body[200] %}
-                {{ post.body }}......
+            <a href="{{ url_for('.post', id=post.id) }}">{{ post.head }} </a> Write_by {{post.author.username}}
+            <a style="text-decoration:none; color:black" href="{{ url_for('.post', id=post.id) }}">
+                {% if post.body_html %}
+                    {{ post.head_html | safe }}<br/>
+                    {% if post.body[200] %}
+                    {{ post.body_html[0:200] | safe }}....
+                    {% else %}
+                    {{ post.body_html | safe }}
+                    {% endif %}
                 {% else %}
-                {{ post.body[0:200] }}
-                {% endif %} 
-                </br>               
-                From:{{ post.author.username }}
+                    {{ post.head }}<br/>
+                    {% if post.body[200] %}
+                    {{ post.body }}
+                    {% else %}
+                    {{ post.body[0:200] }}.....
+                    {% endif %}                
+                {% endif %}
+                </a>
                 
             
         </td>
