@@ -7,38 +7,53 @@
 <div class="page-header">
     <h1> {{ user.username }} {{ title }}</h1>
 </div>
-<table class="table table-hover followers">
-    <thead><tr><th>文章</th><th>收藏时间</th></tr></thead>
-    {% for post in posts %}
+
+<div class="row">
+ <div class="col-xs-12">
+  <div class="box">
+    <div class="box-header">
+      <h3 class="box-title">Posts Table</h3>
+      <!-- <div class="box-tools">
+        <div class="input-group" style="width: 150px;">
+          <input type="text" name="table_search" class="form-control input-sm pull-right" placeholder="Search">
+          <div class="input-group-btn">
+            <button class="btn btn-sm btn-default"><i class="fa fa-search"></i></button>
+          </div>
+        </div>
+      </div> -->
+    </div><!-- /.box-header -->
+    <div class="box-body table-responsive no-padding">
+      <table class="table table-hover">
         <tr>
-        <td>
-            <a href="{{ url_for('.post', id=post.id) }}">{{ post.head }} </a> Write_by {{post.author.username}}
-            <a style="text-decoration:none; color:black" href="{{ url_for('.post', id=post.id) }}">
-                {% if post.body_html %}
-                    {{ post.head_html | safe }}<br/>
-                    {% if post.body[200] %}
-                    {{ post.body_html[0:200] | safe }}....
-                    {% else %}
-                    {{ post.body_html | safe }}
-                    {% endif %}
-                {% else %}
-                    {{ post.head }}<br/>
-                    {% if post.body[200] %}
-                    {{ post.body }}
-                    {% else %}
-                    {{ post.body[0:200] }}.....
-                    {% endif %}                
-                {% endif %}
-                </a>
-                
-            
-        </td>
-        <td>{{ user.startimestamp(post) }}
-        <a href="{{ url_for('.deletestar', id=post.id,) }}" class="label label-danger">
-        <span class="label label-danger">删除</span>
-        </a>
-        </td>
-    </tr>
-    {% endfor %}
-</table>
+          <th>作者</th>
+          <th>标题</th>
+          <th>收藏时间</th>
+          <th>操作</th>
+          <th>正文</th>
+        </tr>
+        {% for post in posts %}
+        <tr>
+          <td><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></td>
+          <td><a href="{{ url_for('.post', id=post.id) }}">{{ post.head }}</a></td>
+          <td>{{ user.startimestamp(post) }}</td>
+          <td><a href="{{ url_for('.deletestar', id=post.id,) }}" class="label label-danger">
+              <span class="label label-danger">删除</span>
+              </a>
+          </td>
+          <td>
+          <a style="text-decoration:none; color:black" href="{{ url_for('.post', id=post.id) }}">
+            {% if post.body[30] %}
+            {{ post.body[0:30] }}....
+            {% else %}
+            {{ post.body}}
+            {% endif %}               
+          </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div><!-- /.box-body -->
+  </div><!-- /.box -->
+</div>
+</div>
 {% endblock %}

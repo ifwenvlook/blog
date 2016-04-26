@@ -25,9 +25,9 @@
                 {% else %}
                     {{ post.head }}<br/>
                     {% if post.body[200] %}
-                    {{ post.body }}
+                    {{ post.body[0:200]}}...
                     {% else %}
-                    {{ post.body[0:200] }}.....
+                    {{ post.body}}
                     {% endif %}                
                 {% endif %}
                 </a>
