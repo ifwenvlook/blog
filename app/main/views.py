@@ -278,7 +278,7 @@ def deletestar(id):
 
 
 
-@main.route('/starposts/<username>')
+@main.route('/user/<username>/starposts')
 def starposts(username):
     user = User.query.filter_by(username=username).first()
     if user is None:
@@ -289,7 +289,7 @@ def starposts(username):
     #     page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
     #     error_out=False)
     posts = user.starposts
-    return render_template('starposts.html', user=user, title="收藏的文章",
+    return render_template('user_starposts.html', user=user, title="收藏的文章",
                            posts=posts)
 
 
@@ -448,7 +448,7 @@ def shownotice_confirmed(id):
 
 
 
-@main.route('/usercomments/<username>')
+@main.route('/user/<username>/comments')
 @login_required
 @permission_required(Permission.COMMENT)
 def usercomments(username):
@@ -458,7 +458,7 @@ def usercomments(username):
         page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
         error_out=False)
     comments = pagination.items
-    return render_template('usercomments.html', comments=comments,user=user,
+    return render_template('user_comments.html', comments=comments,user=user,
                            pagination=pagination, page=page,   )
 
 @main.route('/usercomments/delete/<int:id>')
