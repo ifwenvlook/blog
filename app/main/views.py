@@ -535,7 +535,7 @@ def message_delete(id):
                             page=request.args.get('page', 1, type=int)))
 
 
-@main.route('/firstpage', methods=['GET', 'POST'])
+@main.route('/about', methods=['GET', 'POST'])
 def firstpage():
     return render_template('aboutme.html',  )
 
