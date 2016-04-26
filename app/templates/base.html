@@ -36,7 +36,7 @@ type="image/x-icon">
 {% block navbar %}
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-  <header class="main-header">
+  <header class="main-header" style="position: fixed;top: 0px;width:100%;max-height:100px;z-index:1030"> <!-- 固定置顶 -->
     <a href="#" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>F</b>ly</span>
@@ -268,7 +268,7 @@ type="image/x-icon">
 </header>
 {% endblock %} 
 <!-- 顶部导航栏结束 -->
-<aside class="main-sidebar">　
+<aside class="main-sidebar" style="position: fixed;left: 0px;">　
 <!-- 左侧拉伸栏 -->
   <section class="sidebar">
     <form action="{{url_for('main.search')}}" method="post" class="sidebar-form">
@@ -293,7 +293,7 @@ type="image/x-icon">
 
        
       <li class="treeview">                      
-          <a href="#"><i class="fa fa-link"></i> <span>全部分类</span> <i class="fa fa-angle-left pull-right"></i></a>
+          <a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>全部分类</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu" style="display: block;">
             <li><a href= "{{ url_for('main.category', id=1) }}">python</a></li>                  
             <li><a href="{{ url_for('main.category', id=2) }}">web后端</a></li>
@@ -306,7 +306,7 @@ type="image/x-icon">
       </li>
 
       <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>热门文章</span> <i class="fa fa-angle-left pull-right"></i></a>
+        <a href="#"><i class="fa fa-circle-o text-red"></i> <span>热门文章</span> <i class="fa fa-angle-left pull-right"></i></a>
         <ul class="treeview-menu" style="display: block;">
           <li><a href="{{ url_for('main.post', id=g.hot_post[0].id) }}">No1. {{g.hot_post[0].head}}</a></li>
           <li><a href="{{ url_for('main.post', id=g.hot_post[1].id) }}">No2. {{g.hot_post[1].head}}</a></li>
@@ -316,12 +316,10 @@ type="image/x-icon">
           <li><a href="{{ url_for('main.post', id=g.hot_post[5].id) }}">No6. {{g.hot_post[5].head}}</a></li>
           <li><a href="{{ url_for('main.post', id=g.hot_post[6].id) }}">No7. {{g.hot_post[6].head}}</a></li>
           <li><a href="{{ url_for('main.post', id=g.hot_post[7].id) }}">No8. {{g.hot_post[7].head}}</a></li>
-<!--                 最长26字    -->            
+<!--                 最长26字    -->         
         </ul>
       </li>  
-
-
-
+      <li><a href="#top"><i class="fa fa-share"></i> <span>回到顶部</span></a></li> 
     </ul>        
   </section>
 </aside>
@@ -412,10 +410,11 @@ type="image/x-icon">
 
 
 
-<footer class="main-footer">
+<footer class="main-footer" >
 <div class="pull-right hidden-xs">
 <p>Email:<a href="mailto:ifwenvlook@163.com">ifwenvlook@163.com</a></p>
 </div>
+
 <p><strong>Code@<a href="#"><a href="https://github.com/ifwenvlook/blog">Github</a></a></strong> Power by Flask.</p>
 </footer>
 
