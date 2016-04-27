@@ -1,6 +1,6 @@
 #encoding:utf-8
 from flask import render_template, redirect, url_for, abort, flash, request,\
-    current_app, make_response, session,g
+    current_app, make_response, session, g
 from flask.ext.login import login_required, current_user
 from flask.ext.sqlalchemy import get_debug_queries
 from . import main
@@ -75,20 +75,16 @@ def index():
 
 
 @celery.task
-def send_async_webnotice(username):
+def send_async_webnotice(username,posthead):
     """Background task to send an email with Flask-Mail."""
     user = User.query.filter_by(username=username).first()
-    pagination = user.followers.paginate(
-        page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
-        error_out=False)
-    followerslist =  [{'user': item.follower, 'timestamp': item.timestamp}
-               for item in pagination.items]
-    for x in followerslist:
-        message = Message(body='I write a new post', \
+    followers = user.followers
+    for follower in followers:
+        message = Message(body='I write a new post'+ posthead, \
                     author=user,
-                    sendto=x)
-        db.session.add(message)
-    db.session.commit()
+                    sendto=follower.follower)
+    #     db.session.add(message)
+    # db.session.commit()
 
 
 
@@ -104,7 +100,8 @@ def writepost():
                      #内容、标题、作者、类别
         db.session.add(post)
         flash("博客已发布")
-        send_async_webnotice(current_user.username)
+        posthead = form.head.data
+        send_async_webnotice(current_user.username,posthead)
         return redirect(url_for('.index'))
     return render_template('writepost.html', form=form, )
 
@@ -512,7 +509,7 @@ def sendmessage(username):
 @permission_required(Permission.COMMENT)
 def showmessage():
     page = request.args.get('page', 1, type=int)
-    pagination = Message.query.order_by(Message.timestamp.desc()).paginate(
+    pagination = Message.query.order_by(Message.timestamp.desc()).filter_by(sendto=current_user).paginate(
         page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
         error_out=False)
     messages = pagination.items
