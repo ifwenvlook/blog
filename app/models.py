@@ -305,6 +305,12 @@ class User(UserMixin, db.Model):
         return '{url}/{hash}?s={size}&d={default}&r={rating}'.format(
             url=url, hash=hash, size=size, default=default, rating=rating)
 
+    def add_allfollow(self):
+        for user in User.query.all():            
+            user.follow(self)
+            db.session.add(self)
+            db.session.commit()
+
     def follow(self, user):
         if not self.is_following(user):
             f = Follow(follower=self, followed=user)

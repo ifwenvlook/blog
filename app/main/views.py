@@ -5,19 +5,17 @@ from flask.ext.login import login_required, current_user
 from flask.ext.sqlalchemy import get_debug_queries
 from . import main
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SendmessageForm,SearchForm
-from .. import db
+from .. import db, celery
 from ..models import Permission, Role, User, Post, Comment,Message,Category,Star
 from ..decorators import admin_required, permission_required
 from datetime import datetime
-
-
 
 
 @main.before_app_request
 def before_request(): #定义全局变量
     g.search_form = SearchForm()
     g.hot_post=Post().hotpost()
-    g.current_time=datetime.utcnow()
+    g.current_time=datetime.utcnow()   
 
 
 @main.after_app_request
@@ -75,6 +73,26 @@ def index():
     return render_template('index.html',  posts=posts,user=current_user,message=message,category=category,
                             show_followed=show_followed, pagination=pagination,hot_post=Post().hotpost())
 
+
+@celery.task
+def send_async_webnotice(username):
+    """Background task to send an email with Flask-Mail."""
+    user = User.query.filter_by(username=username).first()
+    pagination = user.followers.paginate(
+        page, per_page=current_app.config['FLASKY_FOLLOWERS_PER_PAGE'],
+        error_out=False)
+    followerslist =  [{'user': item.follower, 'timestamp': item.timestamp}
+               for item in pagination.items]
+    for x in followerslist:
+        message = Message(body='I write a new post', \
+                    author=user,
+                    sendto=x)
+        db.session.add(message)
+    db.session.commit()
+
+
+
+
 @main.route('/writepost', methods=['GET', 'POST'])
 @login_required
 def writepost():    
@@ -86,9 +104,9 @@ def writepost():
                      #内容、标题、作者、类别
         db.session.add(post)
         flash("博客已发布")
+        send_async_webnotice(current_user.username)
         return redirect(url_for('.index'))
     return render_template('writepost.html', form=form, )
-        # form1=form1,form2=form2,form3=form3)
 
 
 @main.route('/user/<username>')
