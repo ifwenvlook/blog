@@ -28,7 +28,7 @@
             {{ post.timestamp }}</div>
             <div class="post-author"><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></div>
             <div class="post-head">
-            {{ post.head }} &nbsp;&nbsp;&nbsp;阅读:{{ post.visits }} 收藏:{{ post.stared.__len__() }}
+            <a href="{{ url_for('.post', id=post.id) }}"><h2>{{ post.head }} <small></a>&nbsp;&nbsp;&nbsp;阅读:{{ post.visits }}&nbsp;收藏:{{ post.stared.__len__() }}</small></h2>
             </div>
             <div class="post-body">
                 {% if post.body_html %}                   
