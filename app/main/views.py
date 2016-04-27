@@ -3,10 +3,11 @@ from flask import render_template, redirect, url_for, abort, flash, request,\
     current_app, make_response, session, g
 from flask.ext.login import login_required, current_user
 from flask.ext.sqlalchemy import get_debug_queries
-from . import main
+from flask.ext.mail import Message as mailmessage
+from . import main 
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SendmessageForm,SearchForm
-from .. import db, celery
-from ..models import Permission, Role, User, Post, Comment,Message,Category,Star
+from .. import db, mail, celery
+from ..models import Permission, Role, User, Post, Comment, Message, Category, Star
 from ..decorators import admin_required, permission_required
 from datetime import datetime
 
@@ -74,17 +75,20 @@ def index():
                             show_followed=show_followed, pagination=pagination,hot_post=Post().hotpost())
 
 
+# @celery.task
+# def send_async_webnotice(username):
+#     user = User.query.filter_by(username=username).first()
+#     followers = user.followers
+#     for follower in followers:
+#         message = Message(body='I write a new post', \
+#                     author=user,
+#                     sendto=follower.follower)
+#         db.session.add(message)
+#     db.session.commit()
 @celery.task
-def send_async_webnotice(username,posthead):
-    """Background task to send an email with Flask-Mail."""
-    user = User.query.filter_by(username=username).first()
-    followers = user.followers
-    for follower in followers:
-        message = Message(body='I write a new post'+ posthead, \
-                    author=user,
-                    sendto=follower.follower)
-    #     db.session.add(message)
-    # db.session.commit()
+def send_async_email(msg):
+    with app.app_context():
+        mail.send(msg)
 
 
 
@@ -99,9 +103,12 @@ def writepost():
                     author=current_user._get_current_object())                  
                      #内容、标题、作者、类别
         db.session.add(post)
-        flash("博客已发布")
-        posthead = form.head.data
-        send_async_webnotice(current_user.username,posthead)
+             
+        msg = mailmessage('Hello from Flask',
+                  recipients='ifwenvlook@163.com')
+        msg.body = 'This is a test email sent from a background Celery task.'
+        send_async_email.delay(msg)
+        flash("博客已发布")   
         return redirect(url_for('.index'))
     return render_template('writepost.html', form=form, )
 
