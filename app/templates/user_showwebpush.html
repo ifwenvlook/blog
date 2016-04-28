@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Fly - 查看订阅{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>查看订阅</h1>
+</div>
+{% set webpush = True %}
+{% include '_webpush.html' %}
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.showwebpush',username=current_user.username) }}
+</div>
+{% endif %}
+{% endblock %}

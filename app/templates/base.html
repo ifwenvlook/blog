@@ -178,19 +178,19 @@ type="image/x-icon">
                     <!-- Menu Toggle Button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-flag-o"></i>
-                      <span class="label label-danger">9</span>
+                      <span class="label label-danger">{{ current_user.unreadwebpushs()}}</span>
                     </a>
                     <ul class="dropdown-menu">
-                      <li class="header">You have 9 tasks</li>
+                      <li class="header">你有{{ current_user.unreadwebpushs()}}条订阅更新</li>
                       <li>
                         <!-- Inner menu: contains the tasks -->
                         <ul class="menu">
                           <li><!-- Task item -->
-                            <a href="#">
+                            <a href="{{ url_for('main.showwebpush',username=current_user.username) }}">
                               <!-- Task title and progress text -->
                               <h3>
-                                Design some buttons
-                                <small class="pull-right">20%</small>
+                                11
+                                <small class="pull-right">最近更新</small>
                               </h3>
                               <!-- The progress bar -->
                               <div class="progress xs">

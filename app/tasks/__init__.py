@@ -1,5 +1,6 @@
+#encoding:utf-8
 from flask import Blueprint
 
-auth = Blueprint('tasks', __name__)
+tasks = Blueprint('tasks', __name__)
 
 from . import celerymail

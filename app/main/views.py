@@ -7,18 +7,10 @@ from flask.ext.mail import Message as mailmessage
 from . import main 
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SendmessageForm,SearchForm
 from .. import db, mail, celery, create_app
-from ..models import Permission, Role, User, Post, Comment, Message, Category, Star
+from ..models import Permission, Role, User, Post, Comment, Message, Category, Star, Webpush
 from ..decorators import admin_required, permission_required
 from datetime import datetime
-
-
-
-
-@celery.task
-def send_async_email(msg):
-    app = create_app('default')
-    with app.app_context():
-        mail.send(msg)
+from ..tasks.celerymail import send_async_email, send_async_webpush
 
 
 @main.before_app_request
@@ -84,24 +76,6 @@ def index():
                             show_followed=show_followed, pagination=pagination,hot_post=Post().hotpost())
 
 
-# @celery.task
-# def send_async_webnotice(username):
-#     user = User.query.filter_by(username=username).first()
-#     followers = user.followers
-#     for follower in followers:
-#         message = Message(body='I write a new post', \
-#                     author=user,
-#                     sendto=follower.follower)
-#         db.session.add(message)
-#     db.session.commit()
-# @celery.task
-# def send_async_email(msg):
-#     with app.app_context():
-#         mail.send(msg)
-
-
-
-
 @main.route('/writepost', methods=['GET', 'POST'])
 @login_required
 def writepost():    
@@ -112,9 +86,12 @@ def writepost():
                     author=current_user._get_current_object())                  
                      #内容、标题、作者、类别
         db.session.add(post)
-        msg = mailmessage('Hello from Flask',recipients=['ifwenvlook@163.com'] )
-        msg.body = 'Fly_blog的测试邮件.'
-        send_async_email.delay(msg)
+        # msg = mailmessage('Hello from Flask',recipients=['ifwenvlook@163.com'] )
+        # msg.body = 'Fly_blog的测试邮件.'
+        # send_async_email.delay(msg)
+        username = current_user.username
+        post = post
+        send_async_webpush.delay(username=username,post=post)
         flash("博客已发布")   
         return redirect(url_for('.index'))
     return render_template('writepost.html', form=form, )
@@ -517,6 +494,49 @@ def sendmessage(username):
         return redirect(url_for('.user', username=username))
         
     return render_template('sendmessage.html', form=form,  )
+
+
+@main.route('/<username>/showwebpush')
+@login_required
+@permission_required(Permission.COMMENT)
+def showwebpush(username):
+    page = request.args.get('page', 1, type=int)
+    pagination = Webpush.query.order_by(Webpush.timestamp.desc()).filter_by(sendto=current_user).paginate(
+        page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
+        error_out=False)
+    webpushs = pagination.items
+    return render_template('user_showwebpush.html',webpushs=webpushs,pagination=pagination,page=page)
+
+@main.route('/webpush/unconfirmed/<int:id>')
+@login_required
+@permission_required(Permission.COMMENT)
+def webpush_unconfirmed(id):
+    webpush = Message.query.get_or_404(id)
+    webpush.confirmed = True
+    db.session.add(webpush)
+    return redirect(url_for('.showwebpush',
+                            page=request.args.get('page', 1, type=int)),username=current_user.username)
+
+@main.route('/webpush/confirmed/<int:id>')
+@login_required
+@permission_required(Permission.COMMENT)
+def webpush_confirmed(id):
+    webpush = Message.query.get_or_404(id)
+    webpush.confirmed = False
+    db.session.add(webpush)
+    return redirect(url_for('.showwebpush',
+                            page=request.args.get('page', 1, type=int)),username=current_user.username)
+
+@main.route('/showmessage/delete/<int:id>')
+@login_required
+@permission_required(Permission.COMMENT)
+def webpush_delete(id):
+    webpush = Message.query.get_or_404(id)   
+    db.session.delete(webpush)
+    flash('推送删除成功')
+    return redirect(url_for('.showmessage',
+                            page=request.args.get('page', 1, type=int)))
+
 
 @main.route('/showmessage')
 @login_required

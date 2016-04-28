@@ -62,6 +62,19 @@ class Follow(db.Model):
                             primary_key=True)
     timestamp = db.Column(db.DateTime, default=datetime.now)
 
+#网站推送
+class Webpush(db.Model):
+    __tablename__ = 'webpushs'
+    id = db.Column(db.Integer, primary_key=True)
+    head = db.Column(db.String(64))
+    body = db.Column(db.Text)
+    timestamp = db.Column(db.DateTime,  default=datetime.now) 
+    confirmed = db.Column(db.Boolean,default=False)
+    author = db.Column(db.String(64),default='Administrator')
+    sendto_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    def __repr__(self):
+        return '<Webpush %r  push_time %r >' % (self.head,self.timestamp)
+
 #私信
 class Message(db.Model):
     __tablename__ = 'messages'
@@ -118,6 +131,24 @@ class User(UserMixin, db.Model):
     messages = db.relationship('Message', backref='author', lazy='dynamic',primaryjoin='Message.author_id==User.id')
 
     messageds = db.relationship('Message', backref='sendto', lazy='dynamic', primaryjoin='Message.sendto_id==User.id')
+
+    webpushs = db.relationship('Webpush', backref='sendto', lazy='dynamic')
+
+
+
+#订阅
+    def unreadwebpushs(self):
+        webpushs=self.webpushs
+        maxi=self.webpushs.count()
+        total=0
+        for i in range(0,maxi):
+            if not self.webpushs[i].confirmed:
+                total=total+1
+        return total
+    def lastwebpush(self):
+        return self.webpushs[-1]
+
+
 
 
 #收藏/取消收藏
