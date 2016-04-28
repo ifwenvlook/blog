@@ -12,6 +12,7 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = '2535199139'
     MAIL_PASSWORD = 'ufxffdwmwtvleadd'
+    MAIL_DEFAULT_SENDER = '2535199139@qq.com'
     FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
     FLASKY_MAIL_SENDER = 'Flasky Admin <2535199139@qq.com>'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
@@ -21,6 +22,7 @@ class Config:
     FLASKY_SLOW_DB_QUERY_TIME=0.5
     CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
     CELERY_BROKER_URL = 'redis://localhost:6379/0'
+
     
 
     @staticmethod

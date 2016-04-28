@@ -6,17 +6,19 @@ from flask.ext.sqlalchemy import get_debug_queries
 from flask.ext.mail import Message as mailmessage
 from . import main 
 from .forms import EditProfileForm, EditProfileAdminForm, PostForm, CommentForm, SendmessageForm,SearchForm
-from .. import db, mail, celery
+from .. import db, mail, celery, create_app
 from ..models import Permission, Role, User, Post, Comment, Message, Category, Star
 from ..decorators import admin_required, permission_required
 from datetime import datetime
-from app.tasks.celerymail import send_async_email
 
 
 
 
-
-
+@celery.task
+def send_async_email(msg):
+    app = create_app('default')
+    with app.app_context():
+        mail.send(msg)
 
 
 @main.before_app_request
@@ -110,10 +112,8 @@ def writepost():
                     author=current_user._get_current_object())                  
                      #内容、标题、作者、类别
         db.session.add(post)
-        app = current_app._get_current_object()
-        subject = 'test'
-        msg = mailmessage('Hello from Flask',recipients='ifwenvlook@163.com')
-        msg.body = 'This is a test email sent from a background Celery task.'
+        msg = mailmessage('Hello from Flask',recipients=['ifwenvlook@163.com'] )
+        msg.body = 'Fly_blog的测试邮件.'
         send_async_email.delay(msg)
         flash("博客已发布")   
         return redirect(url_for('.index'))
