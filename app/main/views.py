@@ -10,6 +10,13 @@ from .. import db, mail, celery
 from ..models import Permission, Role, User, Post, Comment, Message, Category, Star
 from ..decorators import admin_required, permission_required
 from datetime import datetime
+from app.tasks.celerymail import send_async_email
+
+
+
+
+
+
 
 
 @main.before_app_request
@@ -85,10 +92,10 @@ def index():
 #                     sendto=follower.follower)
 #         db.session.add(message)
 #     db.session.commit()
-@celery.task
-def send_async_email(msg):
-    with app.app_context():
-        mail.send(msg)
+# @celery.task
+# def send_async_email(msg):
+#     with app.app_context():
+#         mail.send(msg)
 
 
 
@@ -103,9 +110,9 @@ def writepost():
                     author=current_user._get_current_object())                  
                      #内容、标题、作者、类别
         db.session.add(post)
-             
-        msg = mailmessage('Hello from Flask',
-                  recipients='ifwenvlook@163.com')
+        app = current_app._get_current_object()
+        subject = 'test'
+        msg = mailmessage('Hello from Flask',recipients='ifwenvlook@163.com')
         msg.body = 'This is a test email sent from a background Celery task.'
         send_async_email.delay(msg)
         flash("博客已发布")   
