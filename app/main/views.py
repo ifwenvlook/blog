@@ -86,12 +86,13 @@ def writepost():
                     author=current_user._get_current_object())                  
                      #内容、标题、作者、类别
         db.session.add(post)
+        db.session.commit()
         # msg = mailmessage('Hello from Flask',recipients=['ifwenvlook@163.com'] )
         # msg.body = 'Fly_blog的测试邮件.'
         # send_async_email.delay(msg)
         username = current_user.username
-        post = post
-        send_async_webpush.delay(username=username,post=post)
+        postid = post.id
+        send_async_webpush.delay(username=username,postid=postid)
         flash("博客已发布")   
         return redirect(url_for('.index'))
     return render_template('writepost.html', form=form, )
@@ -511,31 +512,28 @@ def showwebpush(username):
 @login_required
 @permission_required(Permission.COMMENT)
 def webpush_unconfirmed(id):
-    webpush = Message.query.get_or_404(id)
+    webpush = Webpush.query.get_or_404(id)
     webpush.confirmed = True
-    db.session.add(webpush)
-    return redirect(url_for('.showwebpush',
-                            page=request.args.get('page', 1, type=int)),username=current_user.username)
+    db.session.add(webpush)    
+    return redirect(url_for('.showwebpush',page=request.args.get('page', 1, type=int),username=request.args.get('username')))
 
 @main.route('/webpush/confirmed/<int:id>')
 @login_required
 @permission_required(Permission.COMMENT)
 def webpush_confirmed(id):
-    webpush = Message.query.get_or_404(id)
+    webpush = Webpush.query.get_or_404(id)
     webpush.confirmed = False
     db.session.add(webpush)
-    return redirect(url_for('.showwebpush',
-                            page=request.args.get('page', 1, type=int)),username=current_user.username)
+    return redirect(url_for('.showwebpush',page=request.args.get('page', 1, type=int),username=request.args.get('username')))
 
-@main.route('/showmessage/delete/<int:id>')
+@main.route('/showwebpush/delete/<int:id>')
 @login_required
 @permission_required(Permission.COMMENT)
 def webpush_delete(id):
-    webpush = Message.query.get_or_404(id)   
-    db.session.delete(webpush)
-    flash('推送删除成功')
-    return redirect(url_for('.showmessage',
-                            page=request.args.get('page', 1, type=int)))
+    webpush = Webpush.query.get_or_404(id)   
+    db.session.delete(webpush)    
+    flash('消息删除成功')
+    return redirect(url_for('.showwebpush',page=request.args.get('page', 1, type=int),username=request.args.get('username')))
 
 
 @main.route('/showmessage')

@@ -2,29 +2,54 @@
 <ul class="comment">
         {% for webpush in webpushs %}  
             {% if webpush.sendto == current_user %}
-            <li class="comment">
                 <div class="comment-thumbnail">
-                    <!-- <a href="{{ url_for('.user', username=webpush.sendto.username) }}">
-                        <img class="img-rounded profile-thumbnail" src="{{ webpush.author.gravatar(size=40) }}">
-                    </a> -->
-                </div>
-                <div class="comment-content">
+                <a href="{{ url_for('.user', username=webpush.post.author.username) }}">
+                    <img class="img-rounded profile-thumbnail" src="{{ webpush.post.author.gravatar(size=40) }}">
+                </a>
+                </div>  
+                <div class="comment-content"> 
                     <div class="comment-date">{{ webpush.timestamp}}</div>
-                    <div class="comment-sendto">来自<a href="#">{{ webpush.author }}</a>的消息:</div>
+                    <div class="comment-sendto">
                         <div class="comment-body">
-                        {{ webpush.body }}                         
-                        </div>                     
-                    {% if webpush %}
-                    <br>                   
-                        {% if not webpush.confirmed %}
-                        <a class="btn btn-danger btn-xs" href="{{ url_for('.webpush_unconfirmed', id=webpush.id, page=page) }}">标记为已读</a> 
-                        {% else %}
-                        <a class="btn btn-default btn-xs" href="{{ url_for('.webpush_confirmed', id=webpush.id, page=page) }}">标记为未读</a> 
-                        {% endif %}                       
-                    {% endif %}                 
-                </div>
-            </li>  
+                        <a href="{{ url_for('main.user', username=webpush.author.username) }}">{{ webpush.author.username }}</a>
+                        发表了新文章：
+                        </div>
+                    </div>
+                <div class="post-head">
+                <a href="{{ url_for('.post', id=webpush.post.id) }}"><h2>{{webpush.post.head }} <small></a>&nbsp;&nbsp;&nbsp;阅读:{{ webpush.post.visits }}&nbsp;
+                收藏:{{ webpush.post.stared.__len__() }}</small></h2>
+                </div>                     
+
+                <div class="post-body">
+                <a style="text-decoration:none; color:black" href="{{ url_for('.post', id=webpush.post.id) }}">
+                {% if webpush.post.body_html %}
+                    {{ webpush.post.head_html | safe }}<br/>
+                    {% if webpush.post.body[200] %}
+                    {{ webpush.post.body_html[0:200] | safe }}....
+                    {% else %}
+                    {{ webpush.post.body_html | safe }}
+                    {% endif %}
+                {% else %}
+                    {{ webpush.post.head }}<br/>
+                    {% if post.body[200] %}
+                    {{ webpush.post.body[0:200]}}...
+                    {% else %}
+                    {{ webpush.post.body}}
+                    {% endif %}                
+                {% endif %}
+                </a>                      
+                </div>                     
+                {% if webpush %}
+                <br>                   
+                    {% if not webpush.confirmed %}
+                    <a class="btn btn-danger btn-xs" href="{{ url_for('.webpush_unconfirmed', id=webpush.id, page=page,username=current_user.username) }}">标记为已读</a> 
+                    {% else %}
+                    <a class="btn btn-default btn-xs" href="{{ url_for('.webpush_confirmed', id=webpush.id, page=page,username=current_user.username) }}">标记为未读</a> 
+                    {% endif %} 
+                    <a class="btn btn-default btn-xs" href="{{ url_for('.webpush_delete', id=webpush.id, page=page,username=current_user.username) }}">删除消息</a> 
+                {% endif %}  
+                </div>               
             {% endif %}    
-        {% endfor %}
+        {% endfor %}        
 </ul>
 {% endif %}

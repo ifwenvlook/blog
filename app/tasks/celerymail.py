@@ -9,12 +9,13 @@ def send_async_email(msg):
         mail.send(msg)
 
 @celery.task
-def send_async_webpush(username,post):
+def send_async_webpush(username,postid):
 	app = create_app('default')
 	with app.app_context():
 	    user = User.query.filter_by(username=username).first()
-	    post = post
+	    post = Post.query.get(postid)	    
 	    followers = user.followers
 	    for follower in followers:
-	        webpush = Webpush(head=post.head,body=post.body,sendto=follower.follower)
+	    	if follower.follower != user:	    		
+	        	webpush = Webpush(sendto=follower.follower,author=user,post_id=post.id)
 	        

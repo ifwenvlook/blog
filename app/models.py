@@ -66,12 +66,11 @@ class Follow(db.Model):
 class Webpush(db.Model):
     __tablename__ = 'webpushs'
     id = db.Column(db.Integer, primary_key=True)
-    head = db.Column(db.String(64))
-    body = db.Column(db.Text)
     timestamp = db.Column(db.DateTime,  default=datetime.now) 
     confirmed = db.Column(db.Boolean,default=False)
-    author = db.Column(db.String(64),default='Administrator')
+    author_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     sendto_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     def __repr__(self):
         return '<Webpush %r  push_time %r >' % (self.head,self.timestamp)
 
@@ -132,7 +131,9 @@ class User(UserMixin, db.Model):
 
     messageds = db.relationship('Message', backref='sendto', lazy='dynamic', primaryjoin='Message.sendto_id==User.id')
 
-    webpushs = db.relationship('Webpush', backref='sendto', lazy='dynamic')
+    webpushs = db.relationship('Webpush', backref='sendto', lazy='dynamic', primaryjoin='Webpush.sendto_id==User.id')
+
+    websents = db.relationship('Webpush', backref='author', lazy='dynamic', primaryjoin='Webpush.author_id==User.id')
 
 
 
@@ -146,7 +147,9 @@ class User(UserMixin, db.Model):
                 total=total+1
         return total
     def lastwebpush(self):
-        return self.webpushs[-1]
+        if self.webpushs.count()>0:
+            return self.webpushs[-1]
+        
 
 
 
@@ -443,6 +446,7 @@ class Post(db.Model):
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
     category_id = db.Column(db.Integer, db.ForeignKey('categorys.id'))
     visits = db.Column(db.Integer,nullable=False,default=int(10))
+    webpushs = db.relationship('Webpush',backref='post',lazy='dynamic')
 
     @staticmethod
     def hotpost():    #热门文章排序，取前10    

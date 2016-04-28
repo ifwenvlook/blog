@@ -173,41 +173,54 @@ type="image/x-icon">
                   </li><!-- /.notice -->
 
                   <!-- Tasks Menu -->
-                  
-                  <li class="dropdown tasks-menu">
-                    <!-- Menu Toggle Button -->
+                  <li class="dropdown messages-menu">
+                    <!-- Menu toggle button -->
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                       <i class="fa fa-flag-o"></i>
-                      <span class="label label-danger">{{ current_user.unreadwebpushs()}}</span>
-                    </a>
+                      <span class="label label-warning">{{ current_user.unreadwebpushs()}} </span>
+                    </a>                
                     <ul class="dropdown-menu">
-                      <li class="header">你有{{ current_user.unreadwebpushs()}}条订阅更新</li>
+                      <li class="header">你有 {{ current_user.unreadwebpushs()}} 条未读订阅</li>
                       <li>
-                        <!-- Inner menu: contains the tasks -->
+                        <!-- inner menu: contains the messages -->
+                        {% if current_user.unreadwebpushs() > 0  %}
                         <ul class="menu">
-                          <li><!-- Task item -->
+                          <li><!-- start message -->
                             <a href="{{ url_for('main.showwebpush',username=current_user.username) }}">
-                              <!-- Task title and progress text -->
-                              <h3>
-                                11
-                                <small class="pull-right">最近更新</small>
-                              </h3>
-                              <!-- The progress bar -->
-                              <div class="progress xs">
-                                <!-- Change the css width attribute to simulate progress -->
-                                <div class="progress-bar progress-bar-aqua" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-                                  <span class="sr-only">20% Complete</span>
-                                </div>
+                              <div class="pull-left">
+                                <!-- User Image -->  
+                                {% if current_user.is_authenticated %}                          
+                                <img class="user-image" alt="User Image" src="{{ current_user.lastwebpush().post.author.gravatar(size=256) }}">
+                                {% endif %}
                               </div>
+                              <!-- Message title and timestamp -->
+                              <h4>                                    
+                                <small><i class="fa fa-clock-o"></i> 最近更新</small>
+                              </h4>
+                              <br>
+                              <!-- The message -->
+                              <p>{{ current_user.lastwebpush().post.author.username }}发表了文章:{{ current_user.lastwebpush().post.head }}</p>
                             </a>
-                          </li><!-- end task item -->
-                        </ul>
+                          </li><!-- end message -->
+                        </ul><!-- /.menu -->
+                        {% else %}
+                        <ul class="menu">
+                          <li><!-- start message -->
+                            <a href="{{ url_for('main.showwebpush',username=current_user.username) }}">
+                            <h4>   
+                            最近没有更新                         
+                                <small><i class="fa fa-clock-o"></i> 最近更新</small>
+                            </h4>
+                            </a>
+                          </li>
+                        </ul> 
+                        {% endif %}
                       </li>
-                      <li class="footer">
-                        <a href="#">View all tasks</a>
-                      </li>
+                      <li class="footer"><a href="{{ url_for('main.showwebpush',username=current_user.username) }}">查看全部订阅</a></li>
                     </ul>
-                  </li>
+                  </li><!-- /.notice -->
+                  
+                  
                   {% endif %}
                   <!-- 用户头像 -->
                   {% if current_user.is_authenticated %}
