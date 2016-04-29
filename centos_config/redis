@@ -1,0 +1,76 @@
+#!/bin/sh  
+#chkconfig: 345 86 14  
+#description: Startup and shutdown script for Redis  
+   
+PROGDIR=/usr/local/bin #安装路径  
+PROGNAME=redis-server  
+DAEMON=$PROGDIR/$PROGNAME  
+CONFIG=/root/redis-stable/redis.conf  
+PIDFILE=/var/run/redis.pid  
+DESC="redis daemon"  
+SCRIPTNAME=/etc/rc.d/init.d/redis  
+   
+start()  
+{  
+         if test -x $DAEMON  
+         then  
+        echo -e "Starting $DESC: $PROGNAME"  
+                   if $DAEMON $CONFIG  
+                   then  
+                            echo -e "OK"  
+                   else  
+                            echo -e "failed"  
+                   fi  
+         else  
+                   echo -e "Couldn't find Redis Server ($DAEMON)"  
+         fi  
+}  
+   
+stop()  
+{  
+         if test -e $PIDFILE  
+         then  
+                   echo -e "Stopping $DESC: $PROGNAME"  
+                   if kill `cat $PIDFILE`  
+                   then  
+                            echo -e "OK"  
+                   else  
+                            echo -e "failed"  
+                   fi  
+         else  
+                   echo -e "No Redis Server ($DAEMON) running"  
+         fi  
+}  
+   
+restart()  
+{  
+    echo -e "Restarting $DESC: $PROGNAME"  
+    stop  
+         start  
+}  
+   
+list()  
+{  
+         ps aux | grep $PROGNAME  
+}  
+   
+case $1 in  
+         start)  
+                   start  
+        ;;  
+         stop)  
+        stop  
+        ;;  
+         restart)  
+        restart  
+        ;;  
+         list)  
+        list  
+        ;;  
+   
+         *)  
+        echo "Usage: $SCRIPTNAME {start|stop|restart|list}" >&2  
+        exit 1  
+        ;;  
+esac  
+exit 0  
