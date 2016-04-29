@@ -218,7 +218,9 @@ def post_delete(id):
     db.session.delete(post)
     for comment in post.comments:
         db.session.delete(comment)
-    flash('博客以及相关的评论已删除')
+    for webpush in post.webpushs:
+        db.session.delete(webpush)
+    flash('博客以及相关的评论、推送已删除')
     return redirect(url_for('.user', username=post.author.username))
 
 
