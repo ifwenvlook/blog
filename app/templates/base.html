@@ -301,13 +301,13 @@ type="image/x-icon">
       <li class="treeview">                      
           <a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>全部分类</span> <i class="fa fa-angle-left pull-right"></i></a>
           <ul class="treeview-menu" style="display: block;">
-            <li><a href= "{{ url_for('main.category', id=1) }}">python</a></li>                  
-            <li><a href="{{ url_for('main.category', id=2) }}">web后端</a></li>
-            <li><a href= "{{ url_for('main.category', id=3) }}">linux</a></li>
+            <li><a href= "{{ url_for('main.category', id=1) }}">Python({{category.query.get(1).posts.count()}})</a></li>                  
+            <li><a href="{{ url_for('main.category', id=2) }}">Web</a></li>
+            <li><a href= "{{ url_for('main.category', id=3) }}">Linux</a></li>
             <li><a href= "{{ url_for('main.category', id=4) }}">c/c++</a></li>
-            <li><a href= "{{ url_for('main.category',id=5) }}">数据库</a></li>
-            <li><a href= "{{ url_for('main.category', id=6) }}">前端</a></li>
-            <li><a href= "{{ url_for('main.category',id=7) }}">杂记</a></li>
+            <li><a href= "{{ url_for('main.category',id=5) }}">Database</a></li>
+            <li><a href= "{{ url_for('main.category', id=6) }}">Front-end</a></li>
+            <li><a href= "{{ url_for('main.category',id=7) }}">Essays</a></li>
           </ul>
       </li>
 
