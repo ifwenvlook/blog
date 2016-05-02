@@ -37,5 +37,5 @@ selenium==2.45.0
 six==1.4.1
 SQLAlchemy==1.0.12
 uWSGI==2.0.12
-Werkzeug==0.10.4
+Werkzeug==0.11.9
 WTForms==1.0.5
