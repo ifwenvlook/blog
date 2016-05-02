@@ -17,7 +17,8 @@ from ..tasks.celerymail import send_async_email, send_async_webpush
 def before_request(): #定义全局变量
     g.search_form = SearchForm()
     g.hot_post=Post().hotpost()
-    g.current_time=datetime.utcnow()   
+    g.current_time=datetime.utcnow()
+    g.category=Category()   
 
 
 @main.after_app_request
