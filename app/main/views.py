@@ -589,6 +589,10 @@ def message_delete(id):
 def firstpage():
     return render_template('aboutme.html',  )
 
+@main.route('/video', methods=['GET', 'POST'])
+def video():
+    return render_template('video.html',  )
+
 
 
 # @main.route('/firstpage', methods=['GET', 'POST'])

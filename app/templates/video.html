@@ -1,0 +1,54 @@
+
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Fly - video{% endblock %}
+
+{% block page_content %}
+
+{{super()}}
+
+<section >
+<h1><strong>视频来自<a href="http://www.bilibili.com/">Bilibili</a></strong></h1>
+<br>
+
+12分钟看完90万字科幻神作《三体》
+<br>
+<object type="application/x-shockwave-flash" class="player" data="http://static.hdslb.com/play.swf" width="950" height="482" id="player_placeholder" style="visibility: visible;"><param name="bgcolor" value="#ffffff"><param name="allowfullscreeninteractive" value="true"><param name="allowfullscreen" value="true"><param name="quality" value="high"><param name="allowscriptaccess" value="always"><param name="wmode" value="direct"><param name="flashvars" value="cid=4486145&amp;aid=2871480&amp;pre_ad=0"></object>
+<br><br>
+
+
+三体·黑暗森林同人短片
+<br>
+<object type="application/x-shockwave-flash" class="player" data="http://static.hdslb.com/play.swf" width="950" height="482" id="player_placeholder" style="visibility: visible;"><param name="bgcolor" value="#ffffff"><param name="allowfullscreeninteractive" value="true"><param name="allowfullscreen" value="true"><param name="quality" value="high"><param name="allowscriptaccess" value="always"><param name="wmode" value="direct"><param name="flashvars" value="cid=4549722&amp;aid=2910036&amp;pre_ad=0"></object>
+
+
+<br><br>
+妹子没吃药打架子鼓感觉自己萌萌哒
+<br>
+<iframe height="482" width="950" class="player" src="https://secure.bilibili.com/secure,cid=1942758&amp;aid=1276226" scrolling="no" border="0" frameborder="no" framespacing="0" onload="window.securePlayerFrameLoaded=true"></iframe><img src="https://secure.bilibili.com/images/grey.gif" id="img_ErrCheck" style="display:none"><script type="text/javascript" src="http://static.hdslb.com/js/page.player_error.js"></script>
+
+
+<br><br>
+银河系富二代在地球开车违章
+<br>
+<object type="application/x-shockwave-flash" class="player" data="http://static.hdslb.com/play.swf" width="950" height="482" id="player_placeholder" style="visibility: visible;"><param name="bgcolor" value="#ffffff"><param name="allowfullscreeninteractive" value="true"><param name="allowfullscreen" value="true"><param name="quality" value="high"><param name="allowscriptaccess" value="always"><param name="wmode" value="direct"><param name="flashvars" value="cid=7277180&amp;aid=4488272&amp;pre_ad=0"></object>
+
+<br><br>
+papi纪念莎士比亚400周年特别视频
+<br>
+<object type="application/x-shockwave-flash" class="player" data="http://static.hdslb.com/play.swf" width="950" height="482" id="player_placeholder" style="visibility: visible;"><param name="bgcolor" value="#ffffff"><param name="allowfullscreeninteractive" value="true"><param name="allowfullscreen" value="true"><param name="quality" value="high"><param name="allowscriptaccess" value="always"><param name="wmode" value="direct"><param name="flashvars" value="cid=7238454&amp;aid=4466859&amp;pre_ad=0"></object>
+
+
+
+
+
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}
