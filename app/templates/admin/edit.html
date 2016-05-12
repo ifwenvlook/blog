@@ -71,12 +71,12 @@ document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()
 	          <td>{{ moment(user.member_since).format('L') }}</td>          
 	          {% if user != current_user %}
 		          <td><a href="{{ url_for('admin.admin2user',id=user.id) }}" class="label label-danger">
-		              <span class="label label-danger">降为普通用户</span>
+		              降为普通用户
 		              </a>
 		          </td>
 	          {% else %}
-		          <td><a href="#" class="label label-danger">
-		              <span class="label label-danger">愚蠢的人类，给你脸不要脸？</span>
+		          <td><a href="#" class="label label-default">
+		              花式作死
 		              </a>
 		          </td>
 	          {% endif %}

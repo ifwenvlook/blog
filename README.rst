@@ -23,8 +23,15 @@ Setup flask development:
 
 
 
-Quick Start
+Quick Start Blog
 -----------
+Run Mysql、redit and celery:
+	$service redis start
+
+	$service mysqld start
+
+	$celery worker -A celery_worker.celery -l INFO &
+	
 Create testdata and upgrade to mysql: 
 	$ python manage.py db init
 
