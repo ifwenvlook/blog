@@ -13,12 +13,20 @@ from datetime import datetime
 from ..tasks.celerymail import send_async_email, send_async_webpush
 
 
+def deletenoneuser():
+    noneuser = User.query.filter_by(username=None).all()
+    for user in noneuser:
+        db.session.delete(user)
+    db.session.commit()
+
 @main.before_app_request
 def before_request(): #定义全局变量
     g.search_form = SearchForm()
     g.hot_post=Post().hotpost()
     g.current_time=datetime.utcnow()
-    g.category=Category()   
+    g.category=Category() 
+    
+
 
 
 @main.after_app_request
@@ -56,7 +64,8 @@ def search_results(query):
 
 
 @main.route('/', methods=['GET', 'POST'])
-def index():    
+def index(): 
+    deletenoneuser()   
     user = User() 
     message = Message() 
     category = Category()   

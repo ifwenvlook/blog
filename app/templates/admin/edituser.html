@@ -26,14 +26,14 @@
     </nav>                       
 </header>
 </div>
-</body>
+</body>x`
 
 {% endblock %}
 {% block page_content %}
 
 {{super()}}
 
-<h1><strong> {{ current_user.username }},欢迎来到vlblog后台 </strong><small>{{ moment(g.current_time).format('LLL') }}</small></h1>
+<h1><strong> {{ current_user.username }},欢迎来到Vlblog后台 </strong><small>{{ moment(g.current_time).format('LLL') }}</small></h1>
 
 <!--     <p>That was {{ moment(g.current_time).fromNow(refresh=True) }}</p>
 <script >
@@ -52,7 +52,7 @@ document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()
 
 
 <h3><strong>用户列表</strong>
-<a href="{{ url_for('admin.adduser') }}">&nbsp;<small>添加用户</small><i class="fa fa-plus"></i></a>
+<a href="{{ url_for('admin.adduser') }}">&nbsp;<small>添加普通用户</small><i class="fa fa-plus"></i></a>
 
 </h3>
 <div class="row">
@@ -69,11 +69,16 @@ document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()
           {% if user.username  %}
 	          <td><a href="{{ url_for('main.user',username=user.username) }}">{{ user.username }}</a></td>          
 	          <td>{{ moment(user.member_since).format('L') }}</td>          
-	          {% if user != current_user %}
+	          {% if not user.is_administrator() %}
 		          <td><a href="{{ url_for('admin.deleteuser',id=user.id) }}" class="label label-danger">
 		              删除用户
 		              </a>
 		          </td>
+            {% elif user.is_administrator() and user != current_user %}
+              <td><a href="#" class="label label-default">
+                  删除Admin
+                  </a>
+              </td>
             {% else %}
               <td><a href="#" class="label label-default">
                   花式作死
