@@ -2,13 +2,13 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 
-{% block title %}Fly-admin{% endblock %}
+{% block title %}Fly-admin后台{% endblock %}
 
 {% block navbar %}
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper" style="position: relative">
   <header class="main-header" style="position: fixed;top: 0px;width:100%;max-height:100px;z-index:1030"> <!-- 固定置顶 -->
-    <a href="#" class="logo">
+    <a href="{{ url_for('main.index') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>F</b>ly</span>
       <!-- logo for regular state and mobile devices -->
@@ -32,22 +32,29 @@
 {% block page_content %}
 
 {{super()}}
-<div class="page-header">
-    <h4>
-    {% if current_user.is_authenticated %} {{ current_user.username }},欢迎来到vlblog后台
-    {% endif %}
-    </h4>
-    <h4>
-    <p>现在是{{ moment(g.current_time).format('LLL') }}.</p>
+
+<h1><strong> {{ current_user.username }},欢迎来到vlblog后台 </strong><small>{{ moment(g.current_time).format('LLL') }}</small></h1>
+
 <!--     <p>That was {{ moment(g.current_time).fromNow(refresh=True) }}</p>
-    <script >
-    document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());     
-    // 时间
-    </script>  -->
-    </h4>
-</div>
-<h1><strong>后台管理员列表</strong></h1>
-<br><br>
+<script >
+document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());     
+// 时间
+</script>  -->
+
+<a href="{{ url_for('admin.edit') }}" class="btn btn-default" >后台管理员</a>
+<a href="{{ url_for('admin.edituser') }}" class="btn btn-primary">所有用户</a>
+<a href="#" class="btn btn-default">文章管理</a>
+<a href="#" class="btn btn-default">分类管理</a>
+<a href="#" class="btn btn-default">评论管理</a>
+<a href="#" class="btn btn-default">私信管理</a>
+<a href="#" class="btn btn-default">推送管理</a>
+</br>
+
+
+<h3><strong>用户列表</strong>
+<a href="{{ url_for('admin.adduser') }}">&nbsp;<small>添加用户</small><i class="fa fa-plus"></i></a>
+
+</h3>
 <div class="row">
  <div class="col-xs-12">
     <div class="box-body table-responsive no-padding">
@@ -57,21 +64,21 @@
           <th>注册时间</th>
           <th>操作</th>          
         </tr>
-        {% for user in admins %}
+        {% for user in users %}
         <tr>
           {% if user.username  %}
 	          <td><a href="{{ url_for('main.user',username=user.username) }}">{{ user.username }}</a></td>          
 	          <td>{{ moment(user.member_since).format('L') }}</td>          
 	          {% if user != current_user %}
-		          <td><a href="{{ url_for('admin.admin2user',id=user.id) }}" class="label label-danger">
-		              <span class="label label-danger">降为普通用户</span>
+		          <td><a href="{{ url_for('admin.deleteuser',id=user.id) }}" class="label label-danger">
+		              删除用户
 		              </a>
 		          </td>
-	          {% else %}
-		          <td><a href="#" class="label label-danger">
-		              <span class="label label-danger">愚蠢的人类，给你脸不要脸？</span>
-		              </a>
-		          </td>
+            {% else %}
+              <td><a href="#" class="label label-default">
+                  花式作死
+                  </a>
+              </td>
 	          {% endif %}
 	      {% endif %}
         </tr>
@@ -81,10 +88,12 @@
 <!--   </div> --><!-- /.box -->
 </div>
 </div>
+{% if pagination %}
+
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.edituser') }}
+</div>
+{% endif %}
 
 {% endblock %}
 
-{% block scripts %}
-{{ super() }}
-{{ pagedown.include_pagedown() }}
-{% endblock %}
