@@ -23,5 +23,5 @@ def admin2user(id):
 	user = User.query.get_or_404(id)
 	user.role = Role.query.filter_by(name='User').first()
 	db.session.add(user)
-	flash ('已将" '+user.name+' "降为普通用户')
+	flash ('已将" '+user.username+' "降为普通用户')
 	return redirect(url_for('.edit'))

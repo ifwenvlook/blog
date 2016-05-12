@@ -60,21 +60,20 @@
         {% for user in admins %}
         <tr>
           {% if user.username  %}
-          <td><a href="{{ url_for('main.user',username=user.username) }}">{{ user.username }}</a></td>          
-          <td>{{ moment(user.member_since).format('L') }}</td>
-          {% endif %}
-          {% if user != current_user %}
-          <td><a href="{{ url_for('admin.admin2user',id=user.id) }}" class="label label-danger">
-              <span class="label label-danger">降为普通用户</span>
-              </a>
-          </td>
-          {% else %}
-          <td><a href="#" class="label label-danger">
-              <span class="label label-danger">愚蠢的人类，给你脸不要脸？</span>
-              </a>
-          </td>
-          {% endif %}
-
+	          <td><a href="{{ url_for('main.user',username=user.username) }}">{{ user.username }}</a></td>          
+	          <td>{{ moment(user.member_since).format('L') }}</td>          
+	          {% if user != current_user %}
+		          <td><a href="{{ url_for('admin.admin2user',id=user.id) }}" class="label label-danger">
+		              <span class="label label-danger">降为普通用户</span>
+		              </a>
+		          </td>
+	          {% else %}
+		          <td><a href="#" class="label label-danger">
+		              <span class="label label-danger">愚蠢的人类，给你脸不要脸？</span>
+		              </a>
+		          </td>
+	          {% endif %}
+	      {% endif %}
         </tr>
         {% endfor %}
       </table>
