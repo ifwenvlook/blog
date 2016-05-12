@@ -50,4 +50,7 @@ def create_app(config_name):
     from .tasks import tasks as tasks_blueprint
     app.register_blueprint( tasks_blueprint , url_prefix='/tasks')
 
+    from .admin import admin as admin_blueprint
+    app.register_blueprint( admin_blueprint , url_prefix='/admin')
+
     return app

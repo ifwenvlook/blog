@@ -595,10 +595,4 @@ def video():
 
 
 
-# @main.route('/firstpage', methods=['GET', 'POST'])
-# def firstpage():
-#     return render_template('firstpage.html')
 
-# @main.route('/firstpage', methods=['GET', 'POST'])
-# def firstpage():
-#     return render_template('first1.html')

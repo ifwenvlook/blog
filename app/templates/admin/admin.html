@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Fly-admin{% endblock %}
+
+{% block navbar %}
+<body class="hold-transition skin-blue sidebar-mini">
+<div class="wrapper" style="position: relative">
+  <header class="main-header" style="position: fixed;top: 0px;width:100%;max-height:100px;z-index:1030"> <!-- 固定置顶 -->
+    <a href="#" class="logo">
+      <!-- mini logo for sidebar mini 50x50 pixels -->
+      <span class="logo-mini"><b>F</b>ly</span>
+      <!-- logo for regular state and mobile devices -->
+      <span class="logo-lg"><b>梦开始的地方</b></span>
+    </a>
+    <nav class="navbar navbar-static-top" role="navigation">
+    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+    <span class="sr-only">Toggle navigation</span>
+    </a>
+          <div class="navbar-header">            
+            <ul class="nav navbar-nav">
+            <li><a href="{{ url_for('main.index') }}">回到主页</a></li>
+            </ul> 
+          </div>
+    </nav>                       
+</header>
+</div>
+</body>
+
+{% endblock %}
+{% block page_content %}
+
+{{super()}}
+<div class="page-header">
+    <h4>
+    {% if current_user.is_authenticated %} {{ current_user.username }},欢迎来到vlblog后台
+    {% endif %}
+    </h4>
+    <h4>
+    <p>现在是{{ moment(g.current_time).format('LLL') }}.</p>
+<!--     <p>That was {{ moment(g.current_time).fromNow(refresh=True) }}</p>
+    <script >
+    document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());     
+    // 时间
+    </script>  -->
+    </h4>
+</div>
+<h1><strong>后台管理员列表</strong></h1>
+<br><br>
+<div class="row">
+ <div class="col-xs-12">
+    <div class="box-body table-responsive no-padding">
+      <table class="table table-hover">
+        <tr>
+          <th>用户</th>          
+          <th>注册时间</th>
+          <th>操作</th>          
+        </tr>
+        {% for user in admins %}
+        <tr>
+          {% if user.username  %}
+          <td><a href="{{ url_for('main.user',username=user.username) }}">{{ user.username }}</a></td>          
+          <td>{{ moment(user.member_since).format('L') }}</td>
+          {% endif %}
+          {% if user != current_user %}
+          <td><a href="{{ url_for('admin.admin2user',id=user.id) }}" class="label label-danger">
+              <span class="label label-danger">降为普通用户</span>
+              </a>
+          </td>
+          {% else %}
+          <td><a href="#" class="label label-danger">
+              <span class="label label-danger">愚蠢的人类，给你脸不要脸？</span>
+              </a>
+          </td>
+          {% endif %}
+
+        </tr>
+        {% endfor %}
+      </table>
+    </div><!-- /.box-body -->
+<!--   </div> --><!-- /.box -->
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ pagedown.include_pagedown() }}
+{% endblock %}
