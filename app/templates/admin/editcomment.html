@@ -1,0 +1,76 @@
+{% extends "admin/edit.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Fly-admin评论管理{% endblock %}
+
+
+{% block page_content %}
+
+<h1><strong> {{ current_user.username }},欢迎来到Blog后台 </strong><small>{{ moment(g.current_time).format('LLL') }}</small></h1>
+
+<!--     <p>That was {{ moment(g.current_time).fromNow(refresh=True) }}</p>
+<script >
+document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());     
+// 时间
+</script>  -->
+
+<a href="{{ url_for('admin.edit') }}" class="btn btn-default" >后台管理员</a>
+<a href="{{ url_for('admin.edituser') }}" class="btn btn-default">所有用户</a>
+<a href="{{ url_for('admin.editpost') }}" class="btn btn-default">文章管理</a>
+<a href="{{ url_for('admin.editcategory') }}" class="btn btn-default">分类管理</a>
+<a href="{{ url_for('admin.editcomment') }}" class="btn btn-primary">评论管理</a>
+</br>
+
+<h3><strong>评论管理</strong></h3>
+
+
+{% if current_user.is_authenticated %} 
+<ul class="comments">
+    {% for comment in comments %}
+    <li class="comment">
+        <div class="comment-thumbnail">
+            <a href="{{ url_for('main.user', username=comment.author.username) }}">
+                <img class="img-rounded profile-thumbnail" src="{{ comment.author.gravatar(size=40) }}">
+            </a>
+        </div>      
+        <div class="comment-content">
+            <div class="comment-date">{{ comment.timestamp }}</div>
+            <div class="comment-author"><a href="{{ url_for('main.user', username=comment.author.username) }}">{{ comment.author.username }}</a></div>
+            <div class="post link">
+                评论了博客:
+                <a href="{{url_for('main.post',id=comment.post_id)}}">{{comment.post.head}}</a>                       
+            </div>
+            <div class="comment-body">
+                {% if comment.disabled %}
+                <p><i>This comment has been disabled by a moderator.</i></p>
+                {% endif %}
+                {% if not comment.disabled %}
+                    {% if comment.body_html %}
+                        {{ comment.body_html | safe }}
+                    {% else %}
+                        {{ comment.body }}
+                    {% endif %}
+                {% endif %}
+            </div>            
+                <br>
+                {% if comment.disabled %}
+                <a class="btn btn-primary btn-xs" href="{{ url_for('admin.editcomment_enable', id=comment.id, page=page) }}">恢复正常</a>
+                {% else %}
+                <a class="btn btn-danger btn-xs" href="{{ url_for('admin.editcomment_disable', id=comment.id, page=page) }}">屏蔽</a>
+                {% endif %}    
+                <a class="btn btn-danger btn-xs" href="{{ url_for('admin.deletecomment_enable', id=comment.id, page=page) }}">删除</a>       
+        </div>
+    </li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, 'admin.editcomment') }}
+</div>
+{% endif %}
+
+
+{% endblock %}

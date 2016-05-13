@@ -144,24 +144,48 @@ def addcategory():
 
 
 
-
-
-@admin.route('/editcomment', methods=['GET', 'POST'])
+@admin.route('/editcomment')
 @login_required
 @admin_required
 def editcomment():
-	pass
+    page = request.args.get('page', 1, type=int)
+    pagination = Comment.query.order_by(Comment.timestamp.desc()).paginate(
+        page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
+        error_out=False)
+    comments = pagination.items
+    return render_template('admin/editcomment.html', comments=comments,
+                           pagination=pagination, page=page,   )
 
 
-@admin.route('/editmessage', methods=['GET', 'POST'])
+@admin.route('/deletecomment/<int:id>')
 @login_required
 @admin_required
-def editmessage():
-	pass
+def deletecomment_enable(id):
+    comment = Comment.query.get_or_404(id)    
+    db.session.delete(comment)
+    return redirect(url_for('.editcomment',
+                            page=request.args.get('page', 1, type=int)), )   
 
-
-@admin.route('/editpush', methods=['GET', 'POST'])
+@admin.route('/editcomment/enable/<int:id>')
 @login_required
 @admin_required
-def editpush():
-	pass
+def editcomment_enable(id):
+    comment = Comment.query.get_or_404(id)
+    comment.disabled = False
+    db.session.add(comment)
+    return redirect(url_for('.editcomment',
+                            page=request.args.get('page', 1, type=int)), )
+
+
+@admin.route('/editcomment/disable/<int:id>')
+@login_required
+@admin_required
+def editcomment_disable(id):
+    comment = Comment.query.get_or_404(id)
+    comment.disabled = True
+    db.session.add(comment)
+    return redirect(url_for('.editcomment',
+                            page=request.args.get('page', 1, type=int)), )
+
+
+

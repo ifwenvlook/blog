@@ -72,7 +72,7 @@ class Webpush(db.Model):
     sendto_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     post_id = db.Column(db.Integer, db.ForeignKey('posts.id'))
     def __repr__(self):
-        return '<Webpush %r  push_time %r >' % (self.head,self.timestamp)
+        return '<Webpush %r  push_time %r >' % (self.sendto,self.timestamp)
 
 #私信
 class Message(db.Model):
