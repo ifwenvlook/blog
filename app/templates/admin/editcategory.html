@@ -1,0 +1,63 @@
+{% extends "admin/edit.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+{% import "_macros.html" as macros %}
+
+{% block title %}Fly-admin文章管理{% endblock %}
+
+
+{% block page_content %}
+
+
+
+<h1><strong> {{ current_user.username }},欢迎来到Blog后台 </strong><small>{{ moment(g.current_time).format('LLL') }}</small></h1>
+
+<!--     <p>That was {{ moment(g.current_time).fromNow(refresh=True) }}</p>
+<script >
+document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());     
+// 时间
+</script>  -->
+
+<a href="{{ url_for('admin.edit') }}" class="btn btn-default" >后台管理员</a>
+<a href="{{ url_for('admin.edituser') }}" class="btn btn-default">所有用户</a>
+<a href="{{ url_for('admin.editpost') }}" class="btn btn-default">文章管理</a>
+<a href="{{ url_for('admin.editcategory') }}" class="btn btn-primary">分类管理</a>
+<a href="{{ url_for('admin.editcomment') }}" class="btn btn-default">评论管理</a>
+<a href="{{ url_for('admin.editmessage') }}" class="btn btn-default">私信管理</a>
+<a href="{{ url_for('admin.editpush') }}" class="btn btn-default">推送管理</a>
+</br>
+
+<h3><strong>分类列表</strong>
+<a href="{{ url_for('admin.addcategory') }}">&nbsp;<small>创建新分类</small><i class="fa fa-plus"></i></a>
+</h3>
+
+<div class="row">
+ <div class="col-xs-12">
+    <div class="box-body table-responsive no-padding">
+      <table class="table table-hover">
+        <tr>
+          <th>ID</th>
+          <th>名称</th>
+          <th>文章总数</th>
+          <th>操作</th>
+        </tr>
+        {% for category in categorys %}
+          <tr>
+          <td>{{ category.id }}</td>
+          <td><a href="{{ url_for('main.category', id=category.id) }}">{{ category.name }}</a></td>
+          <td>{{category.posts.count()}}</td>
+          <td>
+          	  <a href="#" class="label label-primary">
+              编辑
+              </a>&nbsp;&nbsp;
+              <a href="#" class="label label-danger">
+              删除
+              </a>
+          </td>
+        </tr>
+        {% endfor %}
+      </table>
+    </div><!-- /.box-body -->
+<!--   </div> --><!-- /.box -->
+</div>
+</div>
+{% endblock %}

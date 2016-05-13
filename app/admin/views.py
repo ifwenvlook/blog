@@ -6,7 +6,7 @@ from ..models import Permission, Role, User, Post, Comment, Message, Category, S
 from ..decorators import admin_required, permission_required
 from .. import db
 from . import admin
-from .forms import AddadminForm, AdduserForm
+from .forms import AddadminForm, AdduserForm, AddcategoryForm
 
 
 @admin.route('/', methods=['GET', 'POST'])
@@ -80,7 +80,7 @@ def deleteuser(id):
 		db.session.delete(webpush)
 
 	db.session.delete(user)
-	flash ('已将" '+user.username+' "及相关内容删除')
+	flash ('已将和" '+user.username+' "相关的内容删除')
 	return redirect(url_for('.edituser'))
 
 @admin.route('/adduser', methods=['GET', 'POST'])
@@ -98,3 +98,69 @@ def adduser():
 		flash('已添加" '+user.username+' "为普通用户')
 		return redirect(url_for('.edituser'))
 	return render_template('admin/adduser.html',form=form)
+
+@admin.route('/editpost', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def editpost():	
+	page = request.args.get('page', 1, type=int)
+	pagination = Post.query.order_by(Post.timestamp.desc()).paginate(
+		page, per_page=current_app.config['FLASKY_COMMENTS_PER_PAGE'],
+		error_out=False)
+	posts = pagination.items
+	return render_template('admin/editpost.html',posts=posts,pagination=pagination, page=page)
+
+@admin.route('/post/delete/<int:id>')
+def deletepost(id):
+    post=Post.query.get_or_404(id)
+    db.session.delete(post)
+    for comment in post.comments:
+        db.session.delete(comment)
+    for webpush in post.webpushs:
+        db.session.delete(webpush)
+    flash('博客以及相关的评论、推送已删除')
+    return redirect(url_for('.editpost'))
+
+@admin.route('/editcategory', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def editcategory():
+	categorys = Category.query.order_by(Category.id).all()
+	return render_template('admin/editcategory.html',categorys=categorys)
+
+@admin.route('/addcategory', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def addcategory():
+	form = AddcategoryForm()
+	if form.validate_on_submit():
+		category = Category(name=form.name.data)
+		db.session.add(category)
+		db.session.commit()
+		flash('已添加" '+category.name+' "为新的分类')
+		return redirect(url_for('.editcategory'))
+	return render_template('admin/addcategory.html',form=form)
+
+
+
+
+
+@admin.route('/editcomment', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def editcomment():
+	pass
+
+
+@admin.route('/editmessage', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def editmessage():
+	pass
+
+
+@admin.route('/editpush', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def editpush():
+	pass

@@ -24,7 +24,7 @@ def before_request(): #定义全局变量
     g.search_form = SearchForm()
     g.hot_post=Post().hotpost()
     g.current_time=datetime.utcnow()
-    g.category=Category() 
+    g.categorys=Category.query.all() 
     
 
 

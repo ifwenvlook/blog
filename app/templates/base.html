@@ -302,15 +302,11 @@ type="image/x-icon">
        
       <li class="treeview">                      
           <a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>全部分类</span> <i class="fa fa-angle-left pull-right"></i></a>
+          {% for category in g.categorys %}
           <ul class="treeview-menu" style="display: block;">
-            <li><a href= "{{ url_for('main.category', id=1) }}">Python({{g.category.query.get(1).posts.count()}})</a></li>                  
-            <li><a href="{{ url_for('main.category', id=2) }}">Web({{g.category.query.get(2).posts.count()}})</a></li>
-            <li><a href= "{{ url_for('main.category', id=3) }}">Linux({{g.category.query.get(3).posts.count()}})</a></li>
-            <li><a href= "{{ url_for('main.category', id=4) }}">c/c++({{g.category.query.get(4).posts.count()}})</a></li>
-            <li><a href= "{{ url_for('main.category',id=5) }}">数据库({{g.category.query.get(5).posts.count()}})</a></li>
-            <li><a href= "{{ url_for('main.category', id=6) }}">前端({{g.category.query.get(6).posts.count()}})</a></li>
-            <li><a href= "{{ url_for('main.category',id=7) }}">杂记({{g.category.query.get(7).posts.count()}})</a></li>
+            <li><a href= "{{ url_for('main.category', id=1) }}">{{category.name}}({{category.posts.count()}})</a></li> 
           </ul>
+          {% endfor %}
       </li>
 
       <li class="treeview">

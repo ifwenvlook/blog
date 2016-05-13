@@ -2,8 +2,7 @@
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 
-{% block title %}Fly-添加普通用户{% endblock %}
-
+{% block title %}Fly-创建新分类{% endblock %}
 
 {% block navbar %}
 <body class="hold-transition skin-blue sidebar-mini">
@@ -33,7 +32,7 @@
 {% block page_content %}
 {{super()}}
 <div class="page-header">
-    <h1>添加普通用户</h1>
+    <h1>创建新分类</h1>
 </div>
 <div class="col-md-4">
     {{ wtf.quick_form(form) }}
