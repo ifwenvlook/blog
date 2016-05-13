@@ -33,6 +33,7 @@
 
 {{super()}}
 
+{% if current_user.is_administrator() %}
 <h1><strong> {{ current_user.username }},欢迎来到Blog后台 </strong><small>{{ moment(g.current_time).format('LLL') }}</small></h1>
 
 <!--     <p>That was {{ moment(g.current_time).fromNow(refresh=True) }}</p>
@@ -93,6 +94,10 @@ document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()
 <div class="pagination">
     {{ macros.pagination_widget(pagination, '.edit') }}
 </div>
+{% endif %}
+
+{%else %}
+<h3><strong>你没有权限进入后台，请联系网站管理员:<a href="mailto:ifwenvlook@163.com">ifwenvlook@163.com</a></strong></h3>
 {% endif %}
 
 {% endblock %}

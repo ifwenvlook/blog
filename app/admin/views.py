@@ -11,7 +11,6 @@ from .forms import AddadminForm, AdduserForm, AddcategoryForm
 
 @admin.route('/', methods=['GET', 'POST'])
 @login_required
-@admin_required
 def edit(): 
 	page = request.args.get('page', 1, type=int)
 	pagination = User.query.filter_by(role_id=2).order_by(User.member_since.desc()).paginate(
@@ -111,6 +110,8 @@ def editpost():
 	return render_template('admin/editpost.html',posts=posts,pagination=pagination, page=page)
 
 @admin.route('/post/delete/<int:id>')
+@login_required
+@admin_required
 def deletepost(id):
     post=Post.query.get_or_404(id)
     db.session.delete(post)
