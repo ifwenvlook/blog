@@ -25,7 +25,7 @@
       {% endfor %}　　<!-- flash消息弹出 -->
     {% block page_content %}
 
-    <div class="post-tabs" style= "padding:0;margin-right:15px;margin-left:15px;">
+    <div class="post-tabs" style= "padding:0;margin-right:50px;margin-left:50px;">
         <ul class="nav nav-tabs">
             <li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_all') }}">全部</a></li>
             {% if current_user.is_authenticated %}
@@ -45,7 +45,7 @@
     {% endblock %}
 
   </section>
-  
+
   <footer class="main-footer" style= "margin-left:0px;">
     <div class="pull-right hidden-xs">
       <b>Email:<a href="mailto:ifwenvlook@163.com">ifwenvlook@163.com</a>  Power by Flask
