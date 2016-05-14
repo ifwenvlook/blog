@@ -31,7 +31,7 @@ type="image/x-icon">
 
 {% block body %}
 
-
+{{super()}}
 
 {% block navbar %}
 <body class="hold-transition skin-blue sidebar-mini">
@@ -288,9 +288,9 @@ type="image/x-icon">
          </span>
         </div>
     </form>
-    <ul class="sidebar-menu">
+<!--     <ul class="sidebar-menu">
     <li class="header"><h4>&nbsp;输入标题搜索文章</h4></li> 
-    </ul>
+    </ul> -->
 
 <!--     <form style="display: inline;" action="{{url_for('main.search')}}" method="post" name="search">
     {{g.search_form.hidden_tag()}}{{g.search_form.search(size=20)}}<input type="submit" value="按标题搜索" placeholder="Search...">

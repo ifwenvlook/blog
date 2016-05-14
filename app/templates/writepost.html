@@ -31,7 +31,7 @@
 	<div class="form-group "><label class="control-label" for="body">{{ form.body.label }}</label>
 	        
 	<div class="flask-pagedown">
-		<textarea class="form-control" id="flask-pagedown-body" name="body" rows="15" placeholder="在此输入文章正文"></textarea>
+		<textarea class="form-control" id="flask-pagedown-body" name="body" rows="15" placeholder="在此输入文章正文(支持Markdown语法)"></textarea>
 		</div>
 	</div>
 	    <input class="btn btn-default" id="submit" name="submit" type="submit" value="发表">
@@ -40,7 +40,7 @@
 </form>
 
 
-<!-- makedown预览 -->
+<!-- Markdown预览 -->
 <script type="text/javascript">
 f = function() {
     if (typeof flask_pagedown_converter === "undefined")

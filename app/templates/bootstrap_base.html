@@ -1,34 +1,36 @@
-{% block doc -%}
+{% block doc %}
 <!DOCTYPE html>
 <html xmlns:wb="http://open.weibo.com/wb">
-{%- block html %}
+{% block html %}
   <head>
-    {%- block head %}
+    {% block head %}
     <title>{% block title %}{% endblock title %}</title>
 
-    {%- block metas %}
+    {% block metas %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {%- endblock metas %}
+    {% endblock metas %}
 
-    {%- block styles %}
+    {% block styles %}
     <!-- Bootstrap -->    
     <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet" media="screen">
-    {%- endblock styles %}
-    {%- endblock head %}
+    {% endblock styles %}
+    {% endblock head %}
   </head>
   <body{% block body_attribs %}{% endblock body_attribs %}>
-    {% block body -%}
+    {% block body %}
     {% block navbar %}
-    {%- endblock navbar %}
-    {% block content -%}
-    {%- endblock content %}
+    {% endblock navbar %}
+    {% block topimg %}
+    {% endblock topimg %}
+    {% block content %}
+    {% endblock content %}
 
     {% block scripts %}
     <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
     <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
-    {%- endblock scripts %}
-    {%- endblock body %}
+    {% endblock scripts %}
+    {% endblock body %}
   </body>
-{%- endblock html %}
+{% endblock html %}
 </html>
-{% endblock doc -%}
+{% endblock doc %}
