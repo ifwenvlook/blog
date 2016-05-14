@@ -16,12 +16,13 @@
 document.write("现在是"+(new Date()).toLocaleDateString() + " " + (new Date()).toLocaleTimeString());     
 // 时间
 </script>  -->
-
+<div class="btn-group">
 <a href="{{ url_for('admin.edit') }}" class="btn btn-default" >后台管理员</a>
 <a href="{{ url_for('admin.edituser') }}" class="btn btn-default">所有用户</a>
 <a href="{{ url_for('admin.editpost') }}" class="btn btn-default">文章管理</a>
-<a href="{{ url_for('admin.editcategory') }}" class="btn btn-primary">分类管理</a>
+<a href="{{ url_for('admin.editcategory') }}" class="btn btn-info">分类管理</a>
 <a href="{{ url_for('admin.editcomment') }}" class="btn btn-default">评论管理</a>
+</div>
 </br>
 
 <h3><strong>分类列表</strong>

@@ -7,15 +7,62 @@
 {% block page_content %}
 
 {{super()}}
-<div>
-    {% if current_user.can(Permission.WRITE_ARTICLES) %}
-    {{ wtf.quick_form(form) }}
-    {% endif %}
+
+
+<form method="post" class="form" role="form">
+{{ form.hidden_tag() }}
+    
+
+<div class="col-md-3">
+	<div class="form-group "><label class="control-label" for="category">{{ form.category.label }}</label>		
+	        <select class="form-control" id="category" name="category" > 
+	        {% for choice in form.category.choices %}       
+	        <option value={{choice[0]}} >{{choice[1]}}</option>        
+	        {% endfor %}
+	        </select>       
+	</div> 
 </div>
+
+<div class="col-md-12">
+	<div class= "form-group " ><label class="control-label" for="head">{{ form.head.label }}</label>
+	        <input class="form-control" id="head" name="head" type="text" value="" placeholder="在此输入文章标题，最长25字">
+	</div> 
+
+	<div class="form-group "><label class="control-label" for="body">{{ form.body.label }}</label>
+	        
+	<div class="flask-pagedown">
+		<textarea class="form-control" id="flask-pagedown-body" name="body" rows="15" placeholder="在此输入文章正文"></textarea>
+		</div>
+	</div>
+	    <input class="btn btn-default" id="submit" name="submit" type="submit" value="发表">
+</div>
+
+</form>
+
+
+<!-- makedown预览 -->
+<script type="text/javascript">
+f = function() {
+    if (typeof flask_pagedown_converter === "undefined")
+        flask_pagedown_converter = Markdown.getSanitizingConverter().makeHtml;
+    var textarea = document.getElementById("flask-pagedown-body");
+    var preview = document.createElement('div');
+    preview.className = 'flask-pagedown-preview';
+    textarea.parentNode.insertBefore(preview, textarea.nextSibling);
+    textarea.onkeyup = function() { preview.innerHTML = flask_pagedown_converter(textarea.value); }
+    textarea.onkeyup.call(textarea);
+}
+if (document.readyState === 'complete') 
+    f();
+else if (window.addEventListener)
+    window.addEventListener("load", f, false);
+else if (window.attachEvent)
+    window.attachEvent("onload", f);
+else
+    f();
+</script>
+
 {% endblock %}
-
-
-
 {% block scripts %}
 {{ super() }}
 {{ pagedown.include_pagedown() }}

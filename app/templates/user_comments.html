@@ -6,11 +6,11 @@
 {% block page_content %}
 {% include '_userbase.html' %}
 
-
+<div class="btn-group">
 <a href="{{ url_for('.user',username=user.username)}}" class="btn btn-default" >{{ user.posts.count() }}篇博客</a>
-<a href="{{ url_for('.usercomments',username=user.username)}}" class="btn btn-primary">{{ user.comments.count() }}条评论</a>
+<a href="{{ url_for('.usercomments',username=user.username)}}" class="btn btn-info">{{ user.comments.count() }}条评论</a>
 <a href="{{ url_for('.starposts', username=user.username) }}" class="btn btn-default">{{ user.starposts.__len__() }}篇收藏</a>
-
+</div>
 </br>
 
 {% if current_user.is_authenticated  and   current_user != user%} 

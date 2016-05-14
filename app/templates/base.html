@@ -281,9 +281,10 @@ type="image/x-icon">
   <section class="sidebar">
     <form action="{{url_for('main.search')}}" method="post" class="sidebar-form">
         <div class="input-group">
-         {{g.search_form.hidden_tag()}}{{g.search_form.search(size=20)}}
+        {{g.search_form.hidden_tag()}}
+        <input type="text" name="search" class="form-control" placeholder="Search blog">
          <span class="input-group-btn">
-          <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+          <button type="submit"  id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
          </span>
         </div>
     </form>
