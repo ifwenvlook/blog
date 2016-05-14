@@ -15,17 +15,17 @@
 
 {% block content %}
 <div class="content-wrapper" > <!-- 定义博客列表 -->
-  <section class="content" style=" padding: 0px;">
-  {% for message in get_flashed_messages() %}    
-    <div class="alert alert-warning">
-      <button type="button" class="close" data-dismiss="alert">&times;</button>
-      {{ message }}
-    </div>
-   
-  {% endfor %}　　<!-- flash消息弹出 -->
+  <section class="content" style="min-height: 900px; padding:0;">
+      {% for message in get_flashed_messages() %}    
+        <div class="alert alert-warning">
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+          {{ message }}
+        </div>
+       
+      {% endfor %}　　<!-- flash消息弹出 -->
+    {% block page_content %}
 
-  {% block page_content %}
-    <div class="post-tabs">
+    <div class="post-tabs" style= "padding:0;margin-right:15px;margin-left:15px;">
         <ul class="nav nav-tabs">
             <li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_all') }}">全部</a></li>
             {% if current_user.is_authenticated %}
@@ -43,13 +43,10 @@
     <!-- </div> -->
     {% endif %}
     {% endblock %}
+
   </section>
-
-
-
-</div>
-
-<footer class="main-footer">
+  
+  <footer class="main-footer" style= "margin-left:0px;">
     <div class="pull-right hidden-xs">
       <b>Email:<a href="mailto:ifwenvlook@163.com">ifwenvlook@163.com</a>  Power by Flask
       <a href="http://tongji.baidu.com/web/welcome/ico?s=4ef56ac18f75724ce187ba84286f0c6d"><i class="fa fa-fw fa-bar-chart"></i>百度统计</a>
@@ -61,7 +58,9 @@
     <a href="https://www.facebook.com"style="color:black" ><i class="fa fa-fw fa-facebook-official"></i></a>
     <a href="https://www.google.com"style="color:black" ><i class="fa fa-fw fa-google-plus"></i></a>
   </footer>
-
 </div>
+
 {% endblock %}
+
+
 

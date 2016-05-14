@@ -31,8 +31,6 @@ type="image/x-icon">
 
 {% block body %}
 
-{{super()}}
-
 {% block navbar %}
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper" style="position: relative">
@@ -329,6 +327,10 @@ type="image/x-icon">
   </section>
 </aside>
 
+{% block topimg %}
+        
+{% endblock %}
+
 
 {% block content %}
 <div class="content-wrapper" > <!-- 定义博客列表 -->
@@ -350,7 +352,7 @@ type="image/x-icon">
 
 </div>
 
-<footer class="main-footer">
+  <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Email:<a href="mailto:ifwenvlook@163.com">ifwenvlook@163.com</a>  Power by Flask
       <a href="http://tongji.baidu.com/web/welcome/ico?s=4ef56ac18f75724ce187ba84286f0c6d"><i class="fa fa-fw fa-bar-chart"></i>百度统计</a>
