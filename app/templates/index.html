@@ -4,17 +4,21 @@
 
 {% block title %}Fly{% endblock %}
 
-{% block topimg %}
-<!-- <img  src="{{url_for('static',filename='img/top.jpg')}}"> -->
-<section class="content" style= "margin-left:230px; padding:50px; background:url('../static/img/top_wind.jpg');">
-  <h3 class="widget-user-username"><a href="https://github.com/ifwenvlook/blog.git">Get source code</a><a href="https://github.com/ifwenvlook/blog.git" style="color:black" ><i class="fa fa-fw fa-github-square"></i></a></h3>
-  <h5 class="widget-user-desc">愚者不努力，懒人盼巅峰</h5>
-</section>         
-{% endblock %}
+
+
+
 
 
 {% block content %}
 <div class="content-wrapper" > <!-- 定义博客列表 -->
+
+    {% block topimg %}           
+    <section class="content" style= "background:url('../static/img/top_wind.jpg');">
+      <h3 class="widget-user-username"><a href="https://github.com/ifwenvlook/blog.git">Get source code</a><a href="https://github.com/ifwenvlook/blog.git" style="color:black" ><i class="fa fa-fw fa-github-square"></i></a></h3>
+      <h5 class="widget-user-desc">愚者不努力，懒人盼巅峰</h5>
+    </section> 
+    {% endblock %}
+
   <section class="content" style="min-height: 900px; padding:0;">
       {% for message in get_flashed_messages() %}    
         <div class="alert alert-warning">

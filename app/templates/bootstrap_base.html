@@ -19,12 +19,12 @@
   <body{% block body_attribs %}{% endblock body_attribs %}>
     {% block body %}
     {% block navbar %}
-    {% endblock navbar %}
-    {% block topimg %}
-    {% endblock topimg %}
+    {% endblock navbar %} 
+      
     {% block content %}
+    {% block topimg %}
+    {% endblock topimg %}     
     {% endblock content %}
-
     {% block scripts %}
     <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
     <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>

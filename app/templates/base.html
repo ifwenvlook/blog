@@ -327,12 +327,11 @@ type="image/x-icon">
   </section>
 </aside>
 
-{% block topimg %}
-        
-{% endblock %}
+
 
 
 {% block content %}
+
 <div class="content-wrapper" > <!-- 定义博客列表 -->
   <section class="content" style="min-height: 900px">
   {% for message in get_flashed_messages() %}    
@@ -347,11 +346,10 @@ type="image/x-icon">
 
   {% endblock %} <!-- end page_content -->
   </section>
-
-
-
 </div>
 
+
+<!-- 页脚 -->
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Email:<a href="mailto:ifwenvlook@163.com">ifwenvlook@163.com</a>  Power by Flask
