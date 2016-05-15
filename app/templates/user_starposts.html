@@ -39,9 +39,16 @@
           <td><a href="{{ url_for('.user', username=post.author.username) }}">{{ post.author.username }}</a></td>
           <td><a href="{{ url_for('.post', id=post.id) }}">{{ post.head }}</a></td>
           <td>{{ moment(user.startimestamp(post)).format('L') }}</td>
-          <td><a href="{{ url_for('.deletestar', id=post.id,) }}" class="label label-danger">
-              <span class="label label-danger">删除</span>
+          <td>
+          {% if current_user == user %}
+          <a href="{{ url_for('.deletestar', id=post.id,) }}" class="label label-danger">
+              删除
               </a>
+          {% else %}
+          <a href="#" class="label label-default">
+              无权限
+              </a>
+          {% endif %}
           </td>
           <td>
           <a style="text-decoration:none; color:black" href="{{ url_for('.post', id=post.id) }}">

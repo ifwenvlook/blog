@@ -13,7 +13,7 @@
 </div>
 </br>
 
-{% if current_user.is_authenticated  and   current_user != user%} 
+{% if current_user != user%} 
 <ul class="comments">
         {% for comment in comments %}
             {% if comment.author == user  %}
@@ -47,7 +47,7 @@
             {% endif %}
         {% endfor %}
 
-{% else %}
+{% elif current_user==user %}
     <ul class="comments">
         {% for comment in comments %}
             {% if comment.author == current_user  %}

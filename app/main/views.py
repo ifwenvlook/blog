@@ -468,8 +468,6 @@ def shownotice_confirmed(id):
 
 
 @main.route('/user/<username>/comments')
-@login_required
-@permission_required(Permission.COMMENT)
 def usercomments(username):
     user=User.query.filter_by(username=username).first()
     page = request.args.get('page', 1, type=int)
@@ -487,7 +485,7 @@ def usercomments_delete(id):
     comment = Comment.query.get_or_404(id)
     db.session.delete(comment)
     flash("评论已删除")
-    return redirect(url_for('.usercomments',
+    return redirect(url_for('.usercomments',username=current_user.username,
                             page=request.args.get('page', 1, type=int)))
 
 
