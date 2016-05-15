@@ -1,6 +1,6 @@
 {% block doc %}
 <!DOCTYPE html>
-<html >
+<html xmlns:wb="http://open.weibo.com/wb">
 {% block html %}
   <head>
     {% block head %}
@@ -12,7 +12,7 @@
 
     {% block styles %}
     <!-- Bootstrap -->    
-<!--     <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet" media="screen"> -->
+    <link href="{{bootstrap_find_resource('css/bootstrap.css', cdn='bootstrap')}}" rel="stylesheet" media="screen">
     {% endblock styles %}
     {% endblock head %}
   </head>
@@ -22,12 +22,12 @@
     {% endblock navbar %} 
       
     {% block content %}
-    {% block topimg %}  
+    {% block topimg %}
     {% endblock topimg %}     
     {% endblock content %}
     {% block scripts %}
-<!--     <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
-    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script> -->
+    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
+    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
     {% endblock scripts %}
     {% endblock body %}
   </body>
