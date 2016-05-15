@@ -13,8 +13,13 @@
 <link rel="icon" href="{{ url_for('static', filename = 'img/favicon.ico') }}"
 type="image/x-icon">
     
-{% block styles %}
-    <script src="http://tjs.sjs.sinajs.cn/open/api/js/wb.js?appkey=1523741413" type="text/javascript" charset="utf-8"></script>
+{% block styles %}  
+    
+    <script src="{{url_for('static',filename='js/jquery-2.2.3.min.js')}}"></script> 
+    <script src="{{url_for('static',filename='js/jquery.from.js')}}"></script>    
+    <script src="{{url_for('static',filename='js/jquery-ui.min.js')}}"></script>
+    <script>var _hmt = _hmt || [];(function() {  var hm = document.createElement("script");  hm.src = "//hm.baidu.com/hm.js?4ef56ac18f75724ce187ba84286f0c6d";  var s = document.getElementsByTagName("script")[0];   s.parentNode.insertBefore(hm, s);})();</script>
+
     <link rel="stylesheet" href="{{url_for('static',filename='css/styles.css')}}">
     <link rel="stylesheet" href="{{url_for('static',filename='css/bootstrap.min.css')}}">
     <!-- Font Awesome -->
@@ -25,7 +30,7 @@ type="image/x-icon">
     <link rel="stylesheet" href="{{url_for('static',filename='css/AdminLTE.min.css')}}">
     
     <link rel="stylesheet" href="{{url_for('static',filename='css/skin-blue.min.css')}}">
-    <script>var _hmt = _hmt || [];(function() {  var hm = document.createElement("script");  hm.src = "//hm.baidu.com/hm.js?4ef56ac18f75724ce187ba84286f0c6d";  var s = document.getElementsByTagName("script")[0];   s.parentNode.insertBefore(hm, s);})();</script>
+
 {% endblock %}
 {% endblock %} <!-- headend -->
 
@@ -368,15 +373,9 @@ type="image/x-icon">
 
 
 {% block scripts %}
-
-{{ moment.include_jquery() }}
-{{ moment.include_moment() }}
-{{ moment.lang("zh-CN") }} 
-<script src="{{url_for('static',filename='js/jquery.js')}}"></script> 
 <script src="{{url_for('static',filename='js/bootstrap.min.js')}}"></script>  
 <script src="{{url_for('static',filename='js/app.min.js')}}"></script>    
 {% endblock %} 
-
 
 {% endblock %}
 </body>
