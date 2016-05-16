@@ -303,7 +303,7 @@ type="image/x-icon">
           <a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>全部分类</span> <i class="fa fa-angle-left pull-right"></i></a>
           {% for category in g.categorys %}
           <ul class="treeview-menu" style="display: block;">
-            <li><a href= "{{ url_for('main.category', id=1) }}">{{category.name}}({{category.posts.count()}})</a></li> 
+            <li><a href= "{{ url_for('main.category', id=category.id) }}">{{category.name}}({{category.posts.count()}})</a></li> 
           </ul>
           {% endfor %}
       </li>
