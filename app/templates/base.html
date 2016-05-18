@@ -300,12 +300,12 @@ type="image/x-icon">
 
        
       <li class="treeview">                      
-          <a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>全部分类</span> <i class="fa fa-angle-left pull-right"></i></a>
-          {% for category in g.categorys %}
+          <a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>全部分类</span> <i class="fa fa-angle-left pull-right"></i></a>          
           <ul class="treeview-menu" style="display: block;">
-            <li><a href= "{{ url_for('main.category', id=category.id) }}">{{category.name}}({{category.posts.count()}})</a></li> 
-          </ul>
-          {% endfor %}
+          {% for category in g.categorys %}
+            <li><a href= "{{ url_for('main.category', id=category.id) }}">{{category.name}}({{category.posts.count()}})</a></li>
+          {% endfor %} 
+          </ul>          
       </li>
 
       <li class="treeview">
