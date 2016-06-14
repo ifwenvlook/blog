@@ -32,7 +32,7 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:meian@localhost/flaskdev'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@localhost/flaskdev'
         # os.environ.get('DEV_DATABASE_URL') or \
                 # 'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite') 
 

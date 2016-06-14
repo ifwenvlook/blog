@@ -1,6 +1,6 @@
 {% block doc %}
 <!DOCTYPE html>
-<html xmlns:wb="http://open.weibo.com/wb">
+<html>
 {% block html %}
   <head>
     {% block head %}
@@ -16,20 +16,33 @@
     {% endblock styles %}
     {% endblock head %}
   </head>
-  <body{% block body_attribs %}{% endblock body_attribs %}>
+  <body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper">
     {% block body %}
     {% block navbar %}
     {% endblock navbar %} 
+    
       
+
+    <div class="content-wrapper" style="padding-top: 50px;"> 
     {% block content %}
     {% block topimg %}
-    {% endblock topimg %}     
+    {% endblock topimg %}.
+    {% block contenthead %}
+    {% endblock contenthead %}
+    {% block page_content %}
+    {% endblock page_content %}
     {% endblock content %}
+    </div>
+
+    {% block footandrightnavbar %}
+    {% endblock footandrightnavbar %} 
+
     {% block scripts %}
-    <script src="{{bootstrap_find_resource('jquery.js', cdn='jquery')}}"></script>
-    <script src="{{bootstrap_find_resource('js/bootstrap.js', cdn='bootstrap')}}"></script>
     {% endblock scripts %}
+
     {% endblock body %}
+    </div>
   </body>
 {% endblock html %}
 </html>

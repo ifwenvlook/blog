@@ -82,7 +82,7 @@ def index():
         error_out=False)
     posts = pagination.items[:] #分页显示
 
-    return render_template('index.html',  posts=posts,user=current_user,message=message,category=category,
+    return render_template('index.html',  posts=posts,user=user,message=message,category=category,
                             show_followed=show_followed, pagination=pagination,hot_post=Post().hotpost())
 
 
