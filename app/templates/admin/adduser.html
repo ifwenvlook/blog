@@ -1,51 +1,11 @@
-{% extends "base.html" %}
+{% extends "admin/edit.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 
 {% block title %}Fly-添加普通用户{% endblock %}
 
-{% block contenthead %}
-{{ super() }}
-<section class="content-header" >
-<!--   <h1>
-    Dashboard
-    <small>Control panel</small>
-  </h1> -->
-  <ol class="breadcrumb">
-    <li><a href="{{ url_for('main.index') }}"><i class="fa fa-fw fa-home"></i>首页</a></li>    
-    <li class="active"><a href="#">网站后台</a></li>
-  </ol>
-</section>
-{% endblock %}
 
-
-{% block navbar %}
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper" style="position: relative">
-  <header class="main-header" style="position: fixed;top: 0px;width:100%;max-height:100px;z-index:1030"> <!-- 固定置顶 -->
-    <a href="{{ url_for('main.index') }}" class="logo">
-      <!-- mini logo for sidebar mini 50x50 pixels -->
-      <span class="logo-mini"><b>F</b>ly</span>
-      <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><b>梦开始的地方</b></span>
-    </a>
-    <nav class="navbar navbar-static-top" role="navigation">
-    <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-    <span class="sr-only">Toggle navigation</span>
-    </a>
-          <div class="navbar-header">            
-            <ul class="nav navbar-nav">
-            <li><a href="{{ url_for('admin.edit') }}">回到后台</a></li>
-            </ul> 
-          </div>
-    </nav>                       
-</header>
-</div>
-</body>
-
-{% endblock %}
 {% block page_content %}
-{{super()}}
 <div class="page-header">
     <h1>添加普通用户</h1>
 </div>

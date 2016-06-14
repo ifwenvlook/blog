@@ -5,9 +5,7 @@
 {% block title %}Fly-admin后台{% endblock %}
 
 {% block navbar %}
-<body class="hold-transition skin-blue sidebar-mini">
-<div class="wrapper" style="position: relative">
-  <header class="main-header" style="position: fixed;top: 0px;width:100%;max-height:100px;z-index:1030"> <!-- 固定置顶 -->
+<header class="main-header" style="position: fixed;top: 0px;width:100%;max-height:100px;z-index:1030"> <!-- 固定置顶 -->
     <a href="{{ url_for('main.index') }}" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>F</b>ly</span>
@@ -25,10 +23,61 @@
           </div>
     </nav>                       
 </header>
-</div>
-</body>
 
+<aside class="main-sidebar" style="position: fixed;left: 0px;">　
+<!-- 左侧拉伸栏 -->
+  <section class="sidebar">
+    <form action="{{url_for('main.search')}}" method="post" class="sidebar-form">
+        <div class="input-group">
+        {{g.search_form.hidden_tag()}}
+        <input type="text" name="search" class="form-control" placeholder="Search blog">
+         <span class="input-group-btn">
+          <button type="submit"  id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button>
+         </span>
+        </div>
+    </form>
+<!--     <ul class="sidebar-menu">
+    <li class="header"><h4>&nbsp;输入标题搜索文章</h4></li> 
+    </ul> -->
+
+<!--     <form style="display: inline;" action="{{url_for('main.search')}}" method="post" name="search">
+    {{g.search_form.hidden_tag()}}{{g.search_form.search(size=20)}}<input type="submit" value="按标题搜索" placeholder="Search...">
+    </form> -->
+
+
+    <ul class="sidebar-menu">
+      <!-- <li class="header">推荐</li>  -->
+
+       
+      <li class="treeview">                      
+          <a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>全部分类</span> <i class="fa fa-angle-left pull-right"></i></a>          
+          <ul class="treeview-menu" style="display: block;">
+          {% for category in g.categorys %}
+            <li><a href= "{{ url_for('main.category', id=category.id) }}">{{category.name}}({{category.posts.count()}})</a></li>
+          {% endfor %} 
+          </ul>          
+      </li>
+
+      <li class="treeview">
+        <a href="#"><i class="fa fa-circle-o text-red"></i> <span>热门文章</span> <i class="fa fa-angle-left pull-right"></i></a>
+        <ul class="treeview-menu" style="display: block;">
+          <li><a href="{{ url_for('main.post', id=g.hot_post[0].id) }}">No1. {{g.hot_post[0].head}}</a></li>
+          <li><a href="{{ url_for('main.post', id=g.hot_post[1].id) }}">No2. {{g.hot_post[1].head}}</a></li>
+          <li><a href="{{ url_for('main.post', id=g.hot_post[2].id) }}">No3. {{g.hot_post[2].head}}</a></li>
+          <li><a href="{{ url_for('main.post', id=g.hot_post[3].id) }}">No4. {{g.hot_post[3].head}}</a></li>
+          <li><a href="{{ url_for('main.post', id=g.hot_post[4].id) }}">No5. {{g.hot_post[4].head}}</a></li>
+          <li><a href="{{ url_for('main.post', id=g.hot_post[5].id) }}">No6. {{g.hot_post[5].head}}</a></li>
+          <li><a href="{{ url_for('main.post', id=g.hot_post[6].id) }}">No7. {{g.hot_post[6].head}}</a></li>
+          <li><a href="{{ url_for('main.post', id=g.hot_post[7].id) }}">No8. {{g.hot_post[7].head}}</a></li>
+<!--                 最长26字    -->         
+        </ul>
+      </li>  
+      <li><a href="#top"><i class="fa fa-share"></i> <span>回到顶部</span></a></li> 
+    </ul>        
+  </section>
+</aside>  
 {% endblock %}
+
 
 {% block contenthead %}
 {{ super() }}
@@ -43,6 +92,8 @@
   </ol>
 </section>
 {% endblock %}
+
+
 {% block page_content %}
 
 {{super()}}
