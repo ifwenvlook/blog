@@ -1,13 +1,19 @@
-{% extends "index.html" %}
+{% extends "base.html" %}
 {% import "bootstrap/wtf.html" as wtf %}
 {% import "_macros.html" as macros %}
 
 {% block title %}Fly{% endblock %}
 
 
-{% block page_content %}
+{% block topimg %}           
+<section class="content" style= "background:url('../static/img/top_wind.jpg')">
+  <h3 class="widget-user-username"><a href="https://github.com/ifwenvlook/blog.git">Get source code</a><a href="https://github.com/ifwenvlook/blog.git" style="color:black" ><i class="fa fa-fw fa-github-square"></i></a></h3>
+  <h5 class="widget-user-desc">愚者不努力，懒人盼巅峰</h5>
+</section> 
+{% endblock %}
 
-<div class="post-tabs" style= "padding:0;margin-right:50px;margin-left:15px;">
+
+{% block page_content %}
     <h1><strong>关于小站</strong></h1>
 	<h4>Email:<a  href="mailto:ifwenvlook@163.com">ifwenvlook@163.com</a>&nbsp;
 	<a href="https://github.com/ifwenvlook" style="color:black" ><i class="fa fa-fw fa-github-square"></i></a>
@@ -20,7 +26,6 @@
 	<h3>
 	从前有座山，山上有座庙。<br>云白松青泉水澄，方丈持经童儿笑。<br>摩诃般若妙。<br><br>山中无日月，佛门无白皂。<br>岂闻天下俱兴兵，为得人前身后名，血流漂杵不留行。<br>佛前香零丁。<br><br>天下苍生苦，眼下清泪咸，忽有一日到山前。<br>北坡军威盛，东村号炮鸣。<br>不尽杀戮与血腥。<br>童儿直发抖，方丈只念经。<br>我佛慈悲若有情，但求战事顷刻停，阿弥陀佛念万遍，已见长庚星。<br>喊声才宁息。<br><br>月明星稀三更天，山门之外人马疲，血衣将军滚下马，马头轻顶撞柴扉。<br>方丈忙惊起，披衣开门扉，虽恐血光脏我佛，不忍将军命西归。<br>两日将军醒，五日将军归，七日庙宇人马围。<br>一问曰不知，二问曰不明，六名僧众皆圆寂。<br>佛倒庙塌去。<br><br>日落月升，沧海桑田。<br>天子巡游至山前。<br>文官赞山美，武将夸水甜。<br>丞相铺纸画山景，圣上亲题辞。<br>辞曰：<br>从前有座山，山上有座庙……
 	</h3>
-</div>
 {% endblock %}
 
 
