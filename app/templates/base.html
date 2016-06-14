@@ -39,7 +39,7 @@ type="image/x-icon">
         <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
         <span class="sr-only">Toggle navigation</span>
         </a>
-              <!-- <div class="navbar-header">            
+              <div class="navbar-header">            
                 <ul class="nav navbar-nav">
                 <li><a href="{{ url_for('main.firstpage') }}">关于</a></li>
                 </ul>          
@@ -63,7 +63,7 @@ type="image/x-icon">
 
                 </ul>
 
-              </div> -->
+              </div>
 
               {% if current_user.is_authenticated %}
               <div class="navbar-custom-menu">
@@ -316,19 +316,14 @@ type="image/x-icon">
 {% endblock %}
 
 
-
-
-
-
-{% block page_content %} <!-- post页面和消息弹出等等 -->
+{% block contenthead %}
 {% for message in get_flashed_messages() %}    
 <div class="alert alert-warning">
   <button type="button" class="close" data-dismiss="alert">&times;</button>
   {{ message }}
 </div>
 {% endfor %}　　<!-- flash消息弹出 -->
-{% endblock %} <!-- end page_content -->
-
+{% endblock %}
 
 {% block footandrightnavbar %}
   <footer class="main-footer">

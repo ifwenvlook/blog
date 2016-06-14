@@ -3,6 +3,21 @@
 
 {% block title %}Fly - 登录{% endblock %}
 
+
+{% block contenthead %}
+{{ super() }}
+<section class="content-header">
+<!--   <h1>
+    Dashboard
+    <small>Control panel</small>
+  </h1> -->
+  <ol class="breadcrumb">
+    <li><a href="{{ url_for('main.index') }}"><i class="fa fa-fw fa-home"></i>首页</a></li>    
+    <li class="active"><a href="#">登录</a></li>
+  </ol>
+</section>
+{% endblock %}
+
 {% block page_content %}
 <div class="page-header">
     <h1>登录</h1>

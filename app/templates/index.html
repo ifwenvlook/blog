@@ -10,7 +10,7 @@
 
 
 {% block content %}
-    
+
 {% block topimg %}           
 <section class="content" style= "background:url('../static/img/top_wind.jpg')">
   <h3 class="widget-user-username"><a href="https://github.com/ifwenvlook/blog.git">Get source code</a><a href="https://github.com/ifwenvlook/blog.git" style="color:black" ><i class="fa fa-fw fa-github-square"></i></a></h3>
@@ -19,39 +19,35 @@
 {% endblock %}
 
 {% block contenthead %}
-<section class="content-header">
-  <h1>
+{{ super() }}
+<section class="content-header" style="padding:15px 0 0 0;">
+<!--   <h1>
     Dashboard
     <small>Control panel</small>
-  </h1>
+  </h1> -->
   <ol class="breadcrumb">
-    <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-    <li class="active">Dashboard</li>
+    <li><a href="{{ url_for('main.index') }}"><i class="fa fa-fw fa-home"></i>首页</a></li>
+    <li class="active"></li>
   </ol>
 </section>
 {% endblock %}
 
 {% block page_content %} <!-- post页面等等 -->
-{{ super() }}
-<section class="content">
-    <div class="row" >
-        <div class="item">
-            <li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_all') }}">全部</a></li>
-            {% if current_user.is_authenticated %}
-            <li{% if show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_followed') }}">我的关注</a></li>
-            {% endif %}
-            <li style="float: right" ><button class="btn btn-block btn-info btn-lg"><a style="color:white" href="{{ url_for('.writepost') }}"><i class="fa fa-edit"></i>新文章</a></button></li>
-        </div>
-        {% include '_index_posts.html' %}
-    </div>
-    {% if pagination %}
-    <div class="pagination">
-        {{ macros.pagination_widget(pagination, '.index') }}
-    </div>
-
-    <!-- </div> -->
-    {% endif %}
-</section> 
+<div class="post-tabs" style= "padding:15px;margin-right:50px;margin-left:50px;">
+    <ul class="nav nav-tabs">
+        <li{% if not show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_all') }}">全部</a></li>
+        {% if current_user.is_authenticated %}
+        <li{% if show_followed %} class="active"{% endif %}><a href="{{ url_for('.show_followed') }}">我的关注</a></li>
+        {% endif %}
+        <li style="float: right" ><button class="btn btn-block btn-info btn-lg"><a style="color:white" href="{{ url_for('.writepost') }}"><i class="fa fa-edit"></i>新文章</a></button></li>
+    </ul>
+    {% include '_index_posts.html' %}
+</div>
+{% if pagination %}
+<div class="pagination">
+    {{ macros.pagination_widget(pagination, '.index') }}
+</div>
+{% endif %}
 {% endblock %}
 
 {% endblock %}
