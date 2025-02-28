@@ -1,7 +1,5 @@
 Blog
 ----
-Preview: `http://www.vlblog.tech/`(网站已到期，Sorry)
-
 A simple blog system based on Flask
 
 
