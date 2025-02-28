@@ -9,8 +9,8 @@ oauth = OAuth(app)
 
 weibo = oauth.remote_app(
     'weibo',
-    consumer_key='1523741413',
-    consumer_secret='dadfdcb4d08fa3825b951086c67d2e65',
+    consumer_key='XXX',
+    consumer_secret='XXX',
     request_token_params={'scope': 'email,statuses_to_me_read'},
     base_url='https://api.weibo.com/2/',
     authorize_url='https://api.weibo.com/oauth2/authorize',
