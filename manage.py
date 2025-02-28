@@ -80,7 +80,7 @@ def datainit():
     wen=User.query.filter_by(username='wen').first()
     if not wen:
         print ("make wen in admin")
-        wen=User(username='wen',email='2535199139@qq.com',password='meian',confirmed=True)
+        wen=User(username='wen',email='xxx@mail.com',password='XXX',confirmed=True)
         wen.role=Role.query.filter_by(permissions=0xff).first()
         db.session.add(wen)
         db.session.commit()        
