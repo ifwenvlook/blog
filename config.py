@@ -10,11 +10,11 @@ class Config:
     MAIL_SERVER = 'smtp.qq.com'
     MAIL_PORT = 587
     MAIL_USE_TLS = True
-    MAIL_USERNAME = '2535199139'
-    MAIL_PASSWORD = 'ufxffdwmwtvleadd'
-    MAIL_DEFAULT_SENDER = '2535199139@qq.com'
+    MAIL_USERNAME = 'XXX'
+    MAIL_PASSWORD = 'XXX'
+    MAIL_DEFAULT_SENDER = 'XXX'
     FLASKY_MAIL_SUBJECT_PREFIX = '[Flasky]'
-    FLASKY_MAIL_SENDER = 'Flasky Admin <2535199139@qq.com>'
+    FLASKY_MAIL_SENDER = 'Flasky Admin <XXX@mail.com>'
     FLASKY_ADMIN = os.environ.get('FLASKY_ADMIN')
     FLASKY_POSTS_PER_PAGE = 20
     FLASKY_FOLLOWERS_PER_PAGE = 50
@@ -32,14 +32,14 @@ class Config:
 
 class DevelopmentConfig(Config):
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:123456@localhost/flaskdev'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:password@localhost/flaskdev'
         # os.environ.get('DEV_DATABASE_URL') or \
                 # 'sqlite:///' + os.path.join(basedir, 'data-dev.sqlite') 
 
 
 class TestingConfig(Config):
     TESTING = True
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:meian@localhost/flasktest'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:password@localhost/flasktest'
                 # os.environ.get('DEV_DATABASE_URL') or \
                 # 'sqlite:///' + os.path.join(basedir, 'data-test.sqlite')
 
@@ -47,7 +47,7 @@ class TestingConfig(Config):
 
 
 class ProductionConfig(Config):
-    SQLALCHEMY_DATABASE_URI = 'mysql://root:meian@localhost/flask'
+    SQLALCHEMY_DATABASE_URI = 'mysql://root:password@localhost/flask'
                 # os.environ.get('DEV_DATABASE_URL') or \
                 # 'sqlite:///' + os.path.join(basedir, 'data.sqlite')
 
